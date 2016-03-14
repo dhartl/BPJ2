@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0"
+	xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="at.c02.bpj.client.article.ArticleView">
+	<center>
+		<TableView fx:id="tblArticles" prefHeight="200.0">
+			<columns>
+				<TableColumn fx:id="idColumn" prefWidth="75.0" text="Id" />
+				<TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+				<TableColumn fx:id="priceColumn" prefWidth="75.0" text="Preis" />
+			</columns>
+		</TableView>
+	</center>
+</BorderPane>
