@@ -23,6 +23,8 @@ public class ClientApplication extends Application {
 	public void start(Stage stage) throws Exception {
 		setupDependencyInjection();
 
+		Thread.currentThread().setUncaughtExceptionHandler(new UiErrorHandler());
+
 		stage.setTitle("BPJ2 Application");
 		// ViewTuple<HelloWorldView, HelloWorldViewModel> viewTuple =
 		// FluentViewLoader.fxmlView(HelloWorldView.class)

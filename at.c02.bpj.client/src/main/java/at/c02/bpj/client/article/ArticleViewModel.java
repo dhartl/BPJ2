@@ -50,12 +50,8 @@ public class ArticleViewModel implements ViewModel {
 		dialog.setArticle(new Article());
 		Optional<Article> article = dialog.showAndWait();
 		if (article.isPresent()) {
-			try {
-				Article newArticle = articleService.saveArticle(article.get());
-				articles.add(newArticle);
-			} catch (ServiceException e) {
-				e.printStackTrace();
-			}
+			Article newArticle = articleService.saveArticle(article.get());
+			articles.add(newArticle);
 		}
 	}
 
@@ -64,11 +60,7 @@ public class ArticleViewModel implements ViewModel {
 		dialog.setArticle(article);
 		Optional<Article> newArticle = dialog.showAndWait();
 		if (newArticle.isPresent()) {
-			try {
-				articles.set(articles.indexOf(article), articleService.saveArticle(newArticle.get()));
-			} catch (ServiceException e) {
-				e.printStackTrace();
-			}
+			articles.set(articles.indexOf(article), articleService.saveArticle(newArticle.get()));
 		}
 	}
 
@@ -80,12 +72,8 @@ public class ArticleViewModel implements ViewModel {
 
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {
-			try {
-				articleService.deleteArticle(article);
-				loadArticles();
-			} catch (ServiceException e) {
-				e.printStackTrace();
-			}
+			articleService.deleteArticle(article);
+			loadArticles();
 		}
 	}
 }

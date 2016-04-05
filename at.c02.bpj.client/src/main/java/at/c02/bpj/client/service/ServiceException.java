@@ -1,6 +1,6 @@
 package at.c02.bpj.client.service;
 
-public class ServiceException extends Exception {
+public class ServiceException extends RuntimeException {
 	private static final long serialVersionUID = -2349560478154156243L;
 
 	public ServiceException(String message) {
