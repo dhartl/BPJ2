@@ -6,7 +6,7 @@ import java.lang.annotation.Annotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.c02.bpj.api.ServerError;
+import at.c02.bpj.client.api.model.ServerError;
 import eu.lestard.easydi.EasyDI;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -14,7 +14,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class Api {
 	private static final Logger logger = LoggerFactory.getLogger(Api.class);
@@ -32,7 +32,7 @@ public class Api {
 		// add logging as last interceptor
 		httpClient.addInterceptor(logging); // <-- this is the important line!
 		retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080/api/")
-				.addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
+				.addConverterFactory(JacksonConverterFactory.create()).client(httpClient.build()).build();
 		registerService(ArticleApi.class, context, retrofit);
 	}
 

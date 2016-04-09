@@ -23,12 +23,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>at.c02.bpj</groupId>
-			<artifactId>at.c02.bpj.api</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>de.saxsys</groupId>
 			<artifactId>mvvmfx</artifactId>
 		</dependency>
@@ -44,7 +38,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.squareup.retrofit2</groupId>
-			<artifactId>converter-gson</artifactId>
+			<artifactId>converter-jackson</artifactId>
 			<version>2.0.0-beta4</version>
 		</dependency>
 		<dependency>

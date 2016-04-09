@@ -1,4 +1,4 @@
-package at.c02.bpj.client.service.model;
+package at.c02.bpj.client.api.model;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -11,6 +11,10 @@ public class Article {
 	private ObjectProperty<Long> articleId = new SimpleObjectProperty<>();
 	private StringProperty name = new SimpleStringProperty();
 	private DoubleProperty price = new SimpleDoubleProperty();
+
+	// kein Argument-Konstruktor UNBEDINGT erforderlich
+	public Article() {
+	}
 
 	public final ObjectProperty<Long> articleIdProperty() {
 		return this.articleId;

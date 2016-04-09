@@ -3,9 +3,9 @@ package at.c02.bpj.client.article;
 import java.util.List;
 import java.util.Optional;
 
+import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.service.ArticleService;
 import at.c02.bpj.client.service.ServiceException;
-import at.c02.bpj.client.service.model.Article;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -71,7 +71,7 @@ public class ArticleViewModel implements ViewModel {
 		alert.setContentText(String.format("Möchten Sie den Artikel '%s' wirklich löschen?", article.getName()));
 
 		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
+		if (result.orElse(ButtonType.CANCEL) == ButtonType.OK) {
 			articleService.deleteArticle(article);
 			loadArticles();
 		}

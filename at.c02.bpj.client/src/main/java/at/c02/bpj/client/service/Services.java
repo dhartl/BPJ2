@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import at.c02.bpj.api.ServerError;
 import at.c02.bpj.client.api.Api;
+import at.c02.bpj.client.api.model.ServerError;
 import eu.lestard.easydi.EasyDI;
 import retrofit2.Call;
 import retrofit2.Response;

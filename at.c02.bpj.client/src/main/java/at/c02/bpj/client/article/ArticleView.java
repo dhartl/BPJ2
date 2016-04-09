@@ -3,7 +3,7 @@ package at.c02.bpj.client.article;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import at.c02.bpj.client.service.model.Article;
+import at.c02.bpj.client.api.model.Article;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;

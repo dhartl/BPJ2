@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import at.c02.bpj.api.ServerError;
 import at.c02.bpj.exception.ClientException;
+import at.c02.bpj.server.bean.ServerError;
 
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {

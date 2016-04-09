@@ -1,5 +1,4 @@
-package at.c02.bpj.api;
-
+package at.c02.bpj.server.bean;
 public class ServerError {
 	private String message;
 

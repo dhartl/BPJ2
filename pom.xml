@@ -32,7 +32,6 @@
 	</build>
 
 	<modules>
-		<module>at.c02.bpj.api</module>
 		<module>at.c02.bpj.server</module>
 		<module>at.c02.bpj.client</module>
 	</modules>

@@ -1,6 +1,6 @@
 package at.c02.bpj.client.article;
 
-import at.c02.bpj.client.service.model.Article;
+import at.c02.bpj.client.api.model.Article;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;

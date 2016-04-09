@@ -1,9 +1,7 @@
 package at.c02.bpj.server.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import at.c02.bpj.api.ArticleDTO;
 import at.c02.bpj.server.entity.Article;
 import at.c02.bpj.server.service.ArticleService;
 
@@ -23,23 +20,16 @@ public class ArticleController {
 
 	private ArticleService articleService;
 
-	private ModelMapper modelMapper;
-
 	@Autowired
 	public void setArticleService(ArticleService articleService) {
 		this.articleService = articleService;
 	}
 
-	@Autowired
-	public void setModelMapper(ModelMapper modelMapper) {
-		this.modelMapper = modelMapper;
-	}
-
 	@RequestMapping(method = RequestMethod.GET, path = "articles")
 	@ResponseBody
-	public List<ArticleDTO> getAllArticles() {
+	public List<Article> getAllArticles() {
 		List<Article> articles = articleService.getAllArticles();
-		return articles.stream().map(this::mapToArticleDTO).collect(Collectors.toList());
+		return articles;
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "articles/{articleId}")
@@ -50,17 +40,9 @@ public class ArticleController {
 
 	@RequestMapping(method = RequestMethod.POST, path = "articles")
 	@ResponseBody
-	public ArticleDTO createOrUpdateArticle(@RequestBody ArticleDTO articleDTO) {
-		Article article = mapToArticle(articleDTO);
-		article = articleService.createOrUpdateArticle(article);
-		return mapToArticleDTO(article);
+	public Article createOrUpdateArticle(@RequestBody Article article) {
+		Article responseArticle = articleService.createOrUpdateArticle(article);
+		return responseArticle;
 	}
 
-	private ArticleDTO mapToArticleDTO(Article article) {
-		return modelMapper.map(article, ArticleDTO.class);
-	}
-
-	private Article mapToArticle(ArticleDTO article) {
-		return modelMapper.map(article, Article.class);
-	}
 }
