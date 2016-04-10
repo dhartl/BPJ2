@@ -16,10 +16,15 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Controller für ArticleView.fxml.
+ */
 public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 
+	// ViewModel wird vom FluentFxmlLoader erzeugt und eingefügt
 	@InjectViewModel
 	private ArticleViewModel model;
+	// FXML-Properties: werden in der .fxml-Datei angegeben mit fx:id
 	@FXML
 	private TableView<Article> tblArticles;
 	@FXML
@@ -31,11 +36,14 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// Die Artikel-Tabelle zeigt genau das an, was in der ArticlesProperty
+		// des Models ist
 		Bindings.bindContent(tblArticles.itemsProperty().get(), model.articlesProperty());
 		idColumn.setCellValueFactory(new PropertyValueFactory<>("articleId"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+		// Einfügen des Kontext-Menüs für jede Zeile
 		tblArticles.setRowFactory(table -> {
 			final TableRow<Article> row = new TableRow<>();
 			row.setContextMenu(createContextMenu(row));
@@ -45,13 +53,21 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 
 	private ContextMenu createContextMenu(TableRow<Article> row) {
 		MenuItem miNewArticle = new MenuItem("Neu...");
+		// Bei Click auf "Neu..." wird onNewArticleClick aufgerufen
 		miNewArticle.setOnAction(event -> onNewArticleClick());
+
 		MenuItem miEditArticle = new MenuItem("Bearbeiten...");
+		// Bei Click auf "Bearbeiten..." wird onEditArticleClick aufgerufen
 		miEditArticle.setOnAction(event -> onEditArticleClick(row.getItem()));
+		// Bearbeiten ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
 		miEditArticle.disableProperty().bind(row.emptyProperty());
+
 		MenuItem miDeleteArticle = new MenuItem("Löschen");
+		// Bei Click auf "Löschen" wird onDeleteArticleClick aufgerufen
 		miDeleteArticle.setOnAction(event -> onDeleteArticleClick(row.getItem()));
+		// Löschen ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
 		miDeleteArticle.disableProperty().bind(row.emptyProperty());
+
 		ContextMenu contextMenu = new ContextMenu(miNewArticle, miEditArticle, miDeleteArticle);
 		return contextMenu;
 	}

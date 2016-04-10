@@ -1,4 +1,8 @@
 package at.c02.bpj.server.bean;
+
+/**
+ * Fehlermeldung vom Server
+ */
 public class ServerError {
 	private String message;
 

@@ -13,6 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Hauptklasse für die Client-Applikation
+ *
+ */
 public class ClientApplication extends Application {
 
 	public static void main(String... args) {
@@ -23,12 +27,13 @@ public class ClientApplication extends Application {
 	public void start(Stage stage) throws Exception {
 		setupDependencyInjection();
 
+		// Exceptions, die nicht behandelt werden, werden vom UI-ErrorHandler
+		// verarbeitet.
+		// Dieser erstellt einen Popup-Dialog mit der Fehlermeldung
 		Thread.currentThread().setUncaughtExceptionHandler(new UiErrorHandler());
 
 		stage.setTitle("BPJ2 Application");
-		// ViewTuple<HelloWorldView, HelloWorldViewModel> viewTuple =
-		// FluentViewLoader.fxmlView(HelloWorldView.class)
-		// .load();
+
 		ViewTuple<ArticleView, ArticleViewModel> viewTuple = FluentViewLoader.fxmlView(ArticleView.class).load();
 
 		Parent root = viewTuple.getView();
@@ -36,9 +41,14 @@ public class ClientApplication extends Application {
 		stage.show();
 	}
 
+	/**
+	 * Initialisierung des Contexts für die Dependency-Injection
+	 */
 	private void setupDependencyInjection() {
 		EasyDI context = new EasyDI();
+		// legt die Klassen für den API-Zugriff in den Context
 		Api.initialize(context);
+		// legt die Klassen für die Services in den Context
 		Services.initialize(context);
 		MvvmFX.setCustomDependencyInjector(context::getInstance);
 	}

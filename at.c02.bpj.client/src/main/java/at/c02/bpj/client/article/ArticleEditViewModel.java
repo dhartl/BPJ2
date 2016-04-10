@@ -8,6 +8,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Model für {@link ArticleEditView}
+ */
 public class ArticleEditViewModel implements ViewModel {
 
 	private SimpleObjectProperty<Long> id = new SimpleObjectProperty<>();
@@ -30,6 +33,11 @@ public class ArticleEditViewModel implements ViewModel {
 		return price;
 	}
 
+	/**
+	 * setzt den zu bearbeitenden Artikel
+	 * 
+	 * @param article
+	 */
 	public void editArticle(Article article) {
 		id.set(article.getArticleId());
 		name.set(article.getName());

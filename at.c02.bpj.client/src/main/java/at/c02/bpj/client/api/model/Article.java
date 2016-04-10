@@ -7,6 +7,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Model-Objekt für Artikel
+ */
 public class Article {
 	private ObjectProperty<Long> articleId = new SimpleObjectProperty<>();
 	private StringProperty name = new SimpleStringProperty();

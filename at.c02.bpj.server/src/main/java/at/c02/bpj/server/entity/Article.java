@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Java-Objekt Repräsentation der DB-Tabelle article
+ */
 @Entity
 @Table(name = "article")
 public class Article {

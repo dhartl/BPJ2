@@ -3,6 +3,9 @@ package at.c02.bpj.client.api.model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Model-Objekt für Fehlermeldungen vom Server
+ */
 public class ServerError {
 	private StringProperty message = new SimpleStringProperty();
 

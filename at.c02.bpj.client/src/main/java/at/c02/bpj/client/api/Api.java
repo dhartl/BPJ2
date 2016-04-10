@@ -16,31 +16,53 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
+/**
+ * Basisklasse für den Zugriff auf die Server-Apis
+ */
 public class Api {
 	private static final Logger logger = LoggerFactory.getLogger(Api.class);
 
 	private static Retrofit retrofit;
 
 	public static void initialize(EasyDI context) {
-		HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-		// set your desired log level
-		logging.setLevel(Level.BODY);
-
 		OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-		// add your other interceptors …
-
-		// add logging as last interceptor
-		httpClient.addInterceptor(logging); // <-- this is the important line!
+		addRequestLogging(httpClient);
 		retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080/api/")
 				.addConverterFactory(JacksonConverterFactory.create()).client(httpClient.build()).build();
-		registerService(ArticleApi.class, context, retrofit);
+
+		// Alle Api-Services müssen hier registriert werden
+		createAndRegisterService(ArticleApi.class, context);
 	}
 
-	private static <T> void registerService(Class<T> serviceClass, EasyDI context, Retrofit retrofit) {
-		T service = retrofit.create(serviceClass);
+	/**
+	 * fügt zum HttpClient Logging der Requests hinzu. Muss letzter
+	 * Request-Interceptor sein.
+	 * 
+	 * @param httpClient
+	 */
+	private static void addRequestLogging(OkHttpClient.Builder httpClient) {
+		HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+		logging.setLevel(Level.BODY);
+		httpClient.addInterceptor(logging);
+	}
+
+	/**
+	 * Initialisiert einen API-Service und legt ihn in den Context
+	 * 
+	 * @param serviceClass
+	 * @param context
+	 */
+	private static <SERVICE_CLASS> void createAndRegisterService(Class<SERVICE_CLASS> serviceClass, EasyDI context) {
+		SERVICE_CLASS service = retrofit.create(serviceClass);
 		context.bindInstance(serviceClass, service);
 	}
 
+	/**
+	 * holt die Fehlermeldung aus einer Response, die nicht erfolgreich war
+	 * 
+	 * @param response
+	 * @return Server-Error: die Fehlermeldung
+	 */
 	public static ServerError parseError(retrofit2.Response<?> response) {
 		if (retrofit == null) {
 			return null;

@@ -9,6 +9,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import at.c02.bpj.exception.ClientException;
 import at.c02.bpj.server.bean.ServerError;
 
+/**
+ * <p>
+ * Wenn ein Controller eine Exception wirft, behandelt diese Klasse diese
+ * Exception.
+ * </p>
+ * <p>
+ * Wenn die Exception von der Klasse {@link ClientException} ist, dann liefert
+ * der Server dem Aufrufer eine Response mit dem Text-Inhalt der
+ * {@link ClientException}.
+ * </p>
+ * <p>
+ * Für alle anderen Exceptions liefert der Server 500 Internal Server Error
+ * </p>
+ */
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
 

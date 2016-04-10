@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.service.ArticleService;
-import at.c02.bpj.client.service.ServiceException;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,24 +12,30 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
+/**
+ * Model für den {@link ArticleView}
+ */
 public class ArticleViewModel implements ViewModel {
+	/**
+	 * Liste aller Artikel
+	 */
 	private ObservableList<Article> articles = FXCollections.observableArrayList();
 
 	private ArticleService articleService;
 
+	// ArticleService wird mittels Construktor-Injection gesetzt
 	public ArticleViewModel(ArticleService articleService) {
 		this.articleService = articleService;
 
 		loadArticles();
 	}
 
-	private void loadArticles() {
-		try {
-			List<Article> artciles = articleService.getArticles();
-			setArticles(artciles);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
+	/**
+	 * Lädt die Artikel
+	 */
+	public void loadArticles() {
+		List<Article> artciles = articleService.getArticles();
+		setArticles(artciles);
 	}
 
 	public ObservableList<Article> articlesProperty() {
@@ -45,6 +50,9 @@ public class ArticleViewModel implements ViewModel {
 		this.articles.setAll(articles);
 	}
 
+	/**
+	 * Erstellt einen neuen Artikel
+	 */
 	public void newArticle() {
 		ArticleEditDialog dialog = new ArticleEditDialog();
 		dialog.setArticle(new Article());
@@ -55,16 +63,30 @@ public class ArticleViewModel implements ViewModel {
 		}
 	}
 
+	/**
+	 * Bearbeitet den Artikel
+	 * 
+	 * @param article
+	 */
 	public void editArticle(Article article) {
 		ArticleEditDialog dialog = new ArticleEditDialog();
 		dialog.setArticle(article);
 		Optional<Article> newArticle = dialog.showAndWait();
 		if (newArticle.isPresent()) {
-			articles.set(articles.indexOf(article), articleService.saveArticle(newArticle.get()));
+			// Speichert den Artikel
+			Article savedArticle = articleService.saveArticle(newArticle.get());
+			// aktualisiert den Artikel in der Articles-Liste
+			articles.set(articles.indexOf(article), savedArticle);
 		}
 	}
 
+	/**
+	 * Löscht den Artikel
+	 * 
+	 * @param article
+	 */
 	public void deleteArticle(Article article) {
+		// Sicherheitsabfrage
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Artikel löschen");
 		alert.setHeaderText(null);
