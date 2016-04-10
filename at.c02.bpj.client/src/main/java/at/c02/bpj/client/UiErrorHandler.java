@@ -23,6 +23,7 @@ public class UiErrorHandler implements UncaughtExceptionHandler {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setContentText("Ein Fehler ist Aufgetreten!\n" + throwable.getMessage());
 			alert.setTitle("Fehler!");
+			alert.setHeaderText(null);
 			alert.showAndWait();
 		});
 	}
