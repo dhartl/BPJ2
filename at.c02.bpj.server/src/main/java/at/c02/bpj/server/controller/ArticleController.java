@@ -16,6 +16,7 @@ import at.c02.bpj.server.entity.Article;
 import at.c02.bpj.server.service.ArticleService;
 
 @Controller
+@RequestMapping("articles")
 public class ArticleController {
 
 	private ArticleService articleService;
@@ -25,20 +26,20 @@ public class ArticleController {
 		this.articleService = articleService;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "articles")
+	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<Article> getAllArticles() {
 		List<Article> articles = articleService.getAllArticles();
 		return articles;
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, path = "articles/{articleId}")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/{articleId}")
 	@ResponseStatus(value = HttpStatus.OK)
 	public void deleteArticle(@PathVariable("articleId") long articleId) {
 		articleService.deleteArticle(articleId);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "articles")
+	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
 	public Article createOrUpdateArticle(@RequestBody Article article) {
 		Article responseArticle = articleService.createOrUpdateArticle(article);

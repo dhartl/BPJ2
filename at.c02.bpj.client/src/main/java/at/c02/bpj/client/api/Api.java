@@ -6,6 +6,9 @@ import java.lang.annotation.Annotation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import at.c02.bpj.client.api.model.ServerError;
 import eu.lestard.easydi.EasyDI;
 import okhttp3.OkHttpClient;
@@ -27,11 +30,14 @@ public class Api {
 	public static void initialize(EasyDI context) {
 		OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 		addRequestLogging(httpClient);
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080/api/")
-				.addConverterFactory(JacksonConverterFactory.create()).client(httpClient.build()).build();
+				.addConverterFactory(JacksonConverterFactory.create(objectMapper)).client(httpClient.build()).build();
 
 		// Alle Api-Services müssen hier registriert werden
 		createAndRegisterService(ArticleApi.class, context);
+		createAndRegisterService(CategoryApi.class, context);
 	}
 
 	/**

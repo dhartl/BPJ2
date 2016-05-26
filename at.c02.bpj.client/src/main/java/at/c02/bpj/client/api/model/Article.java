@@ -14,6 +14,8 @@ public class Article {
 	private ObjectProperty<Long> articleId = new SimpleObjectProperty<>();
 	private StringProperty name = new SimpleStringProperty();
 	private DoubleProperty price = new SimpleDoubleProperty();
+	private StringProperty description = new SimpleStringProperty();
+	private ObjectProperty<Category> category = new SimpleObjectProperty<>();
 
 	// kein Argument-Konstruktor UNBEDINGT erforderlich
 	public Article() {
@@ -55,8 +57,33 @@ public class Article {
 		this.priceProperty().set(price);
 	}
 
+	public final StringProperty descriptionProperty() {
+		return this.description;
+	}
+
+	public final java.lang.String getDescription() {
+		return this.descriptionProperty().get();
+	}
+
+	public final void setDescription(final java.lang.String description) {
+		this.descriptionProperty().set(description);
+	}
+
+	public final ObjectProperty<Category> categoryProperty() {
+		return this.category;
+	}
+
+	public final at.c02.bpj.client.api.model.Category getCategory() {
+		return this.categoryProperty().get();
+	}
+
+	public final void setCategory(final at.c02.bpj.client.api.model.Category category) {
+		this.categoryProperty().set(category);
+	}
+
 	@Override
 	public String toString() {
 		return "Article [articleId=" + getArticleId() + "; name=" + getName() + "; price=;" + getPrice() + "]";
 	}
+
 }

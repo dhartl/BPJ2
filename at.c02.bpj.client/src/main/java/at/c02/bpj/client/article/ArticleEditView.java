@@ -5,14 +5,18 @@ import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.util.ResourceBundle;
 
+import at.c02.bpj.client.api.model.Category;
 import at.c02.bpj.client.converter.StringToNumberConverter;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.util.StringConverter;
 
 /**
  * Controller von ArticleEditView.fxml
@@ -28,6 +32,10 @@ public class ArticleEditView implements FxmlView<ArticleEditViewModel>, Initiali
 	private TextField tfName;
 	@FXML
 	private TextField tfPrice;
+	@FXML
+	private TextArea taDescription;
+	@FXML
+	private ComboBox<Category> cmbCategory;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -65,6 +73,22 @@ public class ArticleEditView implements FxmlView<ArticleEditViewModel>, Initiali
 				new StringToNumberConverter<Long>(idFormat));
 		tfName.textProperty().bindBidirectional(model.nameProperty());
 		Bindings.bindBidirectional(tfPrice.textProperty(), model.priceProperty(), priceFormat);
+
+		taDescription.textProperty().bindBidirectional(model.descriptionProperty());
+		Bindings.bindContent(cmbCategory.itemsProperty().get(), model.categoryListProperty());
+		cmbCategory.valueProperty().bindBidirectional(model.categoryProperty());
+		cmbCategory.setConverter(new StringConverter<Category>() {
+
+			@Override
+			public String toString(Category category) {
+				return category.getName();
+			}
+
+			@Override
+			public Category fromString(String string) {
+				return null;
+			}
+		});
 	}
 
 }

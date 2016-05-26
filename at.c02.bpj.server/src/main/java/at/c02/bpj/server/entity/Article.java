@@ -4,9 +4,12 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -14,15 +17,27 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "article")
-public class Article {
+public class Article extends ModLogEntity<Long> {
+	private static final long serialVersionUID = 7927325547287231032L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="articleid")
+	@Column(name = "articleId")
 	private Long articleId;
-	@Column(name="name", length = 255, nullable = false)
+	@Column(name = "name", length = 255, nullable = false)
 	private String name;
-	@Column(name="price", nullable = false)
+	@Column(name = "price", nullable = false)
 	private BigDecimal price;
+	@Column(name = "description")
+	private String description;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "categoryId")
+	private Category category;
+
+	@Override
+	public Long getId() {
+		return getArticleId();
+	}
 
 	public Long getArticleId() {
 		return articleId;
@@ -46,6 +61,22 @@ public class Article {
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 }
