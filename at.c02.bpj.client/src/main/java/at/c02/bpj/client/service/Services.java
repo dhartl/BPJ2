@@ -17,6 +17,9 @@ public class Services {
 	public static void initialize(EasyDI context) {
 		registerService(ArticleService.class, context);
 		registerService(CategoryService.class, context);
+		registerService(OfferService.class, context);
+		registerService(EmployeeService.class, context);
+		registerService(OfferPositionService.class, context);
 	}
 
 	private static <T> void registerService(Class<T> serviceClass, EasyDI context) {
