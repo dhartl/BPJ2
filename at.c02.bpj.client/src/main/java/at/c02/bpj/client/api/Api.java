@@ -38,6 +38,11 @@ public class Api {
 		// Alle Api-Services müssen hier registriert werden
 		createAndRegisterService(ArticleApi.class, context);
 		createAndRegisterService(CategoryApi.class, context);
+		createAndRegisterService(CustomerApi.class, context);
+		createAndRegisterService(EmployeeApi.class, context);
+		createAndRegisterService(OfferApi.class, context);
+		createAndRegisterService(OfferPositionApi.class, context);
+		
 	}
 
 	/**

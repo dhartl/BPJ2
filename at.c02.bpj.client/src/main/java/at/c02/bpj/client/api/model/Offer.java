@@ -13,8 +13,8 @@ public class Offer {
 	private ObjectProperty<Date> createdDt = new SimpleObjectProperty<>();
 	private ObjectProperty<Date> completedDt = new SimpleObjectProperty<>();
 	private StringProperty status = new SimpleStringProperty();
-	private ObjectProperty<Long> customerId = new SimpleObjectProperty<>();
-	private ObjectProperty<Long> employeeId = new SimpleObjectProperty<>();
+	private ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
+	private ObjectProperty<Employee> employee = new SimpleObjectProperty<>();
 	private ObjectProperty<Date> insDt = new SimpleObjectProperty<>();
 	private ObjectProperty<Long> insUserId = new SimpleObjectProperty<>();
 	private ObjectProperty<Date> updDt = new SimpleObjectProperty<>();
@@ -84,33 +84,33 @@ public class Offer {
 	}
 	
 
-	public final ObjectProperty<Long> customerIdProperty() {
-		return this.customerId;
+	public final ObjectProperty<Customer> customerProperty() {
+		return this.customer;
 	}
 	
 
-	public final Long getCustomerId() {
-		return this.customerIdProperty().get();
+	public final Customer getCustomer() {
+		return this.customerProperty().get();
 	}
 	
 
-	public final void setCustomerId(final Long customerId) {
-		this.customerIdProperty().set(customerId);
+	public final void setCustomer(final Customer customer) {
+		this.customerProperty().set(customer);
 	}
 	
 
-	public final ObjectProperty<Long> employeeIdProperty() {
-		return this.employeeId;
+	public final ObjectProperty<Employee> employeeProperty() {
+		return this.employee;
 	}
 	
 
-	public final Long getEmployeeId() {
-		return this.employeeIdProperty().get();
+	public final Employee getEmployee() {
+		return this.employeeProperty().get();
 	}
 	
 
-	public final void setEmployeeId(final Long employeeId) {
-		this.employeeIdProperty().set(employeeId);
+	public final void setEmployee(final Employee employee) {
+		this.employeeProperty().set(employee);
 	}
 	
 
@@ -176,7 +176,7 @@ public class Offer {
 	@Override
 	public String toString() {
 		return "Offer [offerId=" + offerId + ", createdDt=" + createdDt + ", completedDt=" + completedDt + ", status="
-				+ status + ", customerId=" + customerId + ", employeeId=" + employeeId + ", insDt=" + insDt
+				+ status + ", customer=" + customer + ", employee=" + employee + ", insDt=" + insDt
 				+ ", insUserId=" + insUserId + ", updDt=" + updDt + ", updUserId=" + updUserId + "]";
 	}
 	

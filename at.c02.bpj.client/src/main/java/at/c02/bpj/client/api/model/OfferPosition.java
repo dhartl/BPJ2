@@ -9,11 +9,11 @@ import javafx.beans.property.SimpleObjectProperty;
 public class OfferPosition {
 	
 	private ObjectProperty<Long> offerPositionId = new SimpleObjectProperty<>();
-	private ObjectProperty<Long> offerId = new SimpleObjectProperty<>();
+	private ObjectProperty<Offer> offer = new SimpleObjectProperty<>();
 	private ObjectProperty<Long> posNr = new SimpleObjectProperty<>();
 	private ObjectProperty<DecimalFormat> price = new SimpleObjectProperty<>();
 	private ObjectProperty<Long> amount = new SimpleObjectProperty<>();
-	private ObjectProperty<Long> articleId = new SimpleObjectProperty<>();
+	private ObjectProperty<Article> article = new SimpleObjectProperty<>();
 	
 	public OfferPosition() {
 		
@@ -34,18 +34,18 @@ public class OfferPosition {
 	}
 	
 
-	public final ObjectProperty<Long> offerIdProperty() {
-		return this.offerId;
+	public final ObjectProperty<Offer> offerProperty() {
+		return this.offer;
 	}
 	
 
-	public final Long getOfferId() {
-		return this.offerIdProperty().get();
+	public final Offer getOffer() {
+		return this.offerProperty().get();
 	}
 	
 
-	public final void setOfferId(final Long offerId) {
-		this.offerIdProperty().set(offerId);
+	public final void setOffer(final Offer offer) {
+		this.offerProperty().set(offer);
 	}
 	
 
@@ -94,24 +94,24 @@ public class OfferPosition {
 	}
 	
 
-	public final ObjectProperty<Long> articleIdProperty() {
-		return this.articleId;
+	public final ObjectProperty<Article> articleProperty() {
+		return this.article;
 	}
 	
 
-	public final Long getArticleId() {
-		return this.articleIdProperty().get();
+	public final Article getArticle() {
+		return this.articleProperty().get();
 	}
 	
 
-	public final void setArticleId(final Long articleId) {
-		this.articleIdProperty().set(articleId);
+	public final void setArticleId(final Article article) {
+		this.articleProperty().set(article);
 	}
 
 	@Override
 	public String toString() {
-		return "OfferPosition [offerPositionId=" + offerPositionId + ", offerId=" + offerId + ", posNr=" + posNr
-				+ ", price=" + price + ", amount=" + amount + ", articleId=" + articleId + "]";
+		return "OfferPosition [offerPositionId=" + offerPositionId + ", offerId=" + offer + ", posNr=" + posNr
+				+ ", price=" + price + ", amount=" + amount + ", articleId=" + article + "]";
 	}
 	
 
