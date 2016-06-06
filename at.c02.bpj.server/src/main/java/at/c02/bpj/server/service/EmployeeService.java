@@ -2,24 +2,25 @@ package at.c02.bpj.server.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import at.c02.bpj.server.entity.Employee;
 import at.c02.bpj.server.repository.EmployeeRepository;
 
+@Service
 public class EmployeeService {
-	
-private EmployeeRepository employeeRepository;
 
-	
-	public EmployeeRepository getEmployeeRepository() {
-	return employeeRepository;
-	}
+	private EmployeeRepository employeeRepository;
 
+	@Autowired
 	public void setEmployeeRepository(EmployeeRepository employeeRepository) {
-	this.employeeRepository = employeeRepository;
+		this.employeeRepository = employeeRepository;
 	}
 
 	/**
 	 * findet alle Mitarbeiter
+	 * 
 	 * @return Liste aller Mitarbeiter
 	 */
 	public List<Employee> getAllEmployees() {
@@ -27,7 +28,8 @@ private EmployeeRepository employeeRepository;
 	}
 
 	/**
-	 * löscht den Mitarbeiter mit id 
+	 * löscht den Mitarbeiter mit id
+	 * 
 	 * @param employeeid
 	 */
 	public void deleteEmployee(long employeeid) {
@@ -35,12 +37,12 @@ private EmployeeRepository employeeRepository;
 	}
 
 	/**
-	 * erstellt oder aktualisiert Mitarbeiter. 
+	 * erstellt oder aktualisiert Mitarbeiter.
+	 * 
 	 * @param employee
 	 */
 	public Employee createOrUpdateEmployee(Employee employee) {
 		return employeeRepository.save(employee);
 	}
-	
 
 }
