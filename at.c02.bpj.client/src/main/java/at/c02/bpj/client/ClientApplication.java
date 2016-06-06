@@ -36,13 +36,13 @@ public class ClientApplication extends Application {
 
 		stage.setTitle("BPJ2 Application");
 
-		/*
+		
 		ViewTuple<ArticleView, ArticleViewModel> viewTuple = FluentViewLoader.fxmlView(ArticleView.class).load();
-		 */
+		 
 		
-		ViewTuple<OfferManagementView, OfferManagementViewModel> viewTuple = 
+		/*ViewTuple<OfferManagementView, OfferManagementViewModel> viewTuple = 
 				FluentViewLoader.fxmlView(OfferManagementView.class).load();
-		
+		*/
 		Parent root = viewTuple.getView();
 		stage.setScene(new Scene(root));
 		stage.show();
