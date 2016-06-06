@@ -22,6 +22,8 @@ public class OfferPosition extends ModLogEntity<Long> {
 	@Column(name = "offerPositionId")
 	private Long offerPositionId;
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	
+// in EntitätenKlassen am Server wird der JOIN in der Datenbank deklariert.
 	@JoinColumn(name = "offerId")
 	private Offer offer;
 	@Column(name = "posNr", nullable = false)
