@@ -11,16 +11,13 @@ import at.c02.bpj.client.service.EmployeeService;
 import at.c02.bpj.client.service.OfferPositionService;
 import at.c02.bpj.client.service.OfferService;
 import de.saxsys.mvvmfx.ViewModel;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
 
 
 
@@ -44,24 +41,37 @@ public class OfferManagementViewModel implements ViewModel {
 	private OfferPositionService offerPositionService;
 	private CustomerService customerService;
 
-	//Objekt Properties für einzelne Klassen in Verwendung (comboBox)
+	// Objekt Properties für einzelne Klassen in Verwendung (comboBox)
 	private ObjectProperty<Employee> employee = new SimpleObjectProperty<>();
 	private ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
 	
 	// Service Klassen mittels Construktor-Injection setzen
-	//Alle Mitarbeiter aus Datenbank (vom Service Klasse Zugriff) der Observable List hinzufügen (ladet)
+	// Alle Mitarbeiter aus Datenbank (vom Service Klasse Zugriff) der
+	// Observable List hinzufügen (ladet)
 	public OfferManagementViewModel(EmployeeService employeeService, OfferService offerService, 
 			OfferPositionService offerPositionService, CustomerService customerService) {
-				employeesList.addAll(employeeService.getEmployee());
-				customersList.addAll(customerService.getCustomer());
-				offersList.addAll(offerService.getOffer());
-				offerPositionsList.addAll(offerPositionService.getOfferPosition());
+		this.employeeService = employeeService;
+		this.offerService = offerService;
+		this.offerPositionService = offerPositionService;
+		this.customerService = customerService;
+		Platform.runLater(() -> {
+			loadData();
+		});
+
 	}
 	
+	private void loadData() {
+		employeesList.addAll(employeeService.getEmployee());
+		customersList.addAll(customerService.getCustomer());
+		offersList.addAll(offerService.getOffer());
+		offerPositionsList.addAll(offerPositionService.getOfferPosition());
+	}
+
 	// Zugriff auf Controler Class
 	private OfferManagementView controler; 
 	
-	// für alle ObservableLists eine Methode mit RückgabeWert schaffen (um in Bindings im View anzugeben)
+	// für alle ObservableLists eine Methode mit RückgabeWert schaffen (um in
+	// Bindings im View anzugeben)
 	public ObservableList<Offer> offerPropertyList() {
 		return offersList;
 	}
@@ -126,7 +136,7 @@ public class OfferManagementViewModel implements ViewModel {
 	// Search: Offer-Number
 	 public EventHandler<ActionEvent> FindByOfferNumber() {
 	   
-		//auf Filteränderung achten
+		// auf Filteränderung achten
 	        controler.getOfferField().textProperty().addListener((observable, oldValue, newValue) -> {
 	            controler.filteredData.setPredicate(offer -> {
 	            	 // wenn nichts im Filter, dann alle angezeigt 
@@ -184,10 +194,11 @@ public class OfferManagementViewModel implements ViewModel {
 		int compCustomer = customer.getCompanyName().toString().compareTo(cust);
 			if (compCustomer == 0 ) {
 			
-				// hinzufügen der passenden Daten in filteredData
+			// hinzufügen der passenden Daten in filteredData
 				controler.filteredData.addAll(offersList);
 			}
-	// müsste hier eigentlich noch wenn buchstaben übereinstimmen auch schon finden - nicht nur gesamter String
+		// müsste hier eigentlich noch wenn buchstaben übereinstimmen auch schon
+		// finden - nicht nur gesamter String
 
 		return null;
 	}
@@ -202,10 +213,11 @@ public class OfferManagementViewModel implements ViewModel {
 		int compEmployee = employee.getLastname().toString().compareTo(emp);
 			if (compEmployee == 0 ) {
 			
-				// hinzufügen der passenden Daten in filteredData
+			// hinzufügen der passenden Daten in filteredData
 				controler.filteredData.addAll(offersList);
 			}
-	// müsste hier eigentlich noch wenn buchstaben übereinstimmen auch schon finden - nicht nur gesamter String
+		// müsste hier eigentlich noch wenn buchstaben übereinstimmen auch schon
+		// finden - nicht nur gesamter String
 
 		return null;
 	}

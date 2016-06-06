@@ -6,11 +6,6 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
-import javax.management.modelmbean.ModelMBean;
-import javax.sound.midi.ControllerEventListener;
-
-import org.controlsfx.control.table.TableFilter;
-
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
 import at.c02.bpj.client.api.model.Offer;
@@ -25,18 +20,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.util.Pair;
 import javafx.util.StringConverter;
 
 /**
@@ -51,7 +41,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	@FXML
 	private GridPane searchGridPane;
 	@FXML
-	private Label offerField;
+	private TextField offerField;
 	@FXML 
 	private DatePicker dateStartField;
 	@FXML 
@@ -64,7 +54,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	@FXML 
 	private Button searchButton; 
 	
-	//TableView: Spalten Tabellen für Angebotsmanagment
+	// TableView: Spalten Tabellen für Angebotsmanagment
 //---> Daniel: brauche Table View mit mehreren Datentypen von Offer, Employee, Customer ... ???
 	@FXML
 	public TableView<Offer> offerTable;
@@ -84,14 +74,14 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	private TableColumn<OfferPosition, DecimalFormat> priceColumn;
 //-- > wie/wo berechnen Menge * Preis ? 
 	
-	//FilteredList erstellen für alle SuchMethoden
-	public FilteredList<Offer> filteredData = new FilteredList<>(model.offerPropertyList(), p -> true);
+	// FilteredList erstellen für alle SuchMethoden
+	public FilteredList<Offer> filteredData;
 	
 
 	// initialize --> Tabellen Werte wo bereits bei Aufruf/Beginn UC Werte enthalten sein sollen
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { 
-		
+		filteredData = new FilteredList<>(model.offerPropertyList(), p -> true);
 		Bindings.bindContent(offerTable.itemsProperty().get(), model.offerPropertyList());
 		
 		//Alle involvierten Spalten binden -- Syntax: Bindings (List<> , ObservableList<>)
@@ -101,7 +91,8 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 	
-		//für ComboBox Employee (Binding zwischen ComboBox Feld und aus Modell mit der Employee Property 
+		// für ComboBox Employee (Binding zwischen ComboBox Feld und aus Modell
+		// mit der Employee Property
 		Bindings.bindContent(employeeField.itemsProperty().get(), model.employeesPropertyList());
 		employeeField.valueProperty().bindBidirectional(model.employeeProperty());	
 		
@@ -135,8 +126,8 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		
 	    }
 		 
-		//Getter für SuchfunktionenFelder UI
-		public final Label getOfferField() {
+	// Getter für SuchfunktionenFelder UI
+	public final TextField getOfferField() {
 			return offerField;
 		}
 		public final DatePicker getDateStartField() {
@@ -157,7 +148,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		//FilterTable aufrufen
 		public void onSearchButtonClick() {
 			
-			//wenn kein Suchfeld befüllt wurde (=alle leer)
+		// wenn kein Suchfeld befüllt wurde (=alle leer)
 			if (offerField.toString().isEmpty() && dateStartField.equals(null) && dateEndField.equals(null) &&
 					customerField.toString().isEmpty() && employeeField.toString().isEmpty()) {
 		
@@ -170,7 +161,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 			//wenn mindestens 1 Feld Input hat 
 			else {
 				
-				//fügt Ergebnisse aus Suchfeld ANr. der FilteredList hinzu 
+			// fügt Ergebnisse aus Suchfeld ANr. der FilteredList hinzu
 				searchButton.setOnAction(model.FindByOfferNumber());
 				searchButton.setOnAction(model.FindByDate());
 				searchButton.setOnAction(model.FindByCustomer());
@@ -181,11 +172,11 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 			        // SortedList binden, comparator zum TableView comparator.
 			        sortedData.comparatorProperty().bind(offerTable.comparatorProperty());
 			       
-			        // Sortierte und gefilterte Daten in Tabelle einfügen
+			// Sortierte und gefilterte Daten in Tabelle einfügen
 			        offerTable.setItems(sortedData); 
 			}
 			
-			// Filterliste löschen 
+		// Filterliste löschen
 			filteredData.clear();
 		}
 
