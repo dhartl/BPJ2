@@ -39,10 +39,10 @@ public class ClientApplication extends Application {
 		
 		ViewTuple<ArticleView, ArticleViewModel> viewTuple = FluentViewLoader.fxmlView(ArticleView.class).load();
 		 
+		/*
+		ViewTuple<OfferManagementView, OfferManagementViewModel> viewTuple = 
+				FluentViewLoader.fxmlView(OfferManagementView.class).load();*/
 		
-		/*ViewTuple<OfferManagementView, OfferManagementViewModel> viewTuple = 
-				FluentViewLoader.fxmlView(OfferManagementView.class).load();
-		*/
 		Parent root = viewTuple.getView();
 		stage.setScene(new Scene(root));
 		stage.show();

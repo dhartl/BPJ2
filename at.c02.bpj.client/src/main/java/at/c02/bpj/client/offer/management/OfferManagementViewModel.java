@@ -23,7 +23,7 @@ import javafx.event.EventHandler;
 
 
 /**
- * Model für den {@link OfferManagementView}
+ * Model (Logik) für den {@link OfferManagementView}
  */
 public class OfferManagementViewModel implements ViewModel {
 	
@@ -96,40 +96,6 @@ public class OfferManagementViewModel implements ViewModel {
 	
 	public ObjectProperty<Customer> customerProperty() {
 		return customer;
-	}
-
-	
-	//Getter/Setter von ServiceKlassen
-	public OfferService getOfferService() {
-		return offerService;
-	}
-
-	public void setOfferService(OfferService offerService) {
-		this.offerService = offerService;
-	}
-
-	public EmployeeService getEmployeeService() {
-		return employeeService;
-	}
-
-	public void setEmployeeService(EmployeeService employeeService) {
-		this.employeeService = employeeService;
-	}
-
-	public OfferPositionService getOfferPositionService() {
-		return offerPositionService;
-	}
-
-	public void setOfferPositionService(OfferPositionService offerPositionService) {
-		this.offerPositionService = offerPositionService;
-	}
-
-	public CustomerService getCustomerService() {
-		return customerService;
-	}
-
-	public void setCustomerService(CustomerService customerService) {
-		this.customerService = customerService;
 	}
 
 	

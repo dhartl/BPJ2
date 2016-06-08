@@ -30,7 +30,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.StringConverter;
 
 /**
- * Controller für OfferManagement.fxml.
+ * Controller (Darstellung) für OfferManagement.fxml.
  */
 public class OfferManagementView implements FxmlView<OfferManagementViewModel>, Initializable {
 
@@ -53,6 +53,8 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 
 	@FXML 
 	private Button searchButton; 
+	@FXML 
+	private Button exportButton;
 	
 	// TableView: Spalten Tabellen für Angebotsmanagment
 //---> Daniel: brauche Table View mit mehreren Datentypen von Offer, Employee, Customer ... ???
