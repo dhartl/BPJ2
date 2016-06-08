@@ -17,7 +17,7 @@ public interface OfferPositionApi {
      * holt alle OfferPositionen vom Server
      */
     @GET("offerPosition")
-    Call<List<Article>> getOfferPosition();
+    Call<List<OfferPosition>> getOfferPosition();
 
     /**
      * löscht die OfferPosition zu der OfferPositionID
@@ -25,7 +25,7 @@ public interface OfferPositionApi {
      * @param offerPositionID
      */
     @DELETE("offerPositions/{offerPositionID}")
-    Call<Void> deleteOfferPosition(@Path("articleId") long offerPositionID);
+    Call<Void> deleteOfferPosition(@Path("offerPositionID") long offerPositionID);
 
     /**
      * Speichert einen neue oder aktualisierte OfferPosition
