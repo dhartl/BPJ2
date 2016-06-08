@@ -2,10 +2,13 @@ package at.c02.bpj.server.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import at.c02.bpj.server.entity.Offer;
 import at.c02.bpj.server.repository.OfferRepository;
 
-
+@Service
 public class OfferService {
 
 	
@@ -16,6 +19,7 @@ private OfferRepository offerRepository;
 	return offerRepository;
 	}
 
+	@Autowired
 	public void setOfferRepository(OfferRepository offerRepository) {
 	this.offerRepository = offerRepository;
 	}

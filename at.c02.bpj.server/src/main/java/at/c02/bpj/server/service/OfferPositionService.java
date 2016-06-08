@@ -2,10 +2,13 @@ package at.c02.bpj.server.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import at.c02.bpj.server.entity.OfferPosition;
 import at.c02.bpj.server.repository.OfferPositionRepository;
 
-
+@Service
 public class OfferPositionService {
 	
 private OfferPositionRepository offerPositionRepository;
@@ -15,6 +18,7 @@ private OfferPositionRepository offerPositionRepository;
 	return offerPositionRepository;
 	}
 
+	@Autowired
 	public void setOfferPositionRepository(OfferPositionRepository offerPositionRepository) {
 	this.offerPositionRepository = offerPositionRepository;
 	}

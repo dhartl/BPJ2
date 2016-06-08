@@ -27,7 +27,8 @@ public class EmployeeController {
 	public void setEmployeeService(EmployeeService employeeService) {
 		this.employeeService = employeeService;
 	}
-
+	
+// gibt einen Basispfad für alle Controllermethoden an.
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<Employee> getAllEmployees() {

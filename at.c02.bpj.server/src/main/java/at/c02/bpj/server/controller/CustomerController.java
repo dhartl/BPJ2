@@ -2,7 +2,9 @@ package at.c02.bpj.server.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,19 +15,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import at.c02.bpj.server.entity.Customer;
 import at.c02.bpj.server.service.CustomerService;
 
+
+@Controller // sehr wichtig - Sagt Spring, dass die Klasse erzeugt werden muss
+@RequestMapping(path = "customer")
 public class CustomerController {
 	
 	private CustomerService customerService;
 
 	
-	public CustomerService getCustomerService() {
-		return customerService;
-	}
-
+	@Autowired
+	// sagt Spring, dass diese Property automatisch beim Initialisieren des
+	// Controllers befüllt werden soll
 	public void setCustomerService(CustomerService customerService) {
 		this.customerService = customerService;
 	}
-
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
@@ -34,9 +37,9 @@ public class CustomerController {
 		return customers;
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, path = "/{employeeid}")
+	@RequestMapping(method = RequestMethod.DELETE, path = "/{customerid}")
 	@ResponseStatus(value = HttpStatus.OK)
-	public void deleteCustomer(@PathVariable("cusetomerid") long customerid) {
+	public void deleteCustomer(@PathVariable("customerid") long customerid) {
 		customerService.deleteCustomer(customerid);
 	}
 
@@ -47,5 +50,5 @@ public class CustomerController {
 		return responseCustomer;
 	}
 
-
+	
 }
