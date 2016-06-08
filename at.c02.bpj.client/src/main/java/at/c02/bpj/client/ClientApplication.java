@@ -1,6 +1,9 @@
 package at.c02.bpj.client;
 
+import java.sql.Date;
+
 import at.c02.bpj.client.api.Api;
+import at.c02.bpj.client.api.model.Offer;
 import at.c02.bpj.client.article.ArticleView;
 import at.c02.bpj.client.article.ArticleViewModel;
 import at.c02.bpj.client.offer.management.OfferManagementView;
@@ -47,6 +50,7 @@ public class ClientApplication extends Application {
 		stage.setScene(new Scene(root));
 		stage.show();
 		
+	
 	}
 
 	/**

@@ -2,7 +2,17 @@ package at.c02.bpj.client.offer.management;
 
 
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
+import com.sun.glass.events.WindowEvent;
 
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
@@ -18,8 +28,14 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 
 
 
@@ -36,18 +52,23 @@ public class OfferManagementViewModel implements ViewModel {
 	private ObservableList<Customer> customersList = FXCollections.observableArrayList();
 	private ObservableList<OfferPosition> offerPositionsList = FXCollections.observableArrayList();
 
+	
+	// FilteredList erstellen für alle SuchMethoden (=gefilterte Tabelle nach Suche)
+	private FilteredList<Offer> filteredData;
+		
+
 
 	// Objekt Properties für einzelne Klassen in Verwendung (comboBox)
 	private ObjectProperty<Employee> employee = new SimpleObjectProperty<>();
 	private ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
 	
 	// Service Klassen mittels Construktor-Injection setzen
-	public OfferManagementViewModel(EmployeeService employeeService, CustomerService customerService,
-			OfferService offerService, OfferPositionService offerPositionService) {
+	public OfferManagementViewModel(EmployeeService employeeService /*, CustomerService customerService,
+			OfferService offerService, OfferPositionService offerPositionService*/) {
 		employeesList.addAll(employeeService.getEmployee());
-		customersList.addAll(customerService.getCustomer());
+		/*customersList.addAll(customerService.getCustomer());
 		offersList.addAll(offerService.getOffer());
-		offerPositionsList.addAll(offerPositionService.getOfferPosition());
+		offerPositionsList.addAll(offerPositionService.getOfferPosition());*/
 	}
 	
 	
@@ -67,65 +88,24 @@ public class OfferManagementViewModel implements ViewModel {
 	}
 	
 
-
-
-	
-
-	/*
-	public OfferManagementViewModel(EmployeeService employeeService,  CustomerService customerService) {
-		this.employeeService = employeeService;
-		this.offerService = offerService;
-		this.offerPositionService = offerPositionService;
-		this.customerService = customerService;
-		Platform.runLater(() -> {
-			loadData();
-		});
-
+	public ObservableList<Offer> offerListProperty() {
+			return offersList;
 	}
 	
-	private void loadData() {
-		employeesList.addAll(employeeService.getEmployee());
-		customersList.addAll(customerService.getCustomer());
-		offersList.addAll(offerService.getOffer());
-		offerPositionsList.addAll(offerPositionService.getOfferPosition());
-	}
-*/
-	
-	
-
-
-	// Zugriff auf Controler Class
-	private OfferManagementView controler; 
-	
-	// für alle ObservableLists eine Methode mit RückgabeWert schaffen (um in
-	// Bindings im View anzugeben)
-	public ObservableList<Offer> offerPropertyList() {
-		return offersList;
-	}
-	
-	/*public ObservableList<Employee> employeesPropertyList() {
-		return employeesList;
-	}
-	
-	public ObservableList<Customer> customerPropertyList() {
-		return customersList;
-	}
-	
-	public ObservableList<OfferPosition> offerPostionPropertyList() {
+	public ObservableList<OfferPosition> offerPositionListProperty() {
 		return offerPositionsList;
-	}*/
-	
-	/*
-	// ObjectProperties Getter (für Bindings)
-	public ObjectProperty<Employee> employeeProperty() {
-		return employee;
 	}
 	
 	
-	public ObjectProperty<Customer> customerProperty() {
-		return customer;
-	}*/
+	// Getter/Setter Filtered List
+	public FilteredList<Offer> getFilteredData() {
+		return filteredData;
+	}
+	public void setFilteredData(FilteredList<Offer> filteredData) {
+		this.filteredData = filteredData;
+	}
 
+	
 	
 	// Search: Offer-Number
 	 public EventHandler<ActionEvent> FindByOfferNumber() {
@@ -159,20 +139,25 @@ public class OfferManagementViewModel implements ViewModel {
 	 
 	 // Search: DatePicker Period
 	public EventHandler<ActionEvent> FindByDate() {
-/*		
-		//Datum mit Strings vergleichen
-		String startDate = controler.getDateStartField().toString();
-		String endDate = controler.getDateEndField().toString();
+	
+/* --> Problem: localDate convert in Date format! 
+ 
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
 		
+		//Datum mit Strings vergleichen
+		LocalDate startDate = controler.getDateStartField().getValue();
+		LocalDate endDate = controler.getDateEndField().getValue();
+	
 		Offer date = new Offer();
-		int compareDateFrom = date.getCreatedDt().toString().compareTo(startDate);
+		
+		int compareDateFrom = date.getCreatedDt().compareTo(formatter.format(startDate));
 		
 		if (compareDateFrom >= 0) {
-			int compareDateTo = date.completedDtProperty().toString().compareTo(endDate);
-			if (compareDateTo <= 0 ) {
-				
-				// hinzufügen der passenden Daten in filteredData
-				controler.filteredData.addAll(offersList);
+			
+			int compareDateTo = date.completedDtProperty().compareTo(endDate);
+				if (compareDateTo <= 0 ) {
+					// hinzufügen der passenden Daten in filteredData
+					filteredData.addAll(offersList);	
 			}
 		}	
 */
@@ -201,24 +186,71 @@ public class OfferManagementViewModel implements ViewModel {
 
 	// Search: Employee
 	public EventHandler<ActionEvent> FindByEmployee() {
-/*		
-		String emp = controler.getCustomerField().toString();
+	
+		// wenn Bedingung true = match 
+		filteredData = new FilteredList<>(offersList, p -> true);
+		
+		
+		 OfferManagementView omv = new OfferManagementView();
+		 omv.getOfferField().textProperty().addListener((observable, oldValue, newValue) -> {
+	            filteredData.setPredicate(offer -> {
+	                // if filter text leer = alle anzeigen
+	                if (newValue == null || newValue.isEmpty()) {
+	                    return true;
+	                }
+	                String lowerCaseFilter = newValue.toLowerCase();
+
+	                if (offer.getEmployee().getLastname().toLowerCase().contains(lowerCaseFilter)) {
+	                    return true; // Filter matched MA-Nachname.
+	                }
+	                return false; // Kein match.
+	            });
+	        });
+
+	        SortedList<Offer> sortedData = new SortedList<>(filteredData);
+
+	        // Binden der SortedList zur OfferTable
+	        sortedData.comparatorProperty().bind(omv.offerTable.comparatorProperty());
+
+	        // Daten in Tabelle laden 
+	        omv.offerTable.setItems(sortedData);
+	        
+	        return null;
+	    }
+
+
+	
+/*Variante
+		
+		String emp = controler.getCustomerField().getValue().toString();
 		
 		Employee employee = new Employee();
 	
+	for (Offer list : offersList) {
 		int compEmployee = employee.getLastname().toString().compareTo(emp);
 			if (compEmployee == 0 ) {
-			
+			filteredData.add(offersList);
 			// hinzufügen der passenden Daten in filteredData
-				controler.filteredData.addAll(offersList);
+				filteredData.addAll(offersList);
 			}
 		// müsste hier eigentlich noch wenn buchstaben übereinstimmen auch schon
 		// finden - nicht nur gesamter String
-*/
+
 		return null;
 
 	}
+*/
+	
+	public EventHandler<ActionEvent> quitOfferManagement() {
+		Platform.exit();
+		return null;
+	}
+		
+		
+	
 	
 }
+
+
 
 

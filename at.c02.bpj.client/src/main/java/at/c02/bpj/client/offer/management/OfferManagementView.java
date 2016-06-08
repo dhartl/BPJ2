@@ -22,6 +22,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -57,7 +59,6 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	private Button exportButton;
 	
 	// TableView: Spalten Tabellen für Angebotsmanagment
-//---> Daniel: brauche Table View mit mehreren Datentypen von Offer, Employee, Customer ... ???
 	@FXML
 	public TableView<Offer> offerTable;
 	@FXML
@@ -78,16 +79,22 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	private TableColumn<OfferPosition, DecimalFormat> priceColumn;
 //-- > wie/wo berechnen Menge * Preis ? 
 	
-	// FilteredList erstellen für alle SuchMethoden
-	public FilteredList<Offer> filteredData;
 	
-
-	// initialize --> Tabellen Werte wo bereits bei Aufruf/Beginn UC Werte enthalten sein sollen
+	@FXML
+	private MenuItem closeMenuItem;
+	
+	
+	// Initialize --> Tabellen Werte wo bereits bei Aufruf/Beginn UC Werte enthalten sein sollen
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { 
-		//filteredData = new FilteredList<>(model.offerPropertyList(), p -> true);
 		
-		Bindings.bindContent(offerTable.itemsProperty().get(), model.offerPropertyList());
+		
+		Bindings.bindContent(offerTable.itemsProperty().get(), model.offerListProperty());
+		//offersPositionsList? binding??? 
+		
+//---> Daniel Filtered Liste an OfferTable binden
+		//Bindings.bindContent(model.getFilteredData(), offerTable.itemsProperty().get());
+		
 		
 		//Alle involvierten Spalten binden -- Syntax: Bindings (List<> , ObservableList<>)
 		offerNumberColumn.setCellValueFactory(new PropertyValueFactory<>("offerId"));
@@ -132,58 +139,67 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	    }
 		 
 	// Getter für SuchfunktionenFelder UI
-	public final TextField getOfferField() {
+	public TextField getOfferField() {
 			return offerField;
 		}
-		public final DatePicker getDateStartField() {
+	public DatePicker getDateStartField() {
 			return dateStartField;
-		}
-		public final DatePicker getDateEndField() {
+	}
+	public DatePicker getDateEndField() {
 			return dateEndField;
-		}
-		public final ComboBox<Customer> getCustomerField() {
+	}
+	public ComboBox<Customer> getCustomerField() {
 			return customerField;
-		}
-		public final ComboBox<Employee> getEmployeeField() {
+	}
+	public ComboBox<Employee> getEmployeeField() {
 			return employeeField;
-		}
+	}
 
-
+		
 		// wenn Suchen klickt, soll 1. ANR: logik aufrufen, dann Zeitraum etc...(immer nur mit filteredList danach weiter) 
 		//FilterTable aufrufen
-		public void onSearchButtonClick() {
-	/*
-		// wenn kein Suchfeld befüllt wurde (=alle leer)
-			if (offerField.toString().isEmpty() && dateStartField.equals(null) && dateEndField.equals(null) &&
-					customerField.toString().isEmpty() && employeeField.toString().isEmpty()) {
+	public void onSearchButtonClick() {
 		
-				 Alert noInputAlert= new Alert(AlertType.INFORMATION);
-			        noInputAlert.setHeaderText("Keine Eingabe");
+		// wenn kein Suchfeld befüllt wurde (=alle leer)
+			if (offerField.getText().trim().equals("") && dateStartField.getValue() == null && 
+					dateEndField.getValue() == null && customerField.getValue() == null &&
+						employeeField.getValue() == null) {
+		
+				 Alert noInputAlert= new Alert(AlertType.WARNING);
+			        noInputAlert.setHeaderText("Keine Eingabe vorhanden");
 			        noInputAlert.setContentText("Bitte mindestens ein Suchkriterium eingeben");
-			        noInputAlert.showAndWait();	
+			        noInputAlert.showAndWait();
+			   
 			}
 	
 			//wenn mindestens 1 Feld Input hat 
 			else {
-				
-			// fügt Ergebnisse aus Suchfeld ANr. der FilteredList hinzu
-				searchButton.setOnAction(model.FindByOfferNumber());
-				searchButton.setOnAction(model.FindByDate());
-				searchButton.setOnAction(model.FindByCustomer());
 				searchButton.setOnAction(model.FindByEmployee());
+	/*			searchButton.setOnAction(model.FindByDate());
+			
+				searchButton.setOnAction(model.FindByOfferNumber());
+				searchButton.setOnAction(model.FindByCustomer());
 				
-				SortedList<Offer> sortedData = new SortedList<>(filteredData);
+				
+				SortedList<Offer> sortedData = new SortedList<>(model.getFilteredData());
 			     
 			        // SortedList binden, comparator zum TableView comparator.
 			        sortedData.comparatorProperty().bind(offerTable.comparatorProperty());
 			       
 			// Sortierte und gefilterte Daten in Tabelle einfügen
 			        offerTable.setItems(sortedData); 
+	*/
 			}
 			
 		// Filterliste löschen
-			filteredData.clear();
-*/
+			model.getFilteredData().clear();
+
 		}
+	
+	// Beende 
+	public void closeOfferManagement() {
+		closeMenuItem.setOnAction(model.quitOfferManagement());
+	}
+
 
 	}

@@ -44,8 +44,10 @@
                           <MenuItem mnemonicParsing="false" text="Artikel erstellen" />
                         </items>
                       </Menu>
-                      <Menu mnemonicParsing="false" text="Beenden">
-            
+                      <Menu  mnemonicParsing="false" text="Beenden" >
+                      <items>
+                          <MenuItem fx:id="closeMenu"  onAction="#closeOfferManagement" mnemonicParsing="false" text="Ansicht beenden" />
+                        </items>
                 </Menu>
                     </menus>
                      <BorderPane.margin>
