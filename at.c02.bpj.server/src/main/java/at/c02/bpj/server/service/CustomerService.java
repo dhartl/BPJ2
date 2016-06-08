@@ -10,7 +10,7 @@ import at.c02.bpj.server.repository.CustomerRepository;
 
 @Service
 public class CustomerService {
-	
+
 	private CustomerRepository customerRepository;
 
 	@Autowired
@@ -20,6 +20,7 @@ public class CustomerService {
 
 	/**
 	 * findet alle Kunden
+	 * 
 	 * @return Liste aller Kunden
 	 */
 	public List<Customer> getAllCustomers() {
@@ -27,19 +28,21 @@ public class CustomerService {
 	}
 
 	/**
-	 * löscht den Kunden mit id 
-	 * @param customerId
+	 * löscht den Kunden mit id
+	 * 
+	 * @param customerid
 	 */
 	public void deleteCustomer(long customerid) {
 		customerRepository.delete(customerid);
 	}
 
 	/**
-	 * erstellt oder aktualisiert Kunden. 
+	 * erstellt oder aktualisiert Kunden.
+	 * 
 	 * @param customer
 	 */
 	public Customer createOrUpdateCustomer(Customer customer) {
 		return customerRepository.save(customer);
 	}
-	
+
 }

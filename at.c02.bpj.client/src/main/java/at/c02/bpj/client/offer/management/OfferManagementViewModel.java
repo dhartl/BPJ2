@@ -2,6 +2,8 @@ package at.c02.bpj.client.offer.management;
 
 
 
+import java.util.List;
+
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
 import at.c02.bpj.client.api.model.Offer;
@@ -35,21 +37,42 @@ public class OfferManagementViewModel implements ViewModel {
 	private ObservableList<OfferPosition> offerPositionsList = FXCollections.observableArrayList();
 
 
-	// Verbindung zu Service-Klassen herstellen
-	private OfferService offerService;
-	private EmployeeService employeeService;
-	private OfferPositionService offerPositionService;
-	private CustomerService customerService;
-
 	// Objekt Properties für einzelne Klassen in Verwendung (comboBox)
 	private ObjectProperty<Employee> employee = new SimpleObjectProperty<>();
 	private ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
 	
 	// Service Klassen mittels Construktor-Injection setzen
-	// Alle Mitarbeiter aus Datenbank (vom Service Klasse Zugriff) der
-	// Observable List hinzufügen (ladet)
-	public OfferManagementViewModel(EmployeeService employeeService, OfferService offerService, 
-			OfferPositionService offerPositionService, CustomerService customerService) {
+	public OfferManagementViewModel(EmployeeService employeeService, CustomerService customerService,
+			OfferService offerService, OfferPositionService offerPositionService) {
+		employeesList.addAll(employeeService.getEmployee());
+		customersList.addAll(customerService.getCustomer());
+		offersList.addAll(offerService.getOffer());
+		offerPositionsList.addAll(offerPositionService.getOfferPosition());
+	}
+	
+	
+	//Propertyies für Bindings (1x Object; 1x ObservableList)
+	public ObjectProperty<Employee> employeeProperty() {
+		return employee;
+	}
+	public ObservableList<Employee> employeeListProperty() {
+		return employeesList;
+	}
+	
+	public ObjectProperty<Customer> customerProperty() {
+		return customer;
+	}
+	public ObservableList<Customer> customerListProperty() {
+		return customersList;
+	}
+	
+
+
+
+	
+
+	/*
+	public OfferManagementViewModel(EmployeeService employeeService,  CustomerService customerService) {
 		this.employeeService = employeeService;
 		this.offerService = offerService;
 		this.offerPositionService = offerPositionService;
@@ -66,6 +89,10 @@ public class OfferManagementViewModel implements ViewModel {
 		offersList.addAll(offerService.getOffer());
 		offerPositionsList.addAll(offerPositionService.getOfferPosition());
 	}
+*/
+	
+	
+
 
 	// Zugriff auf Controler Class
 	private OfferManagementView controler; 
@@ -76,7 +103,7 @@ public class OfferManagementViewModel implements ViewModel {
 		return offersList;
 	}
 	
-	public ObservableList<Employee> employeesPropertyList() {
+	/*public ObservableList<Employee> employeesPropertyList() {
 		return employeesList;
 	}
 	
@@ -86,22 +113,23 @@ public class OfferManagementViewModel implements ViewModel {
 	
 	public ObservableList<OfferPosition> offerPostionPropertyList() {
 		return offerPositionsList;
-	}
+	}*/
 	
-	
+	/*
 	// ObjectProperties Getter (für Bindings)
 	public ObjectProperty<Employee> employeeProperty() {
 		return employee;
 	}
 	
+	
 	public ObjectProperty<Customer> customerProperty() {
 		return customer;
-	}
+	}*/
 
 	
 	// Search: Offer-Number
 	 public EventHandler<ActionEvent> FindByOfferNumber() {
-	   
+/*
 		// auf Filteränderung achten
 	        controler.getOfferField().textProperty().addListener((observable, oldValue, newValue) -> {
 	            controler.filteredData.setPredicate(offer -> {
@@ -124,14 +152,14 @@ public class OfferManagementViewModel implements ViewModel {
 	  
 	        });
 	        
-	     
+*/  
 			return null;
 	}
 
 	 
 	 // Search: DatePicker Period
 	public EventHandler<ActionEvent> FindByDate() {
-		
+/*		
 		//Datum mit Strings vergleichen
 		String startDate = controler.getDateStartField().toString();
 		String endDate = controler.getDateEndField().toString();
@@ -147,12 +175,13 @@ public class OfferManagementViewModel implements ViewModel {
 				controler.filteredData.addAll(offersList);
 			}
 		}	
+*/
 		return null;
 	}
 
 	//Search: Customer 
 	public EventHandler<ActionEvent> FindByCustomer() {
-		
+/*		
 		String cust = controler.getCustomerField().toString();
 		
 		Customer customer = new Customer();
@@ -165,13 +194,14 @@ public class OfferManagementViewModel implements ViewModel {
 			}
 		// müsste hier eigentlich noch wenn buchstaben übereinstimmen auch schon
 		// finden - nicht nur gesamter String
-
+*/
 		return null;
+
 	}
 
 	// Search: Employee
 	public EventHandler<ActionEvent> FindByEmployee() {
-		
+/*		
 		String emp = controler.getCustomerField().toString();
 		
 		Employee employee = new Employee();
@@ -184,8 +214,9 @@ public class OfferManagementViewModel implements ViewModel {
 			}
 		// müsste hier eigentlich noch wenn buchstaben übereinstimmen auch schon
 		// finden - nicht nur gesamter String
-
+*/
 		return null;
+
 	}
 	
 }

@@ -65,11 +65,13 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	@FXML
 	private TableColumn<Offer, Date> createdDateColumn;
 	@FXML
-	private TableColumn<Offer, Double> completedDateColumn;
+	private TableColumn<Offer, Date> completedDateColumn;
+	
+//--> Typ STring Foreign Keys ???? 
 	@FXML
-	private TableColumn<Employee, String> employeeColumn;
+	private TableColumn<Offer, Employee> employeeColumn;
 	@FXML
-	private TableColumn<Customer, String> customerColumn;
+	private TableColumn<Offer, Customer> customerColumn;
 	@FXML
 	private TableColumn<Offer, String> statusColumn;
 	@FXML
@@ -83,19 +85,20 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	// initialize --> Tabellen Werte wo bereits bei Aufruf/Beginn UC Werte enthalten sein sollen
 	@Override
 	public void initialize(URL location, ResourceBundle resources) { 
-		filteredData = new FilteredList<>(model.offerPropertyList(), p -> true);
+		//filteredData = new FilteredList<>(model.offerPropertyList(), p -> true);
+		
 		Bindings.bindContent(offerTable.itemsProperty().get(), model.offerPropertyList());
 		
 		//Alle involvierten Spalten binden -- Syntax: Bindings (List<> , ObservableList<>)
 		offerNumberColumn.setCellValueFactory(new PropertyValueFactory<>("offerId"));
-		createdDateColumn.setCellValueFactory(new PropertyValueFactory<>("createdDate"));
-		completedDateColumn.setCellValueFactory(new PropertyValueFactory<>("completedDate"));
+		createdDateColumn.setCellValueFactory(new PropertyValueFactory<>("createdDt"));
+		completedDateColumn.setCellValueFactory(new PropertyValueFactory<>("completedDt"));
 		statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 	
 		// für ComboBox Employee (Binding zwischen ComboBox Feld und aus Modell
 		// mit der Employee Property
-		Bindings.bindContent(employeeField.itemsProperty().get(), model.employeesPropertyList());
+		Bindings.bindContent(employeeField.itemsProperty().get(), model.employeeListProperty());
 		employeeField.valueProperty().bindBidirectional(model.employeeProperty());	
 		
 		employeeField.setConverter(new StringConverter<Employee>() {
@@ -111,7 +114,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		});
 		
 		//Binding ComboBox Customer
-		Bindings.bindContent(customerField.itemsProperty().get(), model.customerPropertyList());
+		Bindings.bindContent(customerField.itemsProperty().get(), model.customerListProperty());
 		customerField.valueProperty().bindBidirectional(model.customerProperty());	
 		
 		customerField.setConverter(new StringConverter<Customer>() {
@@ -125,7 +128,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 				return null;
 			}
 		});
-		
+	
 	    }
 		 
 	// Getter für SuchfunktionenFelder UI
@@ -149,7 +152,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		// wenn Suchen klickt, soll 1. ANR: logik aufrufen, dann Zeitraum etc...(immer nur mit filteredList danach weiter) 
 		//FilterTable aufrufen
 		public void onSearchButtonClick() {
-			
+	/*
 		// wenn kein Suchfeld befüllt wurde (=alle leer)
 			if (offerField.toString().isEmpty() && dateStartField.equals(null) && dateEndField.equals(null) &&
 					customerField.toString().isEmpty() && employeeField.toString().isEmpty()) {
@@ -180,6 +183,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 			
 		// Filterliste löschen
 			filteredData.clear();
+*/
 		}
 
 	}
