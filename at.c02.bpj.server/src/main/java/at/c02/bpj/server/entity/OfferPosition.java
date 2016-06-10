@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "offerPosition")
 public class OfferPosition extends ModLogEntity<Long> {
@@ -21,9 +23,9 @@ public class OfferPosition extends ModLogEntity<Long> {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "offerPositionId")
 	private Long offerPositionId;
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	
-// in EntitätenKlassen am Server wird der JOIN in der Datenbank deklariert.
+	// in EntitätenKlassen am Server wird der JOIN in der Datenbank deklariert.
 	@JoinColumn(name = "offerId")
 	private Offer offer;
 	@Column(name = "posNr", nullable = false)
