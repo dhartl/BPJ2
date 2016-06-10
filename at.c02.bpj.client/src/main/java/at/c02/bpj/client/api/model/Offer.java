@@ -1,11 +1,14 @@
 package at.c02.bpj.client.api.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Offer {
 
@@ -19,6 +22,7 @@ public class Offer {
 	private ObjectProperty<Long> insUserId = new SimpleObjectProperty<>();
 	private ObjectProperty<Date> updDt = new SimpleObjectProperty<>();
 	private ObjectProperty<Long> updUserId = new SimpleObjectProperty<>();
+	private ObservableList<OfferPosition> offerPositions = FXCollections.observableArrayList();
 	
 	public Offer() {
 		
@@ -171,6 +175,18 @@ public class Offer {
 
 	public final void setUpdUserId(final Long updUserId) {
 		this.updUserIdProperty().set(updUserId);
+	}
+
+	public final ObservableList<OfferPosition> offerPositionsProperty() {
+		return this.offerPositions;
+	}
+
+	public final void setOfferPositions(List<OfferPosition> offerPositions) {
+		this.offerPositions.setAll(offerPositions);
+	}
+
+	public List<OfferPosition> getOfferPositions() {
+		return offerPositions;
 	}
 
 	@Override
