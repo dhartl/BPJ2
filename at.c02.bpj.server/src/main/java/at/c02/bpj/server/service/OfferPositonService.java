@@ -17,7 +17,7 @@ public class OfferPositonService {
 
     // Spring managed diese Klasse. @Autowired-Felder werden automatisch befüllt
     @Autowired
-    public void setArticleRepository(OfferPositionRepository offerPositionRepository) {
+    public void setOfferPositionRepository(OfferPositionRepository offerPositionRepository) {
 	this.offerPositionRepository = offerPositionRepository;
     }
 

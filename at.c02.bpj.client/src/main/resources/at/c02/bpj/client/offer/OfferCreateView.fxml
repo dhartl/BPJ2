@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.offer.OfferCreateView">
+	<center>
+	<BorderPane>
+	<left>
+		<TableView fx:id="tblArticles" prefHeight="200.0">
+			<columns>
+				<TableColumn fx:id="idColumn" prefWidth="75.0" text="Id" />
+				<TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
+				<TableColumn fx:id="priceColumn" prefWidth="75.0" text="Preis" />
+			</columns>
+		</TableView>
+		</left>
+         <center>
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+            		
+            		<TableView fx:id="tblOfferPositions" prefHeight="200.0">
+            			<columns>
+            				<TableColumn fx:id="idOPColumn" prefWidth="75.0" text="Id" />
+            				<TableColumn fx:id="nameOPColumn" prefWidth="75.0" text="Name" />
+            				<TableColumn fx:id="priceOPColumn" prefWidth="75.0" text="Preis" />
+            				<TableColumn fx:id="amountOPColumn" prefWidth="75.0" text="Menge" />
+            			</columns>
+            		</TableView>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </center>
+		</BorderPane>
+		
+	</center>
+</BorderPane>

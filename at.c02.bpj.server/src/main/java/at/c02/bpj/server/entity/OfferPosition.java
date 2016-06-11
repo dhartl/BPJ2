@@ -12,79 +12,83 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "offerPosition")
 public class OfferPosition extends ModLogEntity<Long> {
 
-	private static final long serialVersionUID = 8923374409266935290L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "offerPositionId")
-	private Long offerPositionId;
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "offerId")
-	private Offer offer;
-	@Column(name = "posNr", nullable = false)
-	private Integer posNr;
-	@Column(name = "price", nullable = false)
-	private BigDecimal price;
-	@Column(name = "amount", nullable = false)
-	private Integer amount;
-	@ManyToOne(fetch = FetchType.EAGER, optional = false)
-	@JoinColumn(name = "articleId")
-	private Article article;
+    private static final long serialVersionUID = 8923374409266935290L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "offerPositionId")
+    private Long offerPositionId;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    // in EntitÃ¤tenKlassen am Server wird der JOIN in der Datenbank deklariert.
+    @JoinColumn(name = "offerId")
+    private Offer offer;
+    @Column(name = "posNr", nullable = false)
+    private Integer posNr;
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
+    @Column(name = "amount", nullable = false)
+    private Integer amount;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "articleId")
+    private Article article;
 
-	@Override
-	public Long getId() {
-		return getOfferPositionId();
-	}
+    @Override
+    public Long getId() {
+	return getOfferPositionId();
+    }
 
-	public Long getOfferPositionId() {
-		return offerPositionId;
-	}
+    public Long getOfferPositionId() {
+	return offerPositionId;
+    }
 
-	public void setOfferPositionId(Long offerPositionId) {
-		this.offerPositionId = offerPositionId;
-	}
+    public void setOfferPositionId(Long offerPositionId) {
+	this.offerPositionId = offerPositionId;
+    }
 
-	public Offer getOffer() {
-		return offer;
-	}
+    public Offer getOffer() {
+	return offer;
+    }
 
-	public void setOffer(Offer offer) {
-		this.offer = offer;
-	}
+    public void setOffer(Offer offer) {
+	this.offer = offer;
+    }
 
-	public Integer getPosNr() {
-		return posNr;
-	}
+    public Integer getPosNr() {
+	return posNr;
+    }
 
-	public void setPosNr(Integer posNr) {
-		this.posNr = posNr;
-	}
+    public void setPosNr(Integer posNr) {
+	this.posNr = posNr;
+    }
 
-	public BigDecimal getPrice() {
-		return price;
-	}
+    public BigDecimal getPrice() {
+	return price;
+    }
 
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
+    public void setPrice(BigDecimal price) {
+	this.price = price;
+    }
 
-	public Integer getAmount() {
-		return amount;
-	}
+    public Integer getAmount() {
+	return amount;
+    }
 
-	public void setAmount(Integer amount) {
-		this.amount = amount;
-	}
+    public void setAmount(Integer amount) {
+	this.amount = amount;
+    }
 
-	public Article getArticle() {
-		return article;
-	}
+    public Article getArticle() {
+	return article;
+    }
 
-	public void setArticle(Article article) {
-		this.article = article;
-	}
+    public void setArticle(Article article) {
+	this.article = article;
+    }
 
 }
