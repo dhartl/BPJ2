@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
 public class Customer {
 
 
-	private ObjectProperty<Long> customerID = new SimpleObjectProperty<>();
+	private ObjectProperty<Long> customerId = new SimpleObjectProperty<>();
 	private StringProperty companyName = new SimpleStringProperty();
 	private StringProperty contactFirstName = new SimpleStringProperty();
 	private StringProperty contactLastName = new SimpleStringProperty();
@@ -20,15 +20,15 @@ public class Customer {
 
 	
 	public final ObjectProperty<Long> customerIdProperty() {
-		return this.customerID;
+		return this.customerId;
 	}
 	
-	public Long getCustomerID() {
+	public Long getCustomerId() {
 		return this.customerIdProperty().get();
 	}
 
-	public void setCustomerID(final Long customerID) {
-		this.customerIdProperty().set(customerID);
+	public void setCustomerId(final Long customerId) {
+		this.customerIdProperty().set(customerId);
 	}
 
 
@@ -75,7 +75,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customerID=" + customerID + ", companyName=" + companyName + ", contactFirstName="
+		return "Customer [customerID=" + customerId + ", companyName=" + companyName + ", contactFirstName="
 				+ contactFirstName + ", contactLastName=" + contactLastName + "]";
 	}
 	
