@@ -114,7 +114,6 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 				return new SimpleStringProperty(param.getValue().getEmployee().getLastname());
 			}
 		});
-		Bindings.bindContent(offerTable.itemsProperty().get(), model.offerListProperty());
 
 		// für ComboBox Employee (Binding zwischen ComboBox Feld und
 		// EmployeeProperty
@@ -151,8 +150,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 			}
 		});
 
-		// Datepicker wert auf NULL setzen, wenn Textfeld von Datepicker leer
-		// ist
+		// Datepicker wert auf NULL setzen, wenn Textfeld von Datepicker leer ist
 		addResetDateFieldValueListener(dateStartField);
 		addResetDateFieldValueListener(dateEndField);
 
@@ -168,7 +166,6 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 			}
 		});
 	}
-
 	@FXML
 	public void onSearchButtonClick() {
 		model.onSearchButtonClick();

@@ -8,8 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Dialog;
 
 
-
-// noch nicht in Gebrauch -> bei use Case Verbindung erst (z.b. Dashboard -- klick auf Angebotsmanagement)
 public class OfferManagementDialog extends Dialog<Offer> {
 
 	
@@ -23,6 +21,7 @@ public class OfferManagementDialog extends Dialog<Offer> {
 		viewTuple = FluentViewLoader.fxmlView(OfferManagementView.class).load();
 		getDialogPane().setContent(viewTuple.getView());
 
+		
 	
 		
 	}

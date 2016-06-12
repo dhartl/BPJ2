@@ -1,6 +1,8 @@
 package at.c02.bpj.client.offer.management;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
@@ -23,24 +25,28 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * Model (Logik) für den {@link OfferManagementView}
  */
 public class OfferManagementViewModel implements ViewModel {
-
+	
 	private ObservableList<Offer> offersList = FXCollections.observableArrayList();
 	private ObservableList<Employee> employeesList = FXCollections.observableArrayList();
 	private ObservableList<Customer> customersList = FXCollections.observableArrayList();
 
 	private FilteredList<Offer> filteredOfferList = new FilteredList<>(offersList);
 
+	//Search Field Properties für Bindings 
 	private StringProperty searchOfferId = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> searchStartDate = new SimpleObjectProperty<>();
 	private ObjectProperty<LocalDate> searchEndDate = new SimpleObjectProperty<>();
 	private ObjectProperty<Employee> searchEmployee = new SimpleObjectProperty<>();
 	private ObjectProperty<Customer> searchCustomer = new SimpleObjectProperty<>();
 
+	
 	// Service Klassen mittels Construktor-Injection setzen
 	public OfferManagementViewModel(EmployeeService employeeService, CustomerService customerService,
 			OfferService offerService) {
@@ -56,7 +62,25 @@ public class OfferManagementViewModel implements ViewModel {
 	}
 
 	public void onSearchButtonClick() {
+		
+		if (Strings.isNullOrEmpty(searchOfferId.getValue()) && searchStartDate.getValue() == null && 
+				searchEndDate.getValue() == null && searchCustomer.getValue() == null &&
+				searchEmployee.getValue() == null) {
+		
+				 Alert noInputAlert= new Alert(AlertType.WARNING);
+			        noInputAlert.setHeaderText("Keine Eingabe vorhanden");
+			        noInputAlert.setContentText("Bitte mindestens ein Suchkriterium eingeben");
+			        noInputAlert.showAndWait();
+		}
+		
 		filteredOfferList.setPredicate(this::checkOfferMatchesSearch);
+		
+		if (filteredOfferList.isEmpty()) {
+			Alert noMatchFoundAlert= new Alert(AlertType.INFORMATION);
+	        noMatchFoundAlert.setHeaderText("Kein Angebot mit angegebenen Suchkriterien gefunden");
+	        noMatchFoundAlert.setContentText("Bitte prüfen Sie die angegebenen Suchkriterien");
+	        noMatchFoundAlert.showAndWait();
+		}
 	}
 
 	private boolean checkOfferMatchesSearch(Offer offer) {
@@ -69,16 +93,18 @@ public class OfferManagementViewModel implements ViewModel {
 		if (!Strings.isNullOrEmpty(offerId) && !Objects.equal(offer.getOfferId(), Longs.tryParse(offerId))) {
 			return false;
 		}
-		if (startDate != null && !startDate.isBefore(offer.getCreatedDt().toLocalDate())) {
-			return false;
-		}
-		if (endDate != null) {
-			if (offer.getCompletedDt() != null && !endDate.isAfter(offer.getCompletedDt().toLocalDate())) {
-				return false;
-			} else if (endDate.isAfter(offer.getCreatedDt().toLocalDate())) {
+		
+		if (startDate != null && endDate != null) {
+			System.out.println("test");
+			if (!startDate.isBefore(offer.getCreatedDt().toLocalDate())) {
 				return false;
 			}
+			if (!endDate.isAfter(offer.getCreatedDt().toLocalDate())) {
+					System.out.print(offer.getCreatedDt().toLocalDate());
+					return false;
+			}
 		}
+
 		if (emplyoee != null && !Objects.equal(emplyoee.getEmployeeId(), offer.getEmployee().getEmployeeId())) {
 			return false;
 		}

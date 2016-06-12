@@ -43,7 +43,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Beenden">
                 <items>
-                    <MenuItem fx:id="closeMenu" mnemonicParsing="false" onAction="#closeOfferManagement" text="Ansicht beenden" />
+                    <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" onAction="#closeOfferManagement" text="Ansicht beenden" />
                   </items>
           </Menu>
               </menus>
