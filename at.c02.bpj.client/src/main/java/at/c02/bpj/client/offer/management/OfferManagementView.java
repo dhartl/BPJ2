@@ -1,9 +1,6 @@
 package at.c02.bpj.client.offer.management;
 
-
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.ParsePosition;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -13,15 +10,14 @@ import java.util.function.Predicate;
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
 import at.c02.bpj.client.api.model.Offer;
-import at.c02.bpj.client.api.model.OfferPosition;
-import at.c02.bpj.client.converter.StringToNumberConverter;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -29,13 +25,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
@@ -105,9 +99,16 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		completedDateColumn.setCellValueFactory(new PropertyValueFactory<>("completedDt"));
 		statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 		
-//Daniel -->Binding für PreisSpalte?	
-		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-		//Bindings.bindContent(priceColumn.getText(), model.offerPositionListProperty());
+		priceColumn.setCellValueFactory(param -> {
+			ObjectProperty<Double> priceProperty = new SimpleObjectProperty<Double>();
+			priceProperty.bind(Bindings.createObjectBinding(
+					() -> param.getValue().getOfferPositions().stream()
+							.mapToDouble(pos -> pos.getPrice() * pos.getAmount()).sum(),
+					param.getValue().offerPositionsProperty()));
+			return priceProperty;
+		});
+		// Bindings.bindContent(priceColumn.getText(),
+		// model.offerPositionListProperty());
 		
 		//laden von ForeignKey Felder der OfferTable (Employee und Customer) 
 		customerColumn.setCellValueFactory(new Callback<CellDataFeatures<Offer, String>,ObservableValue<String>>() {
