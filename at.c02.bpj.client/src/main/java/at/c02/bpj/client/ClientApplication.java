@@ -1,13 +1,8 @@
 package at.c02.bpj.client;
 
-import java.sql.Date;
-
 import at.c02.bpj.client.api.Api;
-import at.c02.bpj.client.api.model.Offer;
 import at.c02.bpj.client.article.ArticleView;
 import at.c02.bpj.client.article.ArticleViewModel;
-import at.c02.bpj.client.offer.management.OfferManagementView;
-import at.c02.bpj.client.offer.management.OfferManagementViewModel;
 import at.c02.bpj.client.service.Services;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.MvvmFX;
@@ -24,44 +19,37 @@ import javafx.stage.Stage;
  */
 public class ClientApplication extends Application {
 
-	public static void main(String... args) {
-		Application.launch(args);
-	}
+    public static void main(String... args) {
+	Application.launch(args);
+    }
 
-	@Override
-	public void start(Stage stage) throws Exception {
-		setupDependencyInjection();
+    @Override
+    public void start(Stage stage) throws Exception {
+	setupDependencyInjection();
 
-		// Exceptions, die nicht behandelt werden, werden vom UI-ErrorHandler
-		// verarbeitet.
-		// Dieser erstellt einen Popup-Dialog mit der Fehlermeldung
-		Thread.currentThread().setUncaughtExceptionHandler(new UiErrorHandler());
+	// Exceptions, die nicht behandelt werden, werden vom UI-ErrorHandler
+	// verarbeitet.
+	// Dieser erstellt einen Popup-Dialog mit der Fehlermeldung
+	Thread.currentThread().setUncaughtExceptionHandler(new UiErrorHandler());
 
-		stage.setTitle("BPJ2 Application");
+	stage.setTitle("BPJ2 Application");
 
-		
-		ViewTuple<ArticleView, ArticleViewModel> viewTuple = FluentViewLoader.fxmlView(ArticleView.class).load();
-		 
-		/*
-		ViewTuple<OfferManagementView, OfferManagementViewModel> viewTuple = 
-				FluentViewLoader.fxmlView(OfferManagementView.class).load();*/
-		
-		Parent root = viewTuple.getView();
-		stage.setScene(new Scene(root));
-		stage.show();
-		
-	
-	}
+	ViewTuple<ArticleView, ArticleViewModel> viewTuple = FluentViewLoader.fxmlView(ArticleView.class).load();
 
-	/**
-	 * Initialisierung des Contexts für die Dependency-Injection
-	 */
-	private void setupDependencyInjection() {
-		EasyDI context = new EasyDI();
-		// legt die Klassen für den API-Zugriff in den Context
-		Api.initialize(context);
-		// legt die Klassen für die Services in den Context
-		Services.initialize(context);
-		MvvmFX.setCustomDependencyInjector(context::getInstance);
-	}
+	Parent root = viewTuple.getView();
+	stage.setScene(new Scene(root));
+	stage.show();
+    }
+
+    /**
+     * Initialisierung des Contexts für die Dependency-Injection
+     */
+    private void setupDependencyInjection() {
+	EasyDI context = new EasyDI();
+	// legt die Klassen für den API-Zugriff in den Context
+	Api.initialize(context);
+	// legt die Klassen für die Services in den Context
+	Services.initialize(context);
+	MvvmFX.setCustomDependencyInjector(context::getInstance);
+    }
 }
