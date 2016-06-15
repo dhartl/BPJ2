@@ -16,7 +16,7 @@ public interface CustomerApi {
 	Call<List<Customer>> getCustomer();
 	
 	@DELETE("customer")
-	Call<Void> deleteCustomer(@Path("articleId") long customerID);
+	Call<Void> deleteCustomer(@Path("customerId") long customerId);
 
 	
 }

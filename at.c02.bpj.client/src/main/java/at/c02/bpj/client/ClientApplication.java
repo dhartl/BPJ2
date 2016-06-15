@@ -1,8 +1,13 @@
 package at.c02.bpj.client;
 
+import java.sql.Date;
+
 import at.c02.bpj.client.api.Api;
+import at.c02.bpj.client.api.model.Offer;
 import at.c02.bpj.client.article.ArticleView;
 import at.c02.bpj.client.article.ArticleViewModel;
+import at.c02.bpj.client.offer.management.OfferManagementView;
+import at.c02.bpj.client.offer.management.OfferManagementViewModel;
 import at.c02.bpj.client.service.Services;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.MvvmFX;
@@ -34,11 +39,18 @@ public class ClientApplication extends Application {
 
 		stage.setTitle("BPJ2 Application");
 
+		
 		ViewTuple<ArticleView, ArticleViewModel> viewTuple = FluentViewLoader.fxmlView(ArticleView.class).load();
-
+		 
+		/*
+		ViewTuple<OfferManagementView, OfferManagementViewModel> viewTuple = 
+				FluentViewLoader.fxmlView(OfferManagementView.class).load();*/
+		
 		Parent root = viewTuple.getView();
 		stage.setScene(new Scene(root));
 		stage.show();
+		
+	
 	}
 
 	/**

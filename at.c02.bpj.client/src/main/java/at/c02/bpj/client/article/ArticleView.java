@@ -3,7 +3,10 @@ package at.c02.bpj.client.article;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import org.controlsfx.control.table.TableFilter;
+
 import at.c02.bpj.client.api.model.Article;
+import at.c02.bpj.client.api.model.Offer;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
@@ -33,7 +36,8 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 	private TableColumn<Article, String> nameColumn;
 	@FXML
 	private TableColumn<Article, Double> priceColumn;
-
+	
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Die Artikel-Tabelle zeigt genau das an, was in der ArticlesProperty
@@ -42,7 +46,7 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 		idColumn.setCellValueFactory(new PropertyValueFactory<>("articleId"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
+		
 		// Einfügen des Kontext-Menüs für jede Zeile
 		tblArticles.setRowFactory(table -> {
 			final TableRow<Article> row = new TableRow<>();
@@ -82,6 +86,11 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 
 	public void onDeleteArticleClick(Article article) {
 		model.deleteArticle(article);
+	}
+	
+	//OfferManagment UC006 öffnen im Fenster
+	public void onOfferManagement() {
+		model.openOfferManagement();
 	}
 
 }

@@ -1,11 +1,15 @@
 package at.c02.bpj.client.api.model;
 
 import java.sql.Date;
+import java.util.List;
 
+import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Offer {
 
@@ -19,6 +23,8 @@ public class Offer {
 	private ObjectProperty<Long> insUserId = new SimpleObjectProperty<>();
 	private ObjectProperty<Date> updDt = new SimpleObjectProperty<>();
 	private ObjectProperty<Long> updUserId = new SimpleObjectProperty<>();
+	private ObservableList<OfferPosition> offerPositions = FXCollections
+			.observableArrayList(Offer::getPriceChangedProperties);
 	
 	public Offer() {
 		
@@ -173,6 +179,18 @@ public class Offer {
 		this.updUserIdProperty().set(updUserId);
 	}
 
+	public final ObservableList<OfferPosition> offerPositionsProperty() {
+		return this.offerPositions;
+	}
+
+	public final void setOfferPositions(List<OfferPosition> offerPositions) {
+		this.offerPositions.setAll(offerPositions);
+	}
+
+	public List<OfferPosition> getOfferPositions() {
+		return offerPositions;
+	}
+
 	@Override
 	public String toString() {
 		return "Offer [offerId=" + offerId + ", createdDt=" + createdDt + ", completedDt=" + completedDt + ", status="
@@ -180,7 +198,16 @@ public class Offer {
 				+ ", insUserId=" + insUserId + ", updDt=" + updDt + ", updUserId=" + updUserId + "]";
 	}
 	
-	
+	/**
+	 * ListChangedListener wird auch aufgerufen, wenn sich Menge bzw. Preis in
+	 * der OfferPosition ändert
+	 * 
+	 * @param offerPosition
+	 * @return
+	 */
+	private static final Observable[] getPriceChangedProperties(OfferPosition offerPosition) {
+		return new Observable[] { offerPosition.amountProperty(), offerPosition.priceProperty() };
+	}
 	
 	
 	
