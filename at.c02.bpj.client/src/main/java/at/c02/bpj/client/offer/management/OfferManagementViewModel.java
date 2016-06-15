@@ -1,13 +1,12 @@
 package at.c02.bpj.client.offer.management;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
 import com.google.common.primitives.Longs;
 
+import at.c02.bpj.client.Async;
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
 import at.c02.bpj.client.api.model.Offer;
@@ -39,7 +38,7 @@ public class OfferManagementViewModel implements ViewModel {
 
 	private FilteredList<Offer> filteredOfferList = new FilteredList<>(offersList);
 
-	//Search Field Properties für Bindings 
+	// Search Field Properties für Bindings
 	private StringProperty searchOfferId = new SimpleStringProperty();
 	private ObjectProperty<LocalDate> searchStartDate = new SimpleObjectProperty<>();
 	private ObjectProperty<LocalDate> searchEndDate = new SimpleObjectProperty<>();
@@ -50,9 +49,9 @@ public class OfferManagementViewModel implements ViewModel {
 	// Service Klassen mittels Construktor-Injection setzen
 	public OfferManagementViewModel(EmployeeService employeeService, CustomerService customerService,
 			OfferService offerService) {
-		employeesList.addAll(employeeService.getEmployee());
-		customersList.addAll(customerService.getCustomer());
-		offersList.addAll(offerService.getOffer());
+		Async.executeUILoad(employeeService::getEmployee, employeesList::setAll);
+		Async.executeUILoad(customerService::getCustomer, customersList::setAll);
+		Async.executeUILoad(offerService::getOffer, offersList::setAll);
 	}
 
 	public EventHandler<ActionEvent> quitOfferManagement() {
@@ -78,7 +77,7 @@ public class OfferManagementViewModel implements ViewModel {
 		if (filteredOfferList.isEmpty()) {
 			Alert noMatchFoundAlert= new Alert(AlertType.INFORMATION);
 	        noMatchFoundAlert.setHeaderText("Kein Angebot mit angegebenen Suchkriterien gefunden");
-	        noMatchFoundAlert.setContentText("Bitte prüfen Sie die angegebenen Suchkriterien");
+			noMatchFoundAlert.setContentText("Bitte prüfen Sie die angegebenen Suchkriterien");
 	        noMatchFoundAlert.showAndWait();
 		}
 	}

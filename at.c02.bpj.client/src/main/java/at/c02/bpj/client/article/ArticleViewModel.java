@@ -3,6 +3,7 @@ package at.c02.bpj.client.article;
 import java.util.List;
 import java.util.Optional;
 
+import at.c02.bpj.client.Async;
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.offer.management.OfferManagementDialog;
 import at.c02.bpj.client.service.ArticleService;
@@ -35,8 +36,7 @@ public class ArticleViewModel implements ViewModel {
 	 * Lädt die Artikel
 	 */
 	public void loadArticles() {
-		List<Article> artciles = articleService.getArticles();
-		setArticles(artciles);
+		Async.executeUILoad(articleService::getArticles, articles::setAll);
 	}
 
 	public ObservableList<Article> articlesProperty() {
@@ -100,10 +100,10 @@ public class ArticleViewModel implements ViewModel {
 		}
 	}
 
-	//UC006 öffnen des OfferManagements 
+	// UC006 öffnen des OfferManagements
 	public void openOfferManagement() {
 		OfferManagementDialog dialog = new OfferManagementDialog();
 		dialog.show();
 	}
-	
+
 }
