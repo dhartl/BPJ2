@@ -141,7 +141,7 @@
       </TableView>
    </right>
    <bottom>
-      <Button fx:id="exportButton" maxHeight="23.0" minHeight="23.0" minWidth="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="Export" BorderPane.alignment="TOP_RIGHT">
+      <Button fx:id="exportButton" maxHeight="23.0" minHeight="23.0" minWidth="15.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="113.0" text="Export" BorderPane.alignment="TOP_RIGHT" onAction="#onExportButtonClick">
          <font>
             <Font size="12.0" />
          </font>

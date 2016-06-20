@@ -1,5 +1,6 @@
 package at.c02.bpj.client.offer.management;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -28,6 +29,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
@@ -157,6 +160,9 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		offerField.textProperty().bindBidirectional(model.searchOfferIdProperty());
 		dateStartField.valueProperty().bindBidirectional(model.searchStartDateProperty());
 		dateEndField.valueProperty().bindBidirectional(model.searchEndDateProperty());
+
+		exportButton.disableProperty().bind(Bindings.isNull(offerTable.getSelectionModel().selectedItemProperty()));
+		model.selectedOfferProperty().bind(offerTable.getSelectionModel().selectedItemProperty());
 	}
 
 	private void addResetDateFieldValueListener(DatePicker datePicker) {
@@ -174,6 +180,22 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	// Beende
 	public void closeOfferManagement() {
 		closeMenuItem.setOnAction(model.quitOfferManagement());
+	}
+
+	@FXML
+	public void onExportButtonClick() {
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open Resource File");
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
+				// richtigen extension filter wählen für pdf
+				new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
+				new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"), new ExtensionFilter("All Files", "*.*"));
+		// hier noch den automatischen filevorschlag implementieren
+
+		File selectedFile = fileChooser.showOpenDialog(exportButton.getScene().getWindow());
+		if (selectedFile != null) {
+			model.onExportButtonClick(selectedFile);
+		}
 	}
 
 }
