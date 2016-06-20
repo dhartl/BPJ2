@@ -3,13 +3,16 @@ package at.c02.bpj.server.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import at.c02.bpj.server.entity.Employee;
 import at.c02.bpj.server.repository.EmployeeRepository;
 
 @Service
-public class EmployeeService {
+public class EmployeeService implements UserDetailsService {
 
 	private EmployeeRepository employeeRepository;
 
@@ -43,6 +46,15 @@ public class EmployeeService {
 	 */
 	public Employee createOrUpdateEmployee(Employee employee) {
 		return employeeRepository.save(employee);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Employee employee = employeeRepository.findByUsername(username);
+		if (employee == null) {
+			throw new UsernameNotFoundException(String.format("Benutzer %s wurde nicht gefunden.", username));
+		}
+		return employee;
 	}
 
 }
