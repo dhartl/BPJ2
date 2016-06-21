@@ -1,5 +1,7 @@
 package at.c02.bpj.client.login;
 
+import com.google.common.base.Strings;
+
 import at.c02.bpj.client.service.LoginService;
 import at.c02.bpj.client.service.ServiceException;
 import de.saxsys.mvvmfx.ViewModel;
@@ -21,17 +23,25 @@ public class LoginViewModel implements ViewModel {
 	}
 
 	public boolean login() {
+		if (Strings.isNullOrEmpty(getUsername())) {
+			showErrorDialog("Benutzername erforderlich", "Bitte geben Sie einen Benutzernamen ein!");
+			return false;
+		}
 		try {
 			loginService.login(getUsername(), getPassword());
 			return true;
 		} catch (ServiceException ex) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText("Login fehlgeschlagen");
-			alert.setContentText(ex.getMessage());
-			alert.showAndWait();
-			password.set(null);
+			showErrorDialog("Login fehlgeschlagen", ex.getMessage());
 			return false;
 		}
+	}
+
+	private void showErrorDialog(String title, String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setHeaderText(title);
+		alert.setContentText(message);
+		alert.showAndWait();
+		password.set(null);
 	}
 
 	public final StringProperty usernameProperty() {
