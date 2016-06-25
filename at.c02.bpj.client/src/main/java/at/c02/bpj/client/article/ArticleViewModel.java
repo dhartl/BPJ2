@@ -133,7 +133,7 @@ public class ArticleViewModel implements ViewModel {
 		public void onSearchButtonClick() {
 		
 		if (Strings.isNullOrEmpty(searchArticleID.getValue()) &&  searchArticleName.getValue() == null &&
-				searchArticleID.getValue() == null) {
+				searchArticleID.getValue() == null && searchCategory.getValue() == null){
 		
 				 Alert noInputAlert= new Alert(AlertType.WARNING);
 			        noInputAlert.setHeaderText("Keine Eingabe vorhanden");
