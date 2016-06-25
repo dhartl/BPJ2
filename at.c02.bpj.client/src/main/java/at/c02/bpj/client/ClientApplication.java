@@ -1,8 +1,8 @@
 package at.c02.bpj.client;
 
 import at.c02.bpj.client.api.Api;
-import at.c02.bpj.client.article.ArticleView;
-import at.c02.bpj.client.article.ArticleViewModel;
+import at.c02.bpj.client.offer.OfferChooseCustomerModel;
+import at.c02.bpj.client.offer.OfferChooseCustomerView;
 import at.c02.bpj.client.service.Services;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.MvvmFX;
@@ -34,7 +34,8 @@ public class ClientApplication extends Application {
 
 	stage.setTitle("BPJ2 Application");
 
-	ViewTuple<ArticleView, ArticleViewModel> viewTuple = FluentViewLoader.fxmlView(ArticleView.class).load();
+	ViewTuple<OfferChooseCustomerView, OfferChooseCustomerModel> viewTuple = FluentViewLoader
+		.fxmlView(OfferChooseCustomerView.class).load();
 
 	Parent root = viewTuple.getView();
 	stage.setScene(new Scene(root));
