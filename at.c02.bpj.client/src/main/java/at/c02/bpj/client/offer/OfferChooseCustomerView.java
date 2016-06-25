@@ -8,11 +8,12 @@ import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.util.StringConverter;
 
-public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerModel> {
+public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerModel>, Initializable {
 
     @InjectViewModel
     private OfferChooseCustomerModel model;
@@ -23,10 +24,11 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
     @FXML
     private Button btnOfferCreate;
 
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
 
 	Bindings.bindContent(cbxCustomer.itemsProperty().get(), model.customerListProperty());
-	cbxCustomer.valueProperty().bindBidirectional(model.customerProperty());
+	cbxCustomer.valueProperty().bindBidirectional(model.searchCustomerProperty());
 
 	cbxCustomer.setConverter(new StringConverter<Customer>() {
 

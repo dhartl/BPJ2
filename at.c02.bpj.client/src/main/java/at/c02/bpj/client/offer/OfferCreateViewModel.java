@@ -91,4 +91,5 @@ public class OfferCreateViewModel implements ViewModel {
 
 	offerPositions.add(newOfferPosition);
     }
+
 }
