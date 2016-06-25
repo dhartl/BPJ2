@@ -44,28 +44,28 @@ public class Customer {
 	this.companyNameProperty().set(companyName);
     }
 
-    public final StringProperty contactFirstNameProperty() {
+    public final StringProperty contactFirstName() {
 	return this.contactFirstName;
     }
 
     public final java.lang.String getContactFirstName() {
-	return this.contactFirstNameProperty().get();
+	return this.contactFirstName().get();
     }
 
     public final void setContactFirstName(final java.lang.String contactFirstName) {
-	this.contactFirstNameProperty().set(contactFirstName);
+	this.contactFirstName().set(contactFirstName);
     }
 
-    public final StringProperty contactLasttNameProperty() {
+    public final StringProperty contactLasttName() {
 	return this.contactLastName;
     }
 
     public final java.lang.String getContactLastName() {
-	return this.contactFirstNameProperty().get();
+	return this.contactLastName.get();
     }
 
     public final void setContactLastName(final java.lang.String contactLastName) {
-	this.contactFirstNameProperty().set(contactLastName);
+	this.contactLastName.set(contactLastName);
     }
 
     // Property für Straße

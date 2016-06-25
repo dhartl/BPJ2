@@ -29,7 +29,7 @@ public class Customer extends ModLogEntity<Long> {
     @Column(name = "city", length = 255)
     private String city;
     @Column(name = "contactFirstName", length = 100)
-    private String contatcFirstName;
+    private String contactFirstName;
     @Column(name = "contactLastName", length = 100)
     private String contactLastName;
     @Column(name = "contactEmail", length = 255)
@@ -93,12 +93,12 @@ public class Customer extends ModLogEntity<Long> {
 	this.city = city;
     }
 
-    public String getContatcFirstName() {
-	return contatcFirstName;
+    public String getContactFirstName() {
+	return contactFirstName;
     }
 
-    public void setContatcFirstName(String contatcFirstName) {
-	this.contatcFirstName = contatcFirstName;
+    public void setContactFirstName(String contactFirstName) {
+	this.contactFirstName = contactFirstName;
     }
 
     public String getContactLastName() {
