@@ -3,6 +3,7 @@ package at.c02.bpj.client.service;
 import java.util.List;
 
 import at.c02.bpj.client.api.CustomerApi;
+
 import at.c02.bpj.client.api.model.Customer;
 
 
@@ -21,5 +22,16 @@ public class CustomerService {
 	
 		return Services.executeCall(customerApi.getCustomer());
 	}
+	public void deleteCustomer(Customer customer) throws ServiceException {
+		Services.executeCall(customerApi.deleteCustomer(customer.getCustomerId()));
+
+	}
+	
+
+	public Customer saveCustomer(Customer customer) throws ServiceException {
+		return Services.executeCall(customerApi.saveCustomer(customer));
+	}
+
+
 
 }

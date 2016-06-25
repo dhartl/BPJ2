@@ -61,12 +61,12 @@ public class Customer {
 	}
 
 	
-	public final StringProperty contactLasttNameProperty() {
+	public final StringProperty contactLastNameProperty() {
 		return this.contactLastName;
 	}
 	
 	public final java.lang.String getContactLastName() {
-		return this.contactFirstNameProperty().get();
+		return this.contactLastNameProperty().get();
 	}
 
 	public final void setContactLastName(final java.lang.String contactLastName) {

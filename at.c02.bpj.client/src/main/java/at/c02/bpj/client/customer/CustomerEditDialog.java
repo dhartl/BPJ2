@@ -1,6 +1,7 @@
 package at.c02.bpj.client.customer;
 
-import at.c02.bpj.client.api.model.Article;
+
+import at.c02.bpj.client.api.model.Customer;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -10,7 +11,7 @@ import javafx.scene.control.Dialog;
 /**
  * Dialog zum Erstellen oder Bearbeiten eines Artikels
  */
-public class CustomerEditDialog extends Dialog<Article> {
+public class CustomerEditDialog extends Dialog<Customer> {
 
 	private ViewTuple<CustomerEditView, CustomerEditViewModel> viewTuple;
 
@@ -28,7 +29,7 @@ public class CustomerEditDialog extends Dialog<Article> {
 			if (saveType.equals(buttonType)) {
 				// Nur wenn Speichern gedrückt wurde, wird der Artikel
 				// zurückgeliefert
-				return viewTuple.getViewModel().getArticle();
+				return viewTuple.getViewModel().getCustomer();
 			}
 			// sonst NULL
 			return null;
@@ -40,8 +41,8 @@ public class CustomerEditDialog extends Dialog<Article> {
 	 * 
 	 * @param article
 	 */
-	public void setArticle(Article article) {
-		viewTuple.getViewModel().editArticle(article);
+	public void setCustomer(Customer customer) {
+		viewTuple.getViewModel().editCustomer(customer);
 	}
 
 }

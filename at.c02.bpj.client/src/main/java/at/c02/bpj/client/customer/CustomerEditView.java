@@ -19,7 +19,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
 
 /**
- * Controller von ArticleEditView.fxml
+ * Controller von CustomerEditView.fxml
  */
 public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initializable {
 
@@ -27,15 +27,14 @@ public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initia
 	private CustomerEditViewModel model;
 
 	@FXML
-	private TextField tfId;
+	private TextField customerId;
 	@FXML
-	private TextField tfName;
+	private TextField customerFirstName;
 	@FXML
-	private TextField tfPrice;
+	private TextField customerLastName;
 	@FXML
-	private TextArea taDescription;
-	@FXML
-	private ComboBox<Category> cmbCategory;
+	private TextField companyName;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -43,7 +42,7 @@ public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initia
 		idFormat.setParseIntegerOnly(true);
 
 		// tfId ist ein Ganzzahlfeld
-		tfId.setTextFormatter(new TextFormatter<>(c -> {
+		customerId.setTextFormatter(new TextFormatter<>(c -> {
 			ParsePosition parsePosition = new ParsePosition(0);
 			Object object = idFormat.parse(c.getControlNewText(), parsePosition);
 
@@ -53,42 +52,18 @@ public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initia
 				return c;
 			}
 		}));
-		DecimalFormat priceFormat = new DecimalFormat("0.00");
-		priceFormat.setMaximumFractionDigits(2);
 		// tfPrice ist ein Feld mit 2 Nachkommazahlen
-		tfPrice.setTextFormatter(new TextFormatter<>(c -> {
-			ParsePosition parsePosition = new ParsePosition(0);
-			Object object = priceFormat.parse(c.getControlNewText(), parsePosition);
-
-			if (object == null || parsePosition.getIndex() < c.getControlNewText().length()) {
-				return null;
-			} else {
-				return c;
-			}
-		}));
+		;
 
 		// Binden der Text-Properties der Textfelder mit den Model-Properties
 		// Konversaton von Text in Zahl passiert automatisch!
-		Bindings.bindBidirectional(tfId.textProperty(), model.idProperty(),
+		Bindings.bindBidirectional(customerId.textProperty(), model.idProperty(),
 				new StringToNumberConverter<Long>(idFormat));
-		tfName.textProperty().bindBidirectional(model.nameProperty());
-		Bindings.bindBidirectional(tfPrice.textProperty(), model.priceProperty(), priceFormat);
+		customerFirstName.textProperty().bindBidirectional(model.firstNameProperty());
+		customerLastName.textProperty().bindBidirectional(model.lastNameProperty());
+		companyName.textProperty().bindBidirectional(model.companyNameProperty());
 
-		taDescription.textProperty().bindBidirectional(model.descriptionProperty());
-		Bindings.bindContent(cmbCategory.itemsProperty().get(), model.categoryListProperty());
-		cmbCategory.valueProperty().bindBidirectional(model.categoryProperty());
-		cmbCategory.setConverter(new StringConverter<Category>() {
 
-			@Override
-			public String toString(Category category) {
-				return category.getName();
-			}
-
-			@Override
-			public Category fromString(String string) {
-				return null;
-			}
-		});
 	}
 
 }

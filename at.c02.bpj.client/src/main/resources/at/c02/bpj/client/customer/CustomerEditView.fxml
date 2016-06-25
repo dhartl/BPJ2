@@ -6,10 +6,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.ComboBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.article.ArticleEditView">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.customer.CustomerEditView">
    <center>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -20,20 +18,17 @@
           <RowConstraints prefHeight="30.0" />
           <RowConstraints prefHeight="30.0" />
           <RowConstraints prefHeight="30.0" />
-          <RowConstraints prefHeight="60.0" />
           <RowConstraints prefHeight="30.0" />
         </rowConstraints>
          <children>
-            <Label text="Artikel Id" />
-            <Label text="Name" GridPane.rowIndex="1" />
-            <Label text="Preis" GridPane.rowIndex="2" />
-            <TextField fx:id="tfId" GridPane.columnIndex="1" disable="true"/>
-            <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="tfPrice" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Beschreibung" GridPane.rowIndex="3"  />
-            <TextArea fx:id="taDescription" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Kategorie" GridPane.rowIndex="4" />
-            <ComboBox fx:id="cmbCategory" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Customer Id" />
+            <Label text="Vorname" GridPane.rowIndex="1" />
+            <Label text="Nachname" GridPane.rowIndex="2" />
+            <TextField fx:id="customerId" disable="true" GridPane.columnIndex="1" />
+            <TextField fx:id="customerFirstName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="customerLastName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Unternehmen" GridPane.rowIndex="3" />
+            <TextField fx:id="companyName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </center>

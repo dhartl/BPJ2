@@ -7,8 +7,7 @@ import org.controlsfx.control.table.TableFilter;
 
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.Category;
-
-
+import at.c02.bpj.client.api.model.Customer;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
@@ -40,24 +39,26 @@ public class CustomerView implements FxmlView<CustomerViewModel>, Initializable 
 	private CustomerViewModel model;
 	// FXML-Properties: werden in der .fxml-Datei angegeben mit fx:id
 	@FXML
-	private TableView<Article> tblArticles;
+	private TableView<Customer> tblCustomer;
 	@FXML
-	private TableColumn<Article, Long> idColumn;
+	private TableColumn<Customer, Long> idColumn;
 	@FXML
-	private TableColumn<Article, String> nameColumn;
+	private TableColumn<Article, String> firstnameColumn;
 	@FXML
-	private TableColumn<Article, Double> priceColumn;
+	private TableColumn<Article, String> lastnameColumn;
 	@FXML
-	private TableColumn<Article, String> categoryColumn;
+	private TableColumn<Article, String> companynameColumn;
 	
 	@FXML
 	private GridPane searchGridPane;
 	@FXML
 	private TextField idField;
 	@FXML
-	private TextField nameField;
+	private TextField firstnameField;
 	@FXML
-	private ComboBox<Category> categoryField;
+	private TextField lastnameField;
+	@FXML
+	private TextField companynameField;
 	@FXML
 	private Button searchButton;
 	
@@ -68,84 +69,71 @@ public class CustomerView implements FxmlView<CustomerViewModel>, Initializable 
 		// Die Artikel-Tabelle zeigt genau das an, was in der ArticlesProperty
 		// des Models ist
 		
-		Bindings.bindContent(tblArticles.itemsProperty().get(), model.articlesProperty());
-		idColumn.setCellValueFactory(new PropertyValueFactory<>("articleId"));
-		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+		Bindings.bindContent(tblCustomer.itemsProperty().get(), model.customerProperty());
+		idColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+		firstnameColumn.setCellValueFactory(new PropertyValueFactory<>("contactFirstName"));
+		lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("contactLastName"));
+		companynameColumn.setCellValueFactory(new PropertyValueFactory<>("CompanyName"));
 
 
-		categoryColumn.setCellValueFactory(new Callback<CellDataFeatures<Article, String>, ObservableValue<String>>() {
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Article, String> param) {
-				return new SimpleStringProperty(param.getValue().getCategory().getName());
-			}
-		});
+		
+		
 		
 		// Einfügen des Kontext-Menüs für jede Zeile
-		tblArticles.setRowFactory(table -> {
-			final TableRow<Article> row = new TableRow<>();
+		tblCustomer.setRowFactory(table -> {
+			final TableRow<Customer> row = new TableRow<>();
 			row.setContextMenu(createContextMenu(row));
 			return row;
 		});
 		
 		// für ComboBox Category (Binding zwischen ComboBox Feld und
 		// CategoryProperty
-		Bindings.bindContent(categoryField.itemsProperty().get(), model.categoryProperty());
-		categoryField.valueProperty().bindBidirectional(model.searchCategoryProperty());
-
-		categoryField.setConverter(new StringConverter<Category>() {
-
-			@Override
-			public String toString(Category category) {
-				return category.getName();
-			}
-
-			@Override
-			public Category fromString(String string) {
-				return null;
-			}
-		});
 		
 
-		idField.textProperty().bindBidirectional(model.searchArticleIdProperty());
-		nameField.textProperty().bindBidirectional(model.searchArticleNameProperty());
+
 		
+		
+
+		idField.textProperty().bindBidirectional(model.searchCustomerIdProperty());
+		firstnameField.textProperty().bindBidirectional(model.searchCustomerFirstNameProperty());
+		lastnameField.textProperty().bindBidirectional(model.searchCustomerLastNameProperty());
+		companynameField.textProperty().bindBidirectional(model.searchCompanyNameProperty());
 		
 		
 	}
 
-	private ContextMenu createContextMenu(TableRow<Article> row) {
-		MenuItem miNewArticle = new MenuItem("Neu...");
+	private ContextMenu createContextMenu(TableRow<Customer> row) {
+		MenuItem miNewCustomer = new MenuItem("Neu...");
 		// Bei Click auf "Neu..." wird onNewArticleClick aufgerufen
-		miNewArticle.setOnAction(event -> onNewArticleClick());
+		miNewCustomer.setOnAction(event -> onNewCustomerClick());
 
-		MenuItem miEditArticle = new MenuItem("Bearbeiten...");
+		MenuItem miEditCustomer = new MenuItem("Bearbeiten...");
 		// Bei Click auf "Bearbeiten..." wird onEditArticleClick aufgerufen
-		miEditArticle.setOnAction(event -> onEditArticleClick(row.getItem()));
+		miEditCustomer.setOnAction(event -> onEditCustomerClick(row.getItem()));
 		// Bearbeiten ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
-		miEditArticle.disableProperty().bind(row.emptyProperty());
+		miEditCustomer.disableProperty().bind(row.emptyProperty());
 
-		MenuItem miDeleteArticle = new MenuItem("Löschen");
+		MenuItem miDeleteCustomer = new MenuItem("Löschen");
 		// Bei Click auf "Löschen" wird onDeleteArticleClick aufgerufen
-		miDeleteArticle.setOnAction(event -> onDeleteArticleClick(row.getItem()));
+		//miDeleteCustomer.setOnAction(event -> onDeleteCustomerClick(row.getItem()));
 		// Löschen ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
-		miDeleteArticle.disableProperty().bind(row.emptyProperty());
+		miDeleteCustomer.disableProperty().bind(row.emptyProperty());
 
-		ContextMenu contextMenu = new ContextMenu(miNewArticle, miEditArticle, miDeleteArticle);
+		ContextMenu contextMenu = new ContextMenu(miNewCustomer, miEditCustomer, miDeleteCustomer);
 		return contextMenu;
 	}
 
-	public void onNewArticleClick() {
-		model.newArticle();
+	public void onNewCustomerClick() {
+		model.newCustomer();
 	}
 
-	public void onEditArticleClick(Article article) {
-		model.editArticle(article);
+	public void onEditCustomerClick(Customer customer) {
+		model.editCustomer(customer);
 	}
 
-	public void onDeleteArticleClick(Article article) {
-		model.deleteArticle(article);
-	}
+//	public void onDeleteCustomerClick(Article customer) {
+//		model.deleteCustomer(customer);
+//	}
 	
 	@FXML
 	public void onSearchButtonClick() {

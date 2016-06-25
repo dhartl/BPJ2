@@ -2,6 +2,7 @@ package at.c02.bpj.client.customer;
 
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.Category;
+import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.service.CategoryService;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.DoubleProperty;
@@ -19,61 +20,45 @@ import javafx.collections.ObservableList;
 public class CustomerEditViewModel implements ViewModel {
 
 	private SimpleObjectProperty<Long> id = new SimpleObjectProperty<>();
-	private StringProperty name = new SimpleStringProperty();
-	private DoubleProperty price = new SimpleDoubleProperty();
-	private StringProperty description = new SimpleStringProperty();
-	private ObjectProperty<Category> category = new SimpleObjectProperty<>();
+	private StringProperty firstName = new SimpleStringProperty();
+	private StringProperty lastName = new SimpleStringProperty();
+	private StringProperty companyName = new SimpleStringProperty();
 
-	private ObservableList<Category> categoryList = FXCollections.observableArrayList();
 
-	public CustomerEditViewModel(CategoryService categoryService) {
-		categoryList.addAll(categoryService.getCategories());
-	}
+
 
 	public SimpleObjectProperty<Long> idProperty() {
 		return id;
 	}
 
-	public StringProperty nameProperty() {
-		return name;
+	public StringProperty firstNameProperty() {
+		return firstName;
+	}
+	public StringProperty lastNameProperty() {
+		return lastName;
+	}
+	public StringProperty companyNameProperty() {
+		return companyName;
 	}
 
-	public DoubleProperty priceProperty() {
-		return price;
-	}
-
-	public StringProperty descriptionProperty() {
-		return description;
-	}
-
-	public ObjectProperty<Category> categoryProperty() {
-		return category;
-	}
-
-	public ObservableList<Category> categoryListProperty() {
-		return categoryList;
-	}
 
 	/**
 	 * setzt den zu bearbeitenden Artikel
 	 * 
-	 * @param article
+	 * @param customer
 	 */
-	public void editArticle(Article article) {
-		id.set(article.getArticleId());
-		name.set(article.getName());
-		price.set(article.getPrice());
-		description.set(article.getDescription());
-		category.set(article.getCategory());
+	public void editCustomer(Customer customer) {
+		id.set(customer.getCustomerId());
+		firstName.set(customer.getContactFirstName());
+		firstName.set(customer.getContactLastName());
 	}
 
-	public Article getArticle() {
-		Article article = new Article();
-		article.setArticleId(id.get());
-		article.setName(name.get());
-		article.setPrice(price.get());
-		article.setDescription(description.get());
-		article.setCategory(category.get());
-		return article;
+	public Customer getCustomer() {
+		Customer customer = new Customer();
+		customer.setCustomerId(id.get());
+		customer.setContactFirstName(firstName.get());
+		customer.setContactLastName(lastName.get());
+		customer.setCompanyName(companyName.get());
+		return customer;
 	}
 }
