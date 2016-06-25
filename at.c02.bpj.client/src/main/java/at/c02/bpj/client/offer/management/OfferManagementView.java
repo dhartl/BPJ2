@@ -1,11 +1,17 @@
 package at.c02.bpj.client.offer.management;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.google.common.base.Strings;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
@@ -183,7 +189,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	}
 
 	@FXML
-	public void onExportButtonClick() {
+	public void onExportButtonClick() throws DocumentException, IOException {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Resource File");
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
@@ -192,10 +198,27 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 				new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"), new ExtensionFilter("All Files", "*.*"));
 		// hier noch den automatischen filevorschlag implementieren
 
-		File selectedFile = fileChooser.showOpenDialog(exportButton.getScene().getWindow());
+		//File selectedFile = fileChooser.showOpenDialog(exportButton.getScene().getWindow());
+		File selectedFile = fileChooser.showSaveDialog(exportButton.getScene().getWindow());
 		if (selectedFile != null) {
 			model.onExportButtonClick(selectedFile);
+			createPdf("D:\\Campus02\\Offers\\test");
 		}
+		//createPdf("test");
+		createPdf(model.getSelectedOffer().getOfferId().toString());
 	}
+	public void createPdf(String filename)
+			throws DocumentException, IOException {
+		        // step 1
+		        Document document = new Document();
+		        // step 2
+		        PdfWriter.getInstance(document, new FileOutputStream(filename));
+		        // step 3
+		        document.open();
+		        // step 4
+		        document.add(new Paragraph("Hello World!"));
+		        // step 5
+		        document.close();
+		    }
 
 }
