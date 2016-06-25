@@ -34,13 +34,13 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
     private Label lblCustomerName;
 
     @FXML
-    private Label lblCustomerCityPLZ;
+    private Label lblCustomerCityPostCode;
 
     @FXML
-    private Label lblCustomerCountry;
+    private Label lblCustomerStreetHouseNr;
 
     @FXML
-    private Label lblCustomerStreet;
+    private Label lblCustomerContactPartner;
 
     @FXML
     private Button btnOfferCreate;
@@ -73,16 +73,22 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 
     }
 
+    // Zeigt die Details des Kunden
     public void onbtnShowChoosenCustomerClick() {
 
-	String s = model.customerProperty().getValue().getStreet();
-
-	if (s == null) {
+	if (cbxCustomer.getValue() == null) {
 	    Alert noInputAlert = new Alert(AlertType.WARNING);
 	    noInputAlert.setHeaderText("Keine Eingabe vorhanden");
 	    noInputAlert.setContentText("Bitte mindestens ein Suchkriterium eingeben");
 	    noInputAlert.showAndWait();
+	} else {
+	    lblCustomerStreetHouseNr.setText(model.customerProperty().getValue().getStreet() + " "
+		    + model.customerProperty().getValue().getHouseNr());
+	    lblCustomerCityPostCode.setText(model.customerProperty().getValue().getPostCode() + " "
+		    + model.customerProperty().getValue().getCity());
 
+	    lblCustomerContactPartner.setText(model.customerProperty().getValue().getContactFirstName() + " "
+		    + model.customerProperty().getValue().getContactLastName());
 	}
     }
 

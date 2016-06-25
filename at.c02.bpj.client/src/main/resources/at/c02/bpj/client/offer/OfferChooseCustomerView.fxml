@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.chart.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -7,7 +8,10 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.offer.OfferChooseCustomerView">
    <bottom>
-      <Button mnemonicParsing="false" text="Kunde bestätigen" BorderPane.alignment="CENTER" />
+      <Button mnemonicParsing="false" text="Kunde bestätigen" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" />
+         </BorderPane.margin></Button>
    </bottom>
    <center>
       <GridPane BorderPane.alignment="CENTER">
@@ -29,22 +33,37 @@
             <Label text="AngebotsNr.:" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label fx:id="lblOfferNumber" GridPane.columnIndex="1" />
             <Label fx:id="lblOfferDate" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <StackPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <children>
-                   <ComboBox fx:id="cbxCustomer" minHeight="-Infinity" minWidth="-Infinity">
-            
-           
-            </ComboBox>
-            
-                  <Button fx:id="btnShowChoosenCustomer" minWidth="50" text="Anzeigen" alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" onAction="#onbtnShowChoosenCustomerClick"> </Button>
-             </children>
-            </StackPane>
+            <StackPane GridPane.columnIndex="1" GridPane.rowIndex="2" />
           
-            <Label fx:id="lblCustomerName" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-            <Label fx:id="lblCustomerCityPLZ" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Label fx:id="lblCustomerCountry" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-        <Label fx:id="lblCustomerStreet" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-            <Label text="Datum:" GridPane.rowIndex="1" />
+            <Label fx:id="lblCustomerName" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin></Label>
+            <Label fx:id="lblCustomerCityPostCode" alignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin></Label>
+            <Label fx:id="lblCustomerStreetHouseNr" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin></Label>
+             <Label fx:id="lblCustomerContactPartner" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin></Label>
+            
+            <Label text="Datum:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Label text="Firmenbezeichnung:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+            <Label text="Ort, PLZ:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+            <Label text="Straße, Hausnummer:" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+            <Label text="Kontaktperson:" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+             <ComboBox fx:id="cbxCustomer" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </ComboBox>
+      
+                  <Button fx:id="btnShowChoosenCustomer" alignment="CENTER_RIGHT" minWidth="50" onAction="#onbtnShowChoosenCustomerClick" text="Details anzeigen" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3"> </Button>
  
          </children>
       </GridPane>
