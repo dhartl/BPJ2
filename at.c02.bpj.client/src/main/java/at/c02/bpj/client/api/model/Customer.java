@@ -74,11 +74,11 @@ public class Customer {
 	return this.street;
     }
 
-    public final java.lang.String getStreetProperty() {
+    public final java.lang.String getStreet() {
 	return this.streetProperty().get();
     }
 
-    public final void setStreetProperty(final java.lang.String street) {
+    public final void setStreet(final java.lang.String street) {
 	this.streetProperty().set(street);
     }
 
@@ -88,11 +88,11 @@ public class Customer {
 	return this.city;
     }
 
-    public final java.lang.String getCityProperty() {
+    public final java.lang.String getCity() {
 	return this.cityProperty().get();
     }
 
-    public final void setCityProperty(final java.lang.String city) {
+    public final void setCity(final java.lang.String city) {
 	this.cityProperty().set(city);
     }
 
@@ -102,11 +102,11 @@ public class Customer {
 	return this.houseNr;
     }
 
-    public final java.lang.String getHouseNrProperty() {
+    public final java.lang.String getHouseNr() {
 	return this.houseNrProperty().get();
     }
 
-    public final void setHouseNrProperty(final java.lang.String houseNr) {
+    public final void setHouseNr(final java.lang.String houseNr) {
 	this.houseNrProperty().set(houseNr);
     }
 
@@ -116,11 +116,11 @@ public class Customer {
 	return this.postCode;
     }
 
-    public final java.lang.String getPostCodeProperty() {
+    public final java.lang.String getPostCode() {
 	return this.postCodeProperty().get();
     }
 
-    public final void setPostCodeProperty(final java.lang.String postCode) {
+    public final void setPostCode(final java.lang.String postCode) {
 	this.postCodeProperty().set(postCode);
     }
 
