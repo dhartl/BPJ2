@@ -10,6 +10,8 @@ import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -43,13 +45,22 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
     private Label lblCustomerName;
 
     @FXML
-    private Label lblCustomerCityPostCode;
+    private Label lblCustomerCity;
 
     @FXML
-    private Label lblCustomerStreetHouseNr;
+    private Label lblCustomerStreet;
 
     @FXML
-    private Label lblCustomerContactPartner;
+    private Label lblCustomerHouseNr;
+
+    @FXML
+    private Label lblCustomerPostCode;
+
+    @FXML
+    private Label lblCustomerContactPartnerFN;
+
+    @FXML
+    private Label lblCustomerContactPartnerLN;
 
     @FXML
     private Button btnOfferCreate;
@@ -63,14 +74,9 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-	// model.newOffer();
-	//
-	// lblOfferNumber.setText(model.offerProperty().getValue().getOfferId().toString());
-	//
-	// lblOfferDate.setText(model.offerProperty().getValue().getCreatedDt().toString());
-
 	Bindings.bindContent(cbxCustomer.itemsProperty().get(), model.customerListProperty());
-	cbxCustomer.valueProperty().bindBidirectional(model.customerProperty());
+	cbxCustomer.valueProperty().bindBidirectional(model.selectedCustomerProperty());
+	cbxCustomer.getSelectionModel().selectFirst();
 
 	cbxCustomer.setConverter(new StringConverter<Customer>() {
 
@@ -87,7 +93,8 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	});
 
 	Bindings.bindContent(cbxEmployees.itemsProperty().get(), model.employeeListProperty());
-	cbxEmployees.valueProperty().bindBidirectional(model.employeeProperty());
+	cbxEmployees.valueProperty().bindBidirectional(model.selectedEmployeeProperty());
+	cbxEmployees.getSelectionModel().selectFirst();
 
 	cbxEmployees.setConverter(new StringConverter<Employee>() {
 
@@ -99,6 +106,56 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	    @Override
 	    public Employee fromString(String string) {
 		return null;
+	    }
+	});
+
+	Bindings.selectString(model.selectedCustomerProperty(),
+		model.selectedCustomerProperty().get().streetProperty().toString());
+
+	Bindings.bindBidirectional(lblCustomerStreet.textProperty(),
+		model.selectedCustomerProperty().get().streetProperty());
+
+	Bindings.bindBidirectional(lblCustomerHouseNr.textProperty(),
+		model.selectedCustomerProperty().get().houseNrProperty());
+
+	Bindings.bindBidirectional(lblCustomerCity.textProperty(),
+		model.selectedCustomerProperty().get().cityProperty());
+
+	Bindings.bindBidirectional(lblCustomerPostCode.textProperty(),
+		model.selectedCustomerProperty().get().postCodeProperty());
+
+	Bindings.bindBidirectional(lblCustomerContactPartnerFN.textProperty(),
+		model.selectedCustomerProperty().get().contactFirstName());
+
+	Bindings.bindBidirectional(lblCustomerContactPartnerLN.textProperty(),
+		model.selectedCustomerProperty().get().contactLasttName());
+
+	cbxCustomer.valueProperty().addListener(new ChangeListener<Customer>() {
+
+	    @Override
+	    public void changed(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue) {
+
+		Bindings.selectString(model.selectedCustomerProperty(),
+			model.selectedCustomerProperty().get().streetProperty().toString());
+
+		Bindings.bindBidirectional(lblCustomerStreet.textProperty(),
+			model.selectedCustomerProperty().get().streetProperty());
+
+		Bindings.bindBidirectional(lblCustomerHouseNr.textProperty(),
+			model.selectedCustomerProperty().get().houseNrProperty());
+
+		Bindings.bindBidirectional(lblCustomerCity.textProperty(),
+			model.selectedCustomerProperty().get().cityProperty());
+
+		Bindings.bindBidirectional(lblCustomerPostCode.textProperty(),
+			model.selectedCustomerProperty().get().postCodeProperty());
+
+		Bindings.bindBidirectional(lblCustomerContactPartnerFN.textProperty(),
+			model.selectedCustomerProperty().get().contactFirstName());
+
+		Bindings.bindBidirectional(lblCustomerContactPartnerLN.textProperty(),
+			model.selectedCustomerProperty().get().contactLasttName());
+
 	    }
 
 	});
@@ -115,7 +172,8 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	}
 
 	else {
-	    // model.newOffer();
+
+	    model.newOffer();
 
 	    Parent root;
 	    ViewTuple<OfferCreateView, OfferCreateViewModel> viewTuple = FluentViewLoader
@@ -129,25 +187,6 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	    stage.setScene(new Scene(root, 450, 450));
 	    stage.show();
 
-	}
-    }
-
-    // Zeigt die Details des Kunden
-    public void onbtnShowChoosenCustomerClick() {
-
-	if (cbxCustomer.getValue() == null) {
-	    Alert noInputAlert = new Alert(AlertType.WARNING);
-	    noInputAlert.setHeaderText("Eingabe fehlerhaft");
-	    noInputAlert.setContentText("Bitte Kunde angeben");
-	    noInputAlert.showAndWait();
-	} else {
-	    lblCustomerStreetHouseNr.setText(model.customerProperty().getValue().getStreet() + " "
-		    + model.customerProperty().getValue().getHouseNr());
-	    lblCustomerCityPostCode.setText(model.customerProperty().getValue().getPostCode() + " "
-		    + model.customerProperty().getValue().getCity());
-
-	    lblCustomerContactPartner.setText(model.customerProperty().getValue().getContactFirstName() + " "
-		    + model.customerProperty().getValue().getContactLastName());
 	}
     }
 
