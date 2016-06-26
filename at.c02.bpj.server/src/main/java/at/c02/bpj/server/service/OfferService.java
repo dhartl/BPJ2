@@ -11,33 +11,35 @@ import at.c02.bpj.server.repository.OfferRepository;
 @Service
 public class OfferService {
 
-    private OfferRepository offerRepository;
+	
+private OfferRepository offerRepository;
 
-    public OfferRepository getOfferRepository() {
+	
+	public OfferRepository getOfferRepository() {
 	return offerRepository;
-    }
+	}
 
-    @Autowired
-    public void setOfferRepository(OfferRepository offerRepository) {
+	@Autowired
+	public void setOfferRepository(OfferRepository offerRepository) {
 	this.offerRepository = offerRepository;
-    }
+	}
 
-    /**
-     * findet alle Angebote
-     * 
-     * @return Liste aller Angebote
-     */
-    public List<Offer> getAllOffers() {
-	return offerRepository.findAll();
-    }
 
-    /**
-     * erstellt oder aktualisiert Angebot.
-     * 
-     * @param offer
-     */
-    public Offer createOrUpdateOffer(Offer offer) {
-	return offerRepository.save(offer);
-    }
+	/**
+	 * findet alle Angebote
+	 * @return Liste aller Angebote
+	 */
+	public List<Offer> getAllOffers() {
+		return offerRepository.findAll();
+	}
 
+	/**
+	 * erstellt oder aktualisiert Angebot. 
+	 * @param offer
+	 */
+	public Offer createOrUpdateOffer(Offer offer) {
+		return offerRepository.save(offer);
+	}
+	
+	
 }

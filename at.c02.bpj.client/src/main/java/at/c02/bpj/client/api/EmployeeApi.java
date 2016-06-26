@@ -8,7 +8,8 @@ import retrofit2.http.GET;
 
 public interface EmployeeApi {
 
-    @GET("employee")
-    Call<List<Employee>> getEmployee();
-
+	@GET("employee")
+	Call<List<Employee>> getEmployee();
+	
+	
 }

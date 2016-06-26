@@ -1,7 +1,5 @@
 package at.c02.bpj.client.api.model;
 
-import java.text.DecimalFormat;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
@@ -11,7 +9,7 @@ public class OfferPosition {
 	private ObjectProperty<Long> offerPositionId = new SimpleObjectProperty<>();
 	private ObjectProperty<Offer> offer = new SimpleObjectProperty<>();
 	private ObjectProperty<Long> posNr = new SimpleObjectProperty<>();
-	private ObjectProperty<DecimalFormat> price = new SimpleObjectProperty<>();
+	private ObjectProperty<Double> price = new SimpleObjectProperty<>();
 	private ObjectProperty<Long> amount = new SimpleObjectProperty<>();
 	private ObjectProperty<Article> article = new SimpleObjectProperty<>();
 	
@@ -37,12 +35,10 @@ public class OfferPosition {
 	public final ObjectProperty<Offer> offerProperty() {
 		return this.offer;
 	}
-	
 
 	public final Offer getOffer() {
 		return this.offerProperty().get();
 	}
-	
 
 	public final void setOffer(final Offer offer) {
 		this.offerProperty().set(offer);
@@ -64,17 +60,17 @@ public class OfferPosition {
 	}
 	
 
-	public final ObjectProperty<DecimalFormat> priceProperty() {
+	public final ObjectProperty<Double> priceProperty() {
 		return this.price;
 	}
 	
 
-	public final DecimalFormat getPrice() {
+	public final Double getPrice() {
 		return this.priceProperty().get();
 	}
 	
 
-	public final void setPrice(final DecimalFormat price) {
+	public final void setPrice(final Double price) {
 		this.priceProperty().set(price);
 	}
 	
@@ -104,7 +100,7 @@ public class OfferPosition {
 	}
 	
 
-	public final void setArticleId(final Article article) {
+	public final void setArticle(final Article article) {
 		this.articleProperty().set(article);
 	}
 
@@ -113,7 +109,6 @@ public class OfferPosition {
 		return "OfferPosition [offerPositionId=" + offerPositionId + ", offerId=" + offer + ", posNr=" + posNr
 				+ ", price=" + price + ", amount=" + amount + ", articleId=" + article + "]";
 	}
-	
 
 
 }

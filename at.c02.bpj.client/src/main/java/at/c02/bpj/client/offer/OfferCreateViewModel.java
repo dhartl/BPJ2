@@ -42,8 +42,8 @@ public class OfferCreateViewModel implements ViewModel {
     }
 
     /**
-     * Lädt die Positionen
-     */
+	 * Lädt die Positionen
+	 */
     public void loadPositions() {
 	List<OfferPosition> offerPositions = offer.get().getOfferPositions();
 	setOfferPositions(offerPositions);
@@ -62,8 +62,8 @@ public class OfferCreateViewModel implements ViewModel {
     }
 
     /**
-     * Lädt die Artikel
-     */
+	 * Lädt die Artikel
+	 */
     public void loadArticles() {
 	List<Article> artciles = articleService.getArticles();
 	setArticles(artciles);
@@ -82,15 +82,15 @@ public class OfferCreateViewModel implements ViewModel {
     }
 
     /**
-     * TODO: Lädt die Kundendaten
-     */
+	 * TODO: Lädt die Kundendaten
+	 */
 
     /**
-     * Fügt eine neue Position zum Angebot hinzu
-     */
+	 * Fügt eine neue Position zum Angebot hinzu
+	 */
     public void addPositiontoOffer(Article article) {
 	OfferPosition newOfferPosition = new OfferPosition();
-	newOfferPosition.setArticleId(article);
+		newOfferPosition.setArticle(article);
 	newOfferPosition.setOffer(offer.get());
 
 	offerPositions.add(newOfferPosition);

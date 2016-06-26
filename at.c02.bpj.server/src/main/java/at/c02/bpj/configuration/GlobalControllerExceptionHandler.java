@@ -1,5 +1,7 @@
 package at.c02.bpj.configuration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -25,16 +27,18 @@ import at.c02.bpj.server.bean.ServerError;
  */
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {
+	public static final Logger logger = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
 
 	@ExceptionHandler(ClientException.class)
 	public ResponseEntity<ServerError> handleClientException(ClientException ex) {
+		logger.error("Client exception occured", ex);
 		return ResponseEntity.badRequest().body(new ServerError(ex.getMessage()));
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Throwable.class)
-	public void handleRemainingExceptions() {
-
+	public void handleRemainingExceptions(Throwable ex) {
+		logger.error("Unhandled exception occured", ex);
 	}
 
 }

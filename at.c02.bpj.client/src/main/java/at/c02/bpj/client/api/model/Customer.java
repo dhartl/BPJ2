@@ -7,7 +7,7 @@ import javafx.beans.property.StringProperty;
 
 public class Customer {
 
-    private ObjectProperty<Long> customerID = new SimpleObjectProperty<>();
+    private ObjectProperty<Long> customerId = new SimpleObjectProperty<>();
     private StringProperty companyName = new SimpleStringProperty();
     private StringProperty contactFirstName = new SimpleStringProperty();
     private StringProperty contactLastName = new SimpleStringProperty();
@@ -21,16 +21,17 @@ public class Customer {
     }
 
     public final ObjectProperty<Long> customerIdProperty() {
-	return this.customerID;
-    }
+		return this.customerId;
+	}
 
-    public Long getCustomerID() {
-	return this.customerIdProperty().get();
-    }
+	public final java.lang.Long getCustomerId() {
+		return this.customerIdProperty().get();
+	}
 
-    public void setCustomerID(final Long customerID) {
-	this.customerIdProperty().set(customerID);
-    }
+
+	public final void setCustomerId(final java.lang.Long customerId) {
+		this.customerIdProperty().set(customerId);
+	}
 
     public final StringProperty companyNameProperty() {
 	return this.companyName;
@@ -68,7 +69,7 @@ public class Customer {
 	this.contactLastName.set(contactLastName);
     }
 
-    // Property für Straße
+	// Property für Straße
 
     public final StringProperty streetProperty() {
 	return this.street;
@@ -82,7 +83,7 @@ public class Customer {
 	this.streetProperty().set(street);
     }
 
-    // Property für Stadt
+	// Property für Stadt
 
     public final StringProperty cityProperty() {
 	return this.city;
@@ -96,7 +97,7 @@ public class Customer {
 	this.cityProperty().set(city);
     }
 
-    // Property für Hausnummer
+	// Property für Hausnummer
 
     public final StringProperty houseNrProperty() {
 	return this.houseNr;
@@ -110,7 +111,7 @@ public class Customer {
 	this.houseNrProperty().set(houseNr);
     }
 
-    // Property für PLZ
+	// Property für PLZ
 
     public final StringProperty postCodeProperty() {
 	return this.postCode;
@@ -126,8 +127,9 @@ public class Customer {
 
     @Override
     public String toString() {
-	return "Customer [customerID=" + customerID + ", companyName=" + companyName + ", contactFirstName="
+	return "Customer [customerID=" + customerId + ", companyName=" + companyName + ", contactFirstName="
 		+ contactFirstName + ", contactLastName=" + contactLastName + "]";
     }
+
 
 }
