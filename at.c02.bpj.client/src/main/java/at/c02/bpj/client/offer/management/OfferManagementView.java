@@ -2,10 +2,18 @@ package at.c02.bpj.client.offer.management;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
+
+import org.apache.log4j.lf5.util.DateFormatManager;
 
 import com.google.common.base.Strings;
 import com.itextpdf.text.Document;
@@ -39,6 +47,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import javafx.util.converter.DateStringConverter;
+import javafx.util.converter.LocalDateTimeStringConverter;
 
 /**
  * Controller (Darstellung) für OfferManagement.fxml.
@@ -191,27 +201,39 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	@FXML
 	public void onExportButtonClick() throws DocumentException, IOException {
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open Resource File");
-		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
+		fileChooser.setTitle("Save File To");
+//		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
+//				// richtigen extension filter wählen für pdf
+//				new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
+//				new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"), new ExtensionFilter("All Files", "*.*"));
+//		// hier noch den automatischen filevorschlag implementieren
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
 				// richtigen extension filter wählen für pdf
-				new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
-				new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"), new ExtensionFilter("All Files", "*.*"));
-		// hier noch den automatischen filevorschlag implementieren
-		fileChooser.setInitialFileName(model.getSelectedOffer().getOfferId().toString());
-		//fileChooser.setSelectedFile(new File("lin_cfg.c"));
+				//new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
+				//new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"), new ExtensionFilter("All Files", "*.*"));
+	
+		Date dt = new Date();
+		SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd_HH_mm_ss" );
+		df.setTimeZone( TimeZone.getDefault() );
 
-		//File selectedFile = fileChooser.showOpenDialog(exportButton.getScene().getWindow());
+		fileChooser.setInitialFileName("Angebot_" + model.getSelectedOffer().getOfferId().toString() + "_" + df.format(dt));
 		File selectedFile = fileChooser.showSaveDialog(exportButton.getScene().getWindow());
 		if (selectedFile != null) {
-			model.onExportButtonClick(selectedFile);
+			model.onExportButtonClick(selectedFile);	
+			createPdf(selectedFile.toString());
 			//fileChooser.setInitialFileName(model.getSelectedOffer().getOfferId().toString());
 			//createPdf("D:\\Campus02\\Offers\\test1");
 			//createPdf("D:\\Campus02\\Offers\\" + selectedFile.getName());
 			//createPdf("D:\\Campus02\\Offers\\" + model.getSelectedOffer().getOfferId().toString());
-			createPdf("1");
+			//createPdf("E:\\Offers\\" + "Angebot_" + model.getSelectedOffer().getOfferId().toString() + "_" + df.format(dt));
 		}
+		
 		//createPdf("test");
 		//createPdf(model.getSelectedOffer().getOfferId().toString());
+		
+		//FileChooser chooser = new FileChooser("D:/Dateien/xml");
+		//chooser.setSelectedFile(new File("Datei - 12.12.1212.xml"));
+		//chooser.showSaveDialog(this);
 	}
 	public void createPdf(String filename)
 			throws DocumentException, IOException {
