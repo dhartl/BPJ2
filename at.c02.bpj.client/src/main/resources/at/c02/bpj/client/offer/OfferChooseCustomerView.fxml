@@ -8,7 +8,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.offer.OfferChooseCustomerView">
    <bottom>
-      <Button mnemonicParsing="false" text="Kunde bestätigen" BorderPane.alignment="CENTER">
+      <Button mnemonicParsing="false" onAction="#onbtnChoosenCustomer" text="Kunde bestätigen" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="20.0" />
          </BorderPane.margin></Button>
@@ -30,7 +30,6 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="AngebotsNr.:" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
             <Label fx:id="lblOfferNumber" GridPane.columnIndex="1" />
             <Label fx:id="lblOfferDate" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <StackPane GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -51,9 +50,7 @@
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin></Label>
-            
-            <Label text="Datum:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Label text="Firmenbezeichnung:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+            <Label text="Kunde:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
             <Label text="Ort, PLZ:" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
             <Label text="Straße, Hausnummer:" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
             <Label text="Kontaktperson:" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
@@ -64,6 +61,8 @@
             </ComboBox>
       
                   <Button fx:id="btnShowChoosenCustomer" alignment="CENTER_RIGHT" minWidth="50" onAction="#onbtnShowChoosenCustomerClick" text="Details anzeigen" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3"> </Button>
+            <Label text="Mitarbeiter:" GridPane.halignment="CENTER" />
+            <ComboBox fx:id="cbxEmployees" prefWidth="150.0" GridPane.columnIndex="1" />
  
          </children>
       </GridPane>

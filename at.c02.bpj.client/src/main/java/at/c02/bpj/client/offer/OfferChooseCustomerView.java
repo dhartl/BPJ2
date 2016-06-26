@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Customer;
+import at.c02.bpj.client.api.model.Employee;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
@@ -23,6 +24,9 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 
     @FXML
     private ComboBox<Customer> cbxCustomer;
+
+    @FXML
+    private ComboBox<Employee> cbxEmployees;
 
     @FXML
     private Label lblOfferNumber;
@@ -54,6 +58,12 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+	// model.newOffer();
+	//
+	// lblOfferNumber.setText(model.offerProperty().getValue().getOfferId().toString());
+	//
+	// lblOfferDate.setText(model.offerProperty().getValue().getCreatedDt().toString());
+
 	Bindings.bindContent(cbxCustomer.itemsProperty().get(), model.customerListProperty());
 	cbxCustomer.valueProperty().bindBidirectional(model.customerProperty());
 
@@ -71,6 +81,38 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 
 	});
 
+	Bindings.bindContent(cbxEmployees.itemsProperty().get(), model.employeeListProperty());
+	cbxEmployees.valueProperty().bindBidirectional(model.employeeProperty());
+
+	cbxEmployees.setConverter(new StringConverter<Employee>() {
+
+	    @Override
+	    public String toString(Employee employee) {
+		return employee.getLastname() + " " + employee.getFirstname();
+	    }
+
+	    @Override
+	    public Employee fromString(String string) {
+		return null;
+	    }
+
+	});
+
+    }
+
+    // Speichert Angebot und öffnet Bearbeitungsfenster
+    public void onbtnChoosenCustomer() {
+	if (cbxCustomer.getValue() == null || cbxEmployees.getValue() == null) {
+	    Alert noInputAlert = new Alert(AlertType.WARNING);
+	    noInputAlert.setHeaderText("Eingabe fehlerhaft");
+	    noInputAlert.setContentText("Bitte Mitarbeiter und Kunde angeben");
+	    noInputAlert.showAndWait();
+	}
+
+	else {
+	    model.newOffer();
+
+	}
     }
 
     // Zeigt die Details des Kunden
@@ -78,8 +120,8 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 
 	if (cbxCustomer.getValue() == null) {
 	    Alert noInputAlert = new Alert(AlertType.WARNING);
-	    noInputAlert.setHeaderText("Keine Eingabe vorhanden");
-	    noInputAlert.setContentText("Bitte mindestens ein Suchkriterium eingeben");
+	    noInputAlert.setHeaderText("Eingabe fehlerhaft");
+	    noInputAlert.setContentText("Bitte Kunde angeben");
 	    noInputAlert.showAndWait();
 	} else {
 	    lblCustomerStreetHouseNr.setText(model.customerProperty().getValue().getStreet() + " "
@@ -90,10 +132,6 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	    lblCustomerContactPartner.setText(model.customerProperty().getValue().getContactFirstName() + " "
 		    + model.customerProperty().getValue().getContactLastName());
 	}
-    }
-
-    public ComboBox<Customer> getCustomerField() {
-	return cbxCustomer;
     }
 
 }
