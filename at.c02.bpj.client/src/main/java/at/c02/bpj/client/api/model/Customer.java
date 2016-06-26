@@ -9,12 +9,15 @@ public class Customer {
 
     private ObjectProperty<Long> customerId = new SimpleObjectProperty<>();
     private StringProperty companyName = new SimpleStringProperty();
-    private StringProperty contactFirstName = new SimpleStringProperty();
-    private StringProperty contactLastName = new SimpleStringProperty();
-    private StringProperty city = new SimpleStringProperty();
     private StringProperty street = new SimpleStringProperty();
     private StringProperty houseNr = new SimpleStringProperty();
     private StringProperty postCode = new SimpleStringProperty();
+	private StringProperty city = new SimpleStringProperty();
+	private StringProperty contactFirstName = new SimpleStringProperty();
+	private StringProperty contactLastName = new SimpleStringProperty();
+	private StringProperty contactEmail = new SimpleStringProperty();
+	private ObjectProperty<Gender> contactGender = new SimpleObjectProperty<>();
+	private StringProperty contactPhoneNr = new SimpleStringProperty();
 
     // kein Argument-Konstruktor UNBEDINGT erforderlich
     public Customer() {
@@ -131,5 +134,40 @@ public class Customer {
 		+ contactFirstName + ", contactLastName=" + contactLastName + "]";
     }
 
+	public final StringProperty contactEmailProperty() {
+		return this.contactEmail;
+	}
+
+	public final java.lang.String getContactEmail() {
+		return this.contactEmailProperty().get();
+	}
+
+	public final void setContactEmail(final java.lang.String contactEmail) {
+		this.contactEmailProperty().set(contactEmail);
+	}
+
+	public final ObjectProperty<Gender> contactGenderProperty() {
+		return this.contactGender;
+	}
+
+	public final at.c02.bpj.client.api.model.Gender getContactGender() {
+		return this.contactGenderProperty().get();
+	}
+
+	public final void setContactGender(final at.c02.bpj.client.api.model.Gender contactGender) {
+		this.contactGenderProperty().set(contactGender);
+	}
+
+	public final StringProperty contactPhoneNrProperty() {
+		return this.contactPhoneNr;
+	}
+
+	public final java.lang.String getContactPhoneNr() {
+		return this.contactPhoneNrProperty().get();
+	}
+
+	public final void setContactPhoneNr(final java.lang.String contactPhoneNr) {
+		this.contactPhoneNrProperty().set(contactPhoneNr);
+	}
 
 }
