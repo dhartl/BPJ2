@@ -8,6 +8,7 @@ import at.c02.bpj.client.api.model.OfferPosition;
 import at.c02.bpj.client.service.ArticleService;
 import at.c02.bpj.client.service.OfferService;
 import de.saxsys.mvvmfx.ViewModel;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -21,13 +22,14 @@ public class OfferCreateViewModel implements ViewModel {
     /**
      * Liste aller Artikel und OfferPositons
      */
+    private ObjectProperty<Offer> offer = new SimpleObjectProperty<>(new Offer());
 
     private ObservableList<Article> articles = FXCollections.observableArrayList();
-	private ObjectProperty<Offer> offer = new SimpleObjectProperty<>(new Offer());
-	private ObservableList<OfferPosition> offerPositions = offer.get().offerPositionsProperty();
+
+    private ObservableList<OfferPosition> offerPositions = FXCollections.observableArrayList();
 
     private ArticleService articleService;
-
+    private OfferService offerService;
 
     public ObjectProperty<Offer> offerProperty() {
 	return offer;
@@ -36,14 +38,15 @@ public class OfferCreateViewModel implements ViewModel {
     // ArticleService wird mittels ConstruktorInjection gesetzt
     public OfferCreateViewModel(ArticleService articleService, OfferService offerService) {
 	this.articleService = articleService;
-
+	this.offerService = offerService;
+	Bindings.bindContent(offerPositionsProperty(), offer.get().offerPositionsProperty());
 	loadPositions();
 	loadArticles();
     }
 
     /**
-	 * Lädt die Positionen
-	 */
+     * Lädt die Positionen
+     */
     public void loadPositions() {
 	List<OfferPosition> offerPositions = offer.get().getOfferPositions();
 	setOfferPositions(offerPositions);
@@ -62,8 +65,8 @@ public class OfferCreateViewModel implements ViewModel {
     }
 
     /**
-	 * Lädt die Artikel
-	 */
+     * Lädt die Artikel
+     */
     public void loadArticles() {
 	List<Article> artciles = articleService.getArticles();
 	setArticles(artciles);
@@ -82,15 +85,12 @@ public class OfferCreateViewModel implements ViewModel {
     }
 
     /**
-	 * TODO: Lädt die Kundendaten
-	 */
-
-    /**
-	 * Fügt eine neue Position zum Angebot hinzu
-	 */
+     * Fügt eine neue Position zum Angebot hinzu
+     */
     public void addPositiontoOffer(Article article) {
 	OfferPosition newOfferPosition = new OfferPosition();
-		newOfferPosition.setArticle(article);
+	newOfferPosition.setArticle(article);
+	newOfferPosition.setPrice(article.getPrice());
 
 	offerPositions.add(newOfferPosition);
     }

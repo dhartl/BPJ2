@@ -3,98 +3,82 @@ package at.c02.bpj.client.api.model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
-
 public class OfferPosition {
-	
-	private ObjectProperty<Long> offerPositionId = new SimpleObjectProperty<>();
-	private ObjectProperty<Long> posNr = new SimpleObjectProperty<>();
-	private ObjectProperty<Double> price = new SimpleObjectProperty<>();
-	private ObjectProperty<Long> amount = new SimpleObjectProperty<>();
-	private ObjectProperty<Article> article = new SimpleObjectProperty<>();
-	
-	public OfferPosition() {
-		
-	}
 
-	public final ObjectProperty<Long> offerPositionIdProperty() {
-		return this.offerPositionId;
-	}
-	
+    private ObjectProperty<Long> offerPositionId = new SimpleObjectProperty<>();
+    private ObjectProperty<Long> posNr = new SimpleObjectProperty<>();
+    private ObjectProperty<Double> price = new SimpleObjectProperty<>();
+    private ObjectProperty<Long> amount = new SimpleObjectProperty<>();
+    private ObjectProperty<Article> article = new SimpleObjectProperty<>();
 
-	public final Long getOfferPositionId() {
-		return this.offerPositionIdProperty().get();
-	}
-	
+    public OfferPosition() {
 
-	public final void setOfferPositionId(final Long offerPositionId) {
-		this.offerPositionIdProperty().set(offerPositionId);
-	}
-	
+    }
 
-	public final ObjectProperty<Long> posNrProperty() {
-		return this.posNr;
-	}
-	
+    public final ObjectProperty<Long> offerPositionIdProperty() {
+	return this.offerPositionId;
+    }
 
-	public final Long getPosNr() {
-		return this.posNrProperty().get();
-	}
-	
+    public final Long getOfferPositionId() {
+	return this.offerPositionIdProperty().get();
+    }
 
-	public final void setPosNr(final Long posNr) {
-		this.posNrProperty().set(posNr);
-	}
-	
+    public final void setOfferPositionId(final Long offerPositionId) {
+	this.offerPositionIdProperty().set(offerPositionId);
+    }
 
-	public final ObjectProperty<Double> priceProperty() {
-		return this.price;
-	}
-	
+    public final ObjectProperty<Long> posNrProperty() {
+	return this.posNr;
+    }
 
-	public final Double getPrice() {
-		return this.priceProperty().get();
-	}
-	
+    public final Long getPosNr() {
+	return this.posNrProperty().get();
+    }
 
-	public final void setPrice(final Double price) {
-		this.priceProperty().set(price);
-	}
-	
+    public final void setPosNr(final Long posNr) {
+	this.posNrProperty().set(posNr);
+    }
 
-	public final ObjectProperty<Long> amountProperty() {
-		return this.amount;
-	}
-	
+    public final ObjectProperty<Double> priceProperty() {
+	return this.price;
+    }
 
-	public final Long getAmount() {
-		return this.amountProperty().get();
-	}
-	
+    public final Double getPrice() {
+	return this.priceProperty().get();
+    }
 
-	public final void setAmount(final Long amount) {
-		this.amountProperty().set(amount);
-	}
-	
+    public final void setPrice(final Double price) {
+	this.priceProperty().set(price);
+    }
 
-	public final ObjectProperty<Article> articleProperty() {
-		return this.article;
-	}
-	
+    public final ObjectProperty<Long> amountProperty() {
+	return this.amount;
+    }
 
-	public final Article getArticle() {
-		return this.articleProperty().get();
-	}
-	
+    public final Long getAmount() {
+	return this.amountProperty().get();
+    }
 
-	public final void setArticle(final Article article) {
-		this.articleProperty().set(article);
-	}
+    public final void setAmount(final Long amount) {
+	this.amountProperty().set(amount);
+    }
 
-	@Override
-	public String toString() {
-		return "OfferPosition [offerPositionId=" + offerPositionId + ", posNr=" + posNr
-				+ ", price=" + price + ", amount=" + amount + ", articleId=" + article + "]";
-	}
+    public final ObjectProperty<Article> articleProperty() {
+	return this.article;
+    }
 
+    public final Article getArticle() {
+	return this.articleProperty().get();
+    }
+
+    public final void setArticle(final Article article) {
+	this.articleProperty().set(article);
+    }
+
+    @Override
+    public String toString() {
+	return "OfferPosition [offerPositionId=" + offerPositionId + ", posNr=" + posNr + ", price=" + price
+		+ ", amount=" + amount + ", articleId=" + article + "]";
+    }
 
 }

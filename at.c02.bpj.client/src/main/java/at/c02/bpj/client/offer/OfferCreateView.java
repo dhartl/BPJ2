@@ -55,6 +55,12 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 	priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+	Bindings.bindContent(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
+	idOPColumn.setCellValueFactory(new PropertyValueFactory<>("offerPositionId"));
+	nameOPColumn.setCellValueFactory(new PropertyValueFactory<>("articleId"));
+	priceOPColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+	amountOPColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
 	// Einfügen des Kontext-Menüs für jede Zeile
 	tblArticles.setRowFactory(table -> {
 	    final TableRow<Article> row = new TableRow<>();
@@ -65,12 +71,12 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 
     private ContextMenu createContextMenu(TableRow<Article> row) {
 
-	Article article = row.getItem();
+	// Article article = row.getItem();
 	MenuItem miNewPositiontoOffer = new MenuItem("Zum Angebot hinzufügen");
 	// Bei Click auf "Zum Angebot hinzufügen..." wird
 	// onAddtoOfferArticleClick
 	// aufgerufen
-	miNewPositiontoOffer.setOnAction(event -> onAddtoOfferArticleClick(article));
+	miNewPositiontoOffer.setOnAction(event -> onAddtoOfferArticleClick(row.getItem()));
 
 	ContextMenu contextMenu = new ContextMenu(miNewPositiontoOffer);
 	return contextMenu;
