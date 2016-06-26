@@ -38,6 +38,7 @@ private OfferRepository offerRepository;
 	 * @param offer
 	 */
 	public Offer createOrUpdateOffer(Offer offer) {
+		offer.getOfferPositions().forEach(offerPosition -> offerPosition.setOffer(offer));
 		return offerRepository.save(offer);
 	}
 	

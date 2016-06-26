@@ -6,8 +6,6 @@ import java.util.List;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,7 +14,7 @@ public class Offer {
 	private ObjectProperty<Long> offerId = new SimpleObjectProperty<>();
 	private ObjectProperty<Date> createdDt = new SimpleObjectProperty<>();
 	private ObjectProperty<Date> completedDt = new SimpleObjectProperty<>();
-	private StringProperty status = new SimpleStringProperty();
+	private ObjectProperty<OfferStatus> status = new SimpleObjectProperty<>();
 	private ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
 	private ObjectProperty<Employee> employee = new SimpleObjectProperty<>();
 	private ObjectProperty<Date> insDt = new SimpleObjectProperty<>();
@@ -75,17 +73,17 @@ public class Offer {
 	}
 	
 
-	public final StringProperty statusProperty() {
+	public final ObjectProperty<OfferStatus> statusProperty() {
 		return this.status;
 	}
 	
 
-	public final String getStatus() {
+	public final OfferStatus getStatus() {
 		return this.statusProperty().get();
 	}
 	
 
-	public final void setStatus(final String status) {
+	public final void setStatus(final OfferStatus status) {
 		this.statusProperty().set(status);
 	}
 	
