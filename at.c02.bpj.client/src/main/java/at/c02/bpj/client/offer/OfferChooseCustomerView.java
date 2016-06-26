@@ -5,16 +5,21 @@ import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
+import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerModel>, Initializable {
@@ -110,7 +115,16 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	}
 
 	else {
-	    model.newOffer();
+	    // model.newOffer();
+
+	    Parent root;
+	    ViewTuple<OfferCreateView, OfferCreateViewModel> viewTuple = FluentViewLoader
+		    .fxmlView(OfferCreateView.class).load();
+	    root = viewTuple.getView();
+	    Stage stage = new Stage();
+	    stage.setTitle("Positionen zuweisen");
+	    stage.setScene(new Scene(root, 450, 450));
+	    stage.show();
 
 	}
     }
