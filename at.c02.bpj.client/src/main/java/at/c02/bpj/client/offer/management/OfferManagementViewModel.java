@@ -1,5 +1,6 @@
 package at.c02.bpj.client.offer.management;
 
+import java.io.File;
 import java.time.LocalDate;
 
 import com.google.common.base.Objects;
@@ -44,11 +45,14 @@ public class OfferManagementViewModel implements ViewModel {
 	private ObjectProperty<LocalDate> searchEndDate = new SimpleObjectProperty<>();
 	private ObjectProperty<Employee> searchEmployee = new SimpleObjectProperty<>();
 	private ObjectProperty<Customer> searchCustomer = new SimpleObjectProperty<>();
+	private ObjectProperty<Offer> selectedOffer = new SimpleObjectProperty<>();
+	private OfferService offerService;
 
 	
 	// Service Klassen mittels Construktor-Injection setzen
 	public OfferManagementViewModel(EmployeeService employeeService, CustomerService customerService,
 			OfferService offerService) {
+		this.offerService = offerService;
 		Async.executeUILoad(employeeService::getEmployee, employeesList::setAll);
 		Async.executeUILoad(customerService::getCustomer, customersList::setAll);
 		Async.executeUILoad(offerService::getOffer, offersList::setAll);
@@ -112,6 +116,11 @@ public class OfferManagementViewModel implements ViewModel {
 		}
 
 		return true;
+	}
+
+	public void onExportButtonClick(File selectedFile) {
+		offerService.exportOffer(selectedFile, getSelectedOffer());
+
 	}
 
 	public ObservableList<Customer> customerListProperty() {
@@ -184,6 +193,18 @@ public class OfferManagementViewModel implements ViewModel {
 
 	public final void setSearchCustomer(final at.c02.bpj.client.api.model.Customer searchCustomer) {
 		this.searchCustomerProperty().set(searchCustomer);
+	}
+
+	public final ObjectProperty<Offer> selectedOfferProperty() {
+		return this.selectedOffer;
+	}
+
+	public final at.c02.bpj.client.api.model.Offer getSelectedOffer() {
+		return this.selectedOfferProperty().get();
+	}
+
+	public final void setSelectedOffer(final at.c02.bpj.client.api.model.Offer selectedOffer) {
+		this.selectedOfferProperty().set(selectedOffer);
 	}
 
 }
