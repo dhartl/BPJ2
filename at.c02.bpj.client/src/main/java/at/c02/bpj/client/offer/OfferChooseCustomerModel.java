@@ -30,9 +30,9 @@ public class OfferChooseCustomerModel implements ViewModel {
 	return offer;
     }
 
-    public SimpleObjectProperty<Long> idProperty() {
-	return id;
-    }
+    // public SimpleObjectProperty<Long> idProperty() {
+    // return id;
+    // }
     //
     // public ObjectProperty<Date> createdDtProperty() {
     // return createdDt;
@@ -53,7 +53,7 @@ public class OfferChooseCustomerModel implements ViewModel {
 
 	// newOffer.setOfferId(id.get());
 	// Offer offer = new Offer();
-	Offer createdOffer = offerService.saveOffer(newOffer);
+	offer.setValue(offerService.saveOffer(newOffer));
 	// // id.set(offer.getOfferId());
 	// // createdDt.set(offer.getCreatedDt());
 

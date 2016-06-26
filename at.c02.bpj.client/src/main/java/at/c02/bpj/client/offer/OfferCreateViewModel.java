@@ -8,6 +8,8 @@ import at.c02.bpj.client.api.model.OfferPosition;
 import at.c02.bpj.client.service.ArticleService;
 import at.c02.bpj.client.service.OfferService;
 import de.saxsys.mvvmfx.ViewModel;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -24,14 +26,16 @@ public class OfferCreateViewModel implements ViewModel {
     private ObservableList<OfferPosition> offerPositions = FXCollections.observableArrayList();
 
     private ArticleService articleService;
-    private OfferService offerService;
-    private Offer offer;
+
+    private ObjectProperty<Offer> offer = new SimpleObjectProperty<>();
+
+    public ObjectProperty<Offer> offerProperty() {
+	return offer;
+    }
 
     // ArticleService wird mittels ConstruktorInjection gesetzt
-    public OfferCreateViewModel(ArticleService articleService, OfferService offerService, Offer param_offer) {
-	this.offer = param_offer;
+    public OfferCreateViewModel(ArticleService articleService, OfferService offerService) {
 	this.articleService = articleService;
-	this.offerService = offerService;
 
 	loadPositions();
 	loadArticles();
@@ -41,7 +45,7 @@ public class OfferCreateViewModel implements ViewModel {
      * Lädt die Positionen
      */
     public void loadPositions() {
-	List<OfferPosition> offerPositions = offer.getOfferPositions();
+	List<OfferPosition> offerPositions = offer.get().getOfferPositions();
 	setOfferPositions(offerPositions);
     }
 
@@ -87,7 +91,7 @@ public class OfferCreateViewModel implements ViewModel {
     public void addPositiontoOffer(Article article) {
 	OfferPosition newOfferPosition = new OfferPosition();
 	newOfferPosition.setArticleId(article);
-	newOfferPosition.setOffer(this.offer);
+	newOfferPosition.setOffer(offer.get());
 
 	offerPositions.add(newOfferPosition);
     }
