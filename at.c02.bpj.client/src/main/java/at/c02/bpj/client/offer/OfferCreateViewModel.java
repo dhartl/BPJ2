@@ -23,11 +23,11 @@ public class OfferCreateViewModel implements ViewModel {
      */
 
     private ObservableList<Article> articles = FXCollections.observableArrayList();
-    private ObservableList<OfferPosition> offerPositions = FXCollections.observableArrayList();
+	private ObjectProperty<Offer> offer = new SimpleObjectProperty<>(new Offer());
+	private ObservableList<OfferPosition> offerPositions = offer.get().offerPositionsProperty();
 
     private ArticleService articleService;
 
-    private ObjectProperty<Offer> offer = new SimpleObjectProperty<>();
 
     public ObjectProperty<Offer> offerProperty() {
 	return offer;
@@ -91,7 +91,6 @@ public class OfferCreateViewModel implements ViewModel {
     public void addPositiontoOffer(Article article) {
 	OfferPosition newOfferPosition = new OfferPosition();
 		newOfferPosition.setArticle(article);
-	newOfferPosition.setOffer(offer.get());
 
 	offerPositions.add(newOfferPosition);
     }

@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleObjectProperty;
 public class OfferPosition {
 	
 	private ObjectProperty<Long> offerPositionId = new SimpleObjectProperty<>();
-	private ObjectProperty<Offer> offer = new SimpleObjectProperty<>();
 	private ObjectProperty<Long> posNr = new SimpleObjectProperty<>();
 	private ObjectProperty<Double> price = new SimpleObjectProperty<>();
 	private ObjectProperty<Long> amount = new SimpleObjectProperty<>();
@@ -29,19 +28,6 @@ public class OfferPosition {
 
 	public final void setOfferPositionId(final Long offerPositionId) {
 		this.offerPositionIdProperty().set(offerPositionId);
-	}
-	
-
-	public final ObjectProperty<Offer> offerProperty() {
-		return this.offer;
-	}
-
-	public final Offer getOffer() {
-		return this.offerProperty().get();
-	}
-
-	public final void setOffer(final Offer offer) {
-		this.offerProperty().set(offer);
 	}
 	
 
@@ -106,7 +92,7 @@ public class OfferPosition {
 
 	@Override
 	public String toString() {
-		return "OfferPosition [offerPositionId=" + offerPositionId + ", offerId=" + offer + ", posNr=" + posNr
+		return "OfferPosition [offerPositionId=" + offerPositionId + ", posNr=" + posNr
 				+ ", price=" + price + ", amount=" + amount + ", articleId=" + article + "]";
 	}
 
