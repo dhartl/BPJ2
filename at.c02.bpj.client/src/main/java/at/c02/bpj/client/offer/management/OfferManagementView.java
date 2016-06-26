@@ -203,15 +203,13 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save File To");
 //		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
-//				// richtigen extension filter wählen für pdf
 //				new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
 //				new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"), new ExtensionFilter("All Files", "*.*"));
-//		// hier noch den automatischen filevorschlag implementieren
+		
+		// richtigen extension filter wählen für pdf
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
-				// richtigen extension filter wählen für pdf
-				//new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
-				//new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"), new ExtensionFilter("All Files", "*.*"));
-	
+
+		// hier noch den automatischen filevorschlag implementieren	
 		Date dt = new Date();
 		SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd_HH_mm_ss" );
 		df.setTimeZone( TimeZone.getDefault() );
@@ -244,7 +242,15 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        // step 3
 		        document.open();
 		        // step 4
-		        document.add(new Paragraph("Hello World!"));
+		        document.add(new Paragraph("Sehr geehrter Herr " + model.getSelectedOffer().getCustomer().getContactLastName() + ","));
+		        document.add(new Paragraph("wie vereinbart finden Sie untenstehend unser Angebot zu Ihrer Bestellung mit der Nummer " + 
+		        		model.getSelectedOffer().getOfferId().toString() + ":"));
+		        document.add(new Paragraph(""));
+		        document.add(new Paragraph(""));
+		        document.add(new Paragraph(""));
+		        document.add(new Paragraph("Hochachtungsvoll,"));
+		        document.add(new Paragraph(model.getSelectedOffer().getEmployee().getFirstname() + " " + model.getSelectedOffer().getEmployee().getLastname()));
+		        
 		        // step 5
 		        document.close();
 		    }
