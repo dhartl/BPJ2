@@ -197,15 +197,21 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 				new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
 				new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"), new ExtensionFilter("All Files", "*.*"));
 		// hier noch den automatischen filevorschlag implementieren
+		fileChooser.setInitialFileName(model.getSelectedOffer().getOfferId().toString());
+		//fileChooser.setSelectedFile(new File("lin_cfg.c"));
 
 		//File selectedFile = fileChooser.showOpenDialog(exportButton.getScene().getWindow());
 		File selectedFile = fileChooser.showSaveDialog(exportButton.getScene().getWindow());
 		if (selectedFile != null) {
 			model.onExportButtonClick(selectedFile);
-			createPdf("D:\\Campus02\\Offers\\test");
+			//fileChooser.setInitialFileName(model.getSelectedOffer().getOfferId().toString());
+			//createPdf("D:\\Campus02\\Offers\\test1");
+			//createPdf("D:\\Campus02\\Offers\\" + selectedFile.getName());
+			//createPdf("D:\\Campus02\\Offers\\" + model.getSelectedOffer().getOfferId().toString());
+			createPdf("1");
 		}
 		//createPdf("test");
-		createPdf(model.getSelectedOffer().getOfferId().toString());
+		//createPdf(model.getSelectedOffer().getOfferId().toString());
 	}
 	public void createPdf(String filename)
 			throws DocumentException, IOException {
@@ -213,6 +219,20 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        Document document = new Document();
 		        // step 2
 		        PdfWriter.getInstance(document, new FileOutputStream(filename));
+		        // step 3
+		        document.open();
+		        // step 4
+		        document.add(new Paragraph("Hello World!"));
+		        // step 5
+		        document.close();
+		    }
+	public void createPdf()
+			throws DocumentException, IOException {
+		        // step 1
+		        Document document = new Document();
+		        // step 2
+		       // PdfWriter.getInstance(document, new FileOutputStream(filename));
+		       ///PdfWriter.getInstance(document, new File();
 		        // step 3
 		        document.open();
 		        // step 4
