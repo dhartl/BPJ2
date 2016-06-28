@@ -37,6 +37,7 @@
                 <Label fx:id="lblCustomerStreet" alignment="BOTTOM_LEFT" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5">  <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin></Label>
+               <Label text=" "></Label>
               <Label fx:id="lblCustomerHouseNr" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5">
           
                <GridPane.margin>
@@ -53,6 +54,7 @@
              <Label fx:id="lblCustomerContactPartnerLN" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6">  <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin></Label>
+               <Label text=" " ></Label>
 <Label fx:id="lblCustomerContactPartnerFN" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6">
                          
   <GridPane.margin>
@@ -72,15 +74,13 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </ComboBox>
-      
-                     <Label text="Mitarbeiter:" GridPane.halignment="CENTER" />
+                   <Label text="Mitarbeiter:" GridPane.halignment="CENTER" />
             <ComboBox fx:id="cbxEmployees" prefWidth="150.0" GridPane.columnIndex="1" />
             <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                <children>
-                
-                  <Label fx:id="lblCustomerPostCode" alignment="CENTER" />
-                  <Label text=" "> </Label>
                   <Label fx:id="lblCustomerCity" alignment="CENTER" />
+                    <Label text=", "> </Label>
+                  <Label fx:id="lblCustomerPostCode" alignment="CENTER" />
                </children>
                <GridPane.margin>
                   <Insets left="20.0" />
