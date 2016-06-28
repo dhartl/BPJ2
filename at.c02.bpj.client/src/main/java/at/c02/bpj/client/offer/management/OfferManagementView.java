@@ -18,6 +18,8 @@ import org.apache.log4j.lf5.util.DateFormatManager;
 import com.google.common.base.Strings;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -242,11 +244,26 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        // step 3
 		        document.open();
 		        // step 4
+		     // Create and add an Image
+//		        Image img = Image.getInstance("/at.c02.bpj.client/AVl_Logo.jpg");
+		        Image img = Image.getInstance("AVl_Logo.jpg");
+		        img.setAbsolutePosition(428f, 765f);
+//		        img.scaleAbsolute(1, 1);
+		        img.scaleToFit(150, 150);
+
+		        
+//		        img.setAbsolutePosition(
+//		            (PageSize.POSTCARD.getWidth() - img.getScaledWidth()) / 2,
+//		            (PageSize.POSTCARD.getHeight() - img.getScaledHeight()) / 2);
+		        document.add(img);
 		        document.add(new Paragraph("Sehr geehrter Herr " + model.getSelectedOffer().getCustomer().getContactLastName() + ","));
-		        document.add(new Paragraph("wie vereinbart finden Sie untenstehend unser Angebot zu Ihrer Bestellung mit der Nummer " + 
+		        document.add(new Paragraph("\n"));
+		        document.add(new Paragraph("wie vereinbart finden Sie untenstehend unser Angebot"));
+		        document.add(new Paragraph("zu Ihrer Bestellung mit der Nummer " + 
 		        		model.getSelectedOffer().getOfferId().toString() + ":"));
+		        document.add(new Paragraph("\n\n\n"));
 		        document.add(new Paragraph(""));
-		        document.add(new Paragraph(""));
+		        
 		        document.add(new Paragraph(""));
 		        document.add(new Paragraph("Hochachtungsvoll,"));
 		        document.add(new Paragraph(model.getSelectedOffer().getEmployee().getFirstname() + " " + model.getSelectedOffer().getEmployee().getLastname()));
