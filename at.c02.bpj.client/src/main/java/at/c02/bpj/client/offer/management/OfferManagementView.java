@@ -4,14 +4,18 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.security.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
+
+import javax.management.modelmbean.ModelMBean;
 
 import org.apache.log4j.lf5.util.DateFormatManager;
 
@@ -22,6 +26,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.fonts.FontsResourceAnchor;
 
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
@@ -262,9 +267,47 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        document.add(new Paragraph("zu Ihrer Bestellung mit der Nummer " + 
 		        		model.getSelectedOffer().getOfferId().toString() + ":"));
 		        document.add(new Paragraph("\n\n\n"));
-		        document.add(new Paragraph(""));
+		        document.add(new Paragraph("Das Angebot setzt sich aus folgender(n) Position(en) zsammen:"));
+		        document.add(new Paragraph("\n"));
+
+		        ArrayList<Offer>Anbot = new ArrayList<Offer>();
+		        //Anbot.add(model.getSelectedOffer().getCustomer().companyNameProperty().toString());
+		        Anbot.add(model.getSelectedOffer());
+		        System.out.println(Anbot);
+		        for (Offer offer : Anbot) 
+		        {
+		        	System.out.println(offer.getCustomer().getCompanyName().toString());
+				}
+		        for (Offer offer : Anbot) 
+		        {
+		        	for(int i=0; i<offer.getOfferPositions().size(); i++)
+		        	System.out.println(offer.getOfferPositions().get(i).getArticle().getName() + offer.getOfferPositions().get(i).getArticle().getPrice()+offer.getOfferPositions().get(i).getOfferPositionId().toString());
+		        	//System.out.println(offer.getOfferPositions().get(i).getArticle().getName() + offer.getOfferPositions().get(i).getArticle().getPrice()+offer.getOfferPositions().get(i).getOfferPositionId().toString());
+		        	System.out.println(offer.getOfferPositions().size());
+		    	}
+//		       String name;
+//		       for (int i=0; i<Anbot.size(); i++)
+//		       {
+//		    	   name = model.getSelectedOffer().customerProperty().getName();
+//		    	   
+//		    	   System.out.println(name);
+//		       }
+//		        for (model.getSelectedOffer().getCustomer().companyNameProperty().toString() : Anbot)
+//			        {
+//			        System.out.println(Anbot);
+//			        }
+//		        OfferManagementView angebot = new OfferManagementView();
+		        //int anbot[] = new int[];
+//		        document.add(new Paragraph(for (int i : model.getSelectedOffer()
+//		        		{
+//		        			for (int j: model.getSelectedOffer().getOfferPositions())
+//		        		})
+//		        		model.getSelectedOffer().getOfferPositions().toString()));
+		        document.add(new Paragraph("\n\n\n"));
+		        document.add(new Paragraph("\n\n\n"));
 		        
-		        document.add(new Paragraph(""));
+		        
+		        document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + model.getSelectedOffer().getCompletedDt()));
 		        document.add(new Paragraph("Hochachtungsvoll,"));
 		        document.add(new Paragraph(model.getSelectedOffer().getEmployee().getFirstname() + " " + model.getSelectedOffer().getEmployee().getLastname()));
 		        
