@@ -10,12 +10,15 @@ import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 /**
  * Controller für OfferCreateView.fxml.
@@ -29,6 +32,12 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     // FXML-Properties: werden in der .fxml-Datei angegeben mit fx:id
     @FXML
     private TableView<Article> tblArticles;
+    @FXML
+    private Label offCustomerID;
+    @FXML
+    private Label offCompanyName;
+    @FXML
+    private Label offSummaryPrice;
     @FXML
     private TableView<OfferPosition> tblOfferPositions;
     @FXML
@@ -46,8 +55,12 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private TableColumn<Article, Double> amountOPColumn;
 
+    @FXML
+    private Button btnSaveAndClose;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
 	// Die Artikel-Tabelle zeigt genau das an, was in der ArticlesProperty
 	// des Models ist
 	Bindings.bindContent(tblArticles.itemsProperty().get(), model.articlesProperty());
@@ -69,6 +82,12 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	});
     }
 
+    public void onbtnSaveOffer() {
+	model.saveOffer();
+	Stage stage = (Stage) btnSaveAndClose.getScene().getWindow();
+	stage.close();
+    }
+
     private ContextMenu createContextMenu(TableRow<Article> row) {
 
 	// Article article = row.getItem();
@@ -83,7 +102,14 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     }
 
     private void onAddtoOfferArticleClick(Article article) {
+	showOfferData();
 	model.addPositiontoOffer(article);
     }
 
+    public void showOfferData() {
+	offCustomerID.setText(model.offerProperty().get().customerProperty().get().getCustomerId().toString());
+	offCompanyName.textProperty()
+		.bindBidirectional(model.offerProperty().get().customerProperty().get().companyNameProperty());
+
+    }
 }

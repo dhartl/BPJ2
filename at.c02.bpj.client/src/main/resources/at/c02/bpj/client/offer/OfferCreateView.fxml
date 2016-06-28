@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Button?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.offer.OfferCreateView">
+<BorderPane prefHeight="800" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.offer.OfferCreateView">
 	<center>
 	<BorderPane>
 	<left>
@@ -51,23 +51,23 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="34.0" prefWidth="139.0" text="Angebot speichern" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                          <Button fx:id="btnSaveAndClose" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="34.0" onAction="#onbtnSaveOffer" prefWidth="139.0" text="Angebot speichern" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                           <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                              <children>
                                                 <Label text="Kundennummer: " />
-                                                <Label text="23492ß5425" />
+                                                <Label fx:id="offCustomerID" />
                                              </children>
                                           </FlowPane>
                                           <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                              <children> 
                                                 <Label text="Kunde: " />
-                                                <Label text="Horst HUber " />
+                                                <Label fx:id="offCompanyName" />
                                              </children>
                                           </FlowPane>
                                           <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <children>
                                                 <Label text="Gesamtpreis: " />
-                                                <Label text="23,43" />
+                                                <Label fx:id="offSummaryPrice" />
                                              </children>
                                           </FlowPane>
                                        </children>

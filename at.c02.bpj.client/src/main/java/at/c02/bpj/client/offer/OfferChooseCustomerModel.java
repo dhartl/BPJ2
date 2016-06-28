@@ -56,9 +56,10 @@ public class OfferChooseCustomerModel implements ViewModel {
 	newOffer.setCustomer(selectedCustomer.get());
 	newOffer.setOfferId(id.get());
 	// Offer offer = new Offer();
-	offer.setValue(offerService.saveOffer(newOffer));
+	// offer.setValue(offerService.saveOffer(newOffer));
 	// // id.set(offer.getOfferId());
 	// // createdDt.set(offer.getCreatedDt());
+	offer.set(newOffer);
 
     }
 

@@ -36,7 +36,8 @@ public class OfferCreateViewModel implements ViewModel {
     }
 
     // ArticleService wird mittels ConstruktorInjection gesetzt
-    public OfferCreateViewModel(ArticleService articleService, OfferService offerService) {
+    public OfferCreateViewModel(ArticleService articleService, OfferService offerService, Offer param_offer) {
+	offer.set(param_offer);
 	this.articleService = articleService;
 	this.offerService = offerService;
 	Bindings.bindContent(offerPositionsProperty(), offer.get().offerPositionsProperty());
@@ -95,4 +96,7 @@ public class OfferCreateViewModel implements ViewModel {
 	offerPositions.add(newOfferPosition);
     }
 
+    public void saveOffer() {
+	offerService.saveOffer(offer.get());
+    }
 }

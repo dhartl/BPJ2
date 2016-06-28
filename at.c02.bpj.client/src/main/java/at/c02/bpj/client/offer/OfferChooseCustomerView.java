@@ -178,13 +178,12 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	    Parent root;
 	    ViewTuple<OfferCreateView, OfferCreateViewModel> viewTuple = FluentViewLoader
 		    .fxmlView(OfferCreateView.class).load();
-
 	    // Übergabe des erstellten Angebotes an das neue Fenster
 	    viewTuple.getViewModel().offerProperty().set(model.offerProperty().get());
 	    root = viewTuple.getView();
 	    Stage stage = new Stage();
 	    stage.setTitle("Positionen zuweisen");
-	    stage.setScene(new Scene(root, 450, 450));
+	    stage.setScene(new Scene(root, 800, 600));
 	    stage.show();
 
 	}
