@@ -51,10 +51,15 @@ public class OfferCreateViewModel implements ViewModel {
 	this.articleService = articleService;
 	this.offerPositionService = offerPositionService;
 	this.offerService = offerService;
-	Bindings.bindContent(offerPositionsProperty(), offer.get().offerPositionsProperty());
+
+	// Bindings.bindContent(offerPositionsProperty(),
+	// offer.get().offerPositionsProperty());
+	//
+
+	Bindings.bindContentBidirectional(offerPositionsProperty(), offer.get().offerPositionsProperty());
 
 	sumPrice.bind(Bindings.createObjectBinding(
-		() -> getOfferPositions().stream().mapToDouble(pos -> pos.getPrice() * pos.getAmount()).sum(),
+		() -> offerPositionsProperty().stream().mapToDouble(pos -> pos.getPrice() * pos.getAmount()).sum(),
 		offerPositions));
 	loadPositions();
 	loadArticles();
