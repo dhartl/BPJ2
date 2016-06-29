@@ -34,7 +34,7 @@ import javafx.util.Callback;
 
 public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initializable {
 
-    // ViewModel wird vom FluentFxmlLoader erzeugt und eingefügt
+	// ViewModel wird vom FluentFxmlLoader erzeugt und eingefügt
     @InjectViewModel
     private OfferCreateViewModel model;
     // FXML-Properties: werden in der .fxml-Datei angegeben mit fx:id
@@ -61,7 +61,7 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private TableColumn<OfferPosition, Double> priceOPColumn;
     @FXML
-    private TableColumn<OfferPosition, Number> amountOPColumn;
+	private TableColumn<OfferPosition, Number> amountOPColumn;
 
     @FXML
     private Button btnSaveAndClose;
@@ -94,13 +94,13 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 	priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-	tblOfferPositions.setEditable(true);
-	Bindings.bindContent(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
 	idOPColumn.setCellValueFactory(new PropertyValueFactory<>("posNr"));
 
-	priceOPColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-	// amountOPColumn.setCellValueFactory(new
-	// PropertyValueFactory<>("amount"));
+		amountOPColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
+
+		amountOPColumn.setCellFactory(col -> new IntegerEditingCell());
+
+	amountOPColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
 	nameOPColumn
 		.setCellValueFactory(new Callback<CellDataFeatures<OfferPosition, String>, ObservableValue<String>>() {
@@ -110,34 +110,32 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 		    }
 		});
 
-	amountOPColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
-
-	amountOPColumn.setCellFactory(col -> new IntegerEditingCell());
-
 	// amountOPColumn.setCellFactory(TextFieldTableCell.<OfferPosition>
 	// forTableColumn());
 	//
 	// amountOPColumn.setEditable(true);
 
-	// Einfügen des Kontext-Menüs für jede Zeile --ARTIKELTABELLE
+		// Einfügen des Kontext-Menüs für jede Zeile --ARTIKELTABELLE
 	tblArticles.setRowFactory(table -> {
 	    final TableRow<Article> row = new TableRow<>();
 	    row.setContextMenu(createContextMenu(row));
 	    return row;
 	});
 
-	// Einfügen des Kontext-Menüs für jede Zeile --POSITIONSTABELLE -- nur
+		// Einfügen des Kontext-Menüs für jede Zeile --POSITIONSTABELLE -- nur
 	// wenn rowcell nicht editable sein kann
 	tblOfferPositions.setRowFactory(table -> {
 	    final TableRow<OfferPosition> row = new TableRow<>();
 	    row.setContextMenu(createContextMenuOP(row));
 	    return row;
 	});
+		Bindings.bindContentBidirectional(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
+		tblOfferPositions.setEditable(true);
     }
 
     private ContextMenu createContextMenuOP(TableRow<OfferPosition> row) {
 
-	MenuItem miEditPosition = new MenuItem("Position entfernen");
+		MenuItem miEditPosition = new MenuItem("Position entfernen");
 
 	miEditPosition.setOnAction(event -> onEditOfferPosition(row.getItem()));
 
@@ -146,7 +144,7 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     }
 
     private Object onEditOfferPosition(OfferPosition item) {
-
+		tblOfferPositions.itemsProperty().get().remove(item);
 	return null;
     }
 
@@ -158,8 +156,8 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 
     private ContextMenu createContextMenu(TableRow<Article> row) {
 
-	MenuItem miNewPositiontoOffer = new MenuItem("Zum Angebot hinzufügen");
-	// Bei Click auf "Zum Angebot hinzufügen..." wird
+		MenuItem miNewPositiontoOffer = new MenuItem("Zum Angebot hinzufügen");
+		// Bei Click auf "Zum Angebot hinzufügen..." wird
 	// onAddtoOfferArticleClick
 	// aufgerufen
 	miNewPositiontoOffer.setOnAction(event -> onAddtoOfferArticleClick(row.getItem()));
@@ -184,5 +182,4 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 
 	offSummaryPrice.textProperty().bind(model.sumPriceProperty().asString());
     }
-
 }

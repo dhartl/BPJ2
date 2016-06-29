@@ -19,7 +19,6 @@ public class Services {
 		registerService(CategoryService.class, context);
 		registerService(OfferService.class, context);
 		registerService(EmployeeService.class, context);
-		registerService(OfferPositionService.class, context);
 		registerService(CustomerService.class, context);
 	}
 
