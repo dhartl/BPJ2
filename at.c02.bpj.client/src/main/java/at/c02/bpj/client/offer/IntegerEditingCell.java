@@ -63,10 +63,10 @@ public class IntegerEditingCell extends TableCell<OfferPosition, Number> {
 	setGraphic(null);
     }
 
-    // This seems necessary to persist the edit on loss of focus; not sure why:
     @Override
     public void commitEdit(Number value) {
 	super.commitEdit(value);
 	((OfferPosition) this.getTableRow().getItem()).setAmount(value.intValue());
+
     }
 }

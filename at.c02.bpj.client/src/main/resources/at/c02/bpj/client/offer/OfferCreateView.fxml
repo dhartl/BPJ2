@@ -34,7 +34,7 @@
             				<TableColumn fx:id="idOPColumn" prefWidth="60" text="Pos.-Nr." />
             				<TableColumn fx:id="nameOPColumn" prefWidth="200" text="Artikelname" />
             				<TableColumn fx:id="priceOPColumn" prefWidth="100" text="Preis pro Einheit" />
-            				<TableColumn fx:id="amountOPColumn" editable="true" prefWidth="75.0" text="Menge" />
+            				<TableColumn fx:id="amountOPColumn" editable="true" onEditCommit="#recalculatePriceSummarized" prefWidth="75.0" text="Menge" />
             			</columns>
             		</TableView>
                         <TitledPane animated="false" text="Angebot speichern">

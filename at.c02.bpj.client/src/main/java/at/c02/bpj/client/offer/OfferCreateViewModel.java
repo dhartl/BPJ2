@@ -65,6 +65,13 @@ public class OfferCreateViewModel implements ViewModel {
 	loadArticles();
     }
 
+    public void recalculateBinding() {
+	sumPrice.bind(Bindings.createObjectBinding(
+		() -> offerPositionsProperty().stream().mapToDouble(pos -> pos.getPrice() * pos.getAmount()).sum(),
+		offerPositions));
+
+    }
+
     /**
      * Lädt die Positionen
      */
