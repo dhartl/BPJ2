@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Button?>
 
-<BorderPane prefHeight="800" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.offer.OfferCreateView">
+<BorderPane prefHeight="600" prefWidth="800" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.offer.OfferCreateView">
 	<center>
 	<BorderPane>
 	<left>
@@ -33,17 +34,17 @@
             				<TableColumn fx:id="idOPColumn" prefWidth="60" text="Pos.-Nr." />
             				<TableColumn fx:id="nameOPColumn" prefWidth="200" text="Artikelname" />
             				<TableColumn fx:id="priceOPColumn" prefWidth="100" text="Preis pro Einheit" />
-            				<TableColumn fx:id="amountOPColumn" prefWidth="75.0" text="Menge" editable="true"  />
+            				<TableColumn fx:id="amountOPColumn" editable="true" prefWidth="75.0" text="Menge" />
             			</columns>
             		</TableView>
                         <TitledPane animated="false" text="Angebot speichern">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane layoutY="-5.0" prefHeight="179.0" prefWidth="351.0">
+                                    <GridPane prefHeight="174.0" prefWidth="546.0">
                                       <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="317.0" minWidth="10.0" prefWidth="252.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="235.0" />
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -51,23 +52,32 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Button fx:id="btnSaveAndClose" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="34.0" onAction="#onbtnSaveOffer" prefWidth="139.0" text="Angebot speichern" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                          <Button fx:id="btnSaveAndClose" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onbtnSaveOffer" prefHeight="34.0" prefWidth="139.0" text="Angebot speichern" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                           <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                              <children>
-                                                <Label text="Kundennummer: " />
+                                                <Label text="Kundennummer: ">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font></Label>
                                                 <Label fx:id="offCustomerID" />
                                              </children>
                                           </FlowPane>
                                           <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                              <children> 
-                                                <Label text="Kunde: " />
+                                                <Label text="Kunde: ">
+                                                   <font>
+                                                      <Font size="13.0" />
+                                                   </font></Label>
                                                 <Label fx:id="offCompanyName" />
                                              </children>
                                           </FlowPane>
                                           <FlowPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                              <children>
-                                                <Label text="Gesamtpreis: " />
-                                                <Label fx:id="offSummaryPrice" />
+                                                <Label text="Gesamtpreis: ">
+                                                   <font>
+                                                      <Font size="15.0" />
+                                                   </font></Label>
+                                                <TextField fx:id="offSummaryPrice" />
                                              </children>
                                           </FlowPane>
                                        </children>

@@ -25,6 +25,8 @@ public class OfferCreateViewModel implements ViewModel {
      */
     private ObjectProperty<Offer> offer = new SimpleObjectProperty<>(new Offer());
 
+    private ObjectProperty<Double> sumPrice = new SimpleObjectProperty<>();
+
     private ObservableList<Article> articles = FXCollections.observableArrayList();
 
     private ObservableList<OfferPosition> offerPositions = FXCollections.observableArrayList();
@@ -38,6 +40,10 @@ public class OfferCreateViewModel implements ViewModel {
 	return offer;
     }
 
+    public ObjectProperty<Double> sumPriceProperty() {
+	return sumPrice;
+    }
+
     // ArticleService wird mittels ConstruktorInjection gesetzt
     public OfferCreateViewModel(ArticleService articleService, OfferService offerService,
 	    OfferPositionService offerPositionService) {
@@ -46,6 +52,10 @@ public class OfferCreateViewModel implements ViewModel {
 	this.offerPositionService = offerPositionService;
 	this.offerService = offerService;
 	Bindings.bindContent(offerPositionsProperty(), offer.get().offerPositionsProperty());
+
+	sumPrice.bind(Bindings.createObjectBinding(
+		() -> getOfferPositions().stream().mapToDouble(pos -> pos.getPrice() * pos.getAmount()).sum(),
+		offerPositions));
 	loadPositions();
 	loadArticles();
     }

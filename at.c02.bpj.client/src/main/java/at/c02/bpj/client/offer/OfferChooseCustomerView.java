@@ -107,6 +107,7 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	    }
 	});
 
+	// Bindings für Kundendaten
 	lblCustomerStreet.textProperty()
 		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "street"));
 

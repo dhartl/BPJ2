@@ -1,6 +1,8 @@
 package at.c02.bpj.client.offer;
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.ParsePosition;
 import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Article;
@@ -20,6 +22,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -41,7 +45,7 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private Label offCompanyName;
     @FXML
-    private Label offSummaryPrice;
+    private TextField offSummaryPrice;
     @FXML
     private TableView<OfferPosition> tblOfferPositions;
     @FXML
@@ -62,8 +66,26 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private Button btnSaveAndClose;
 
+    private DecimalFormat priceFormat;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+	priceFormat = new DecimalFormat("0.00");
+	priceFormat.setMaximumFractionDigits(2);
+	// offSummaryPrice ist ein Feld mit 2 Nachkommazahlen
+	offSummaryPrice.setTextFormatter(new TextFormatter<>(c -> {
+	    ParsePosition parsePosition = new ParsePosition(0);
+	    Object object = priceFormat.parse(c.getControlNewText(), parsePosition);
+
+	    if (object == null || parsePosition.getIndex() < c.getControlNewText().length()) {
+		return null;
+	    } else {
+		return c;
+	    }
+	}));
+
+	offSummaryPrice.setEditable(false);
 
 	// Die Artikel-Tabelle zeigt genau das an, was in der ArticlesProperty
 	// des Models ist
@@ -98,7 +120,8 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	    return row;
 	});
 
-	// Einfügen des Kontext-Menüs für jede Zeile --POSITIONSTABELLE
+	// Einfügen des Kontext-Menüs für jede Zeile --POSITIONSTABELLE -- nur
+	// wenn rowcell nicht editable sein kann
 	tblOfferPositions.setRowFactory(table -> {
 	    final TableRow<OfferPosition> row = new TableRow<>();
 	    row.setContextMenu(createContextMenuOP(row));
@@ -147,9 +170,12 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     // kann nicht bei Initialize gemacht werden weil da das offer property noch
     // null ist
     public void showOfferData() {
-	offCustomerID.setText(model.offerProperty().get().customerProperty().get().getCustomerId().toString());
+
+	offCustomerID.textProperty()
+		.bind(model.offerProperty().get().customerProperty().get().customerIdProperty().asString());
 	offCompanyName.textProperty()
 		.bindBidirectional(model.offerProperty().get().customerProperty().get().companyNameProperty());
 
+	offSummaryPrice.textProperty().bind(model.sumPriceProperty().asString());
     }
 }
