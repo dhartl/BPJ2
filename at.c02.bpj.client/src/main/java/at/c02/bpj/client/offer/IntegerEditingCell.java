@@ -65,7 +65,8 @@ public class IntegerEditingCell extends TableCell<OfferPosition, Number> {
 
     @Override
     public void commitEdit(Number value) {
-	((OfferPosition) this.getTableRow().getItem()).amountProperty().setValue(value);
+	super.commitEdit(value);
+	((OfferPosition) this.getTableRow().getItem()).setAmount(value.intValue());
 
     }
 }
