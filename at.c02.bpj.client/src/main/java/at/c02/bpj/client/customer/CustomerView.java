@@ -3,31 +3,26 @@ package at.c02.bpj.client.customer;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.controlsfx.control.table.TableFilter;
+
 
 import at.c02.bpj.client.api.model.Article;
-import at.c02.bpj.client.api.model.Category;
 import at.c02.bpj.client.api.model.Customer;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
+
+
 
 /**
  * Controller für ArticleView.fxml.

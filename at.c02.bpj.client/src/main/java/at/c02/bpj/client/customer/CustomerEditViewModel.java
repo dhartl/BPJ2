@@ -1,18 +1,18 @@
 package at.c02.bpj.client.customer;
 
-import at.c02.bpj.client.api.model.Article;
+
 import at.c02.bpj.client.api.model.Category;
 import at.c02.bpj.client.api.model.Customer;
+import at.c02.bpj.client.api.model.Gender;
 import at.c02.bpj.client.service.CategoryService;
 import de.saxsys.mvvmfx.ViewModel;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 
 /**
  * Model für {@link CustomerEditView}
@@ -23,10 +23,28 @@ public class CustomerEditViewModel implements ViewModel {
 	private StringProperty firstName = new SimpleStringProperty();
 	private StringProperty lastName = new SimpleStringProperty();
 	private StringProperty companyName = new SimpleStringProperty();
+	private StringProperty street = new SimpleStringProperty();
+	private StringProperty houseNr = new SimpleStringProperty();
+	private StringProperty postCode = new SimpleStringProperty();
+	private StringProperty city = new SimpleStringProperty();
+	private StringProperty phoneNr = new SimpleStringProperty();
+	private StringProperty email = new SimpleStringProperty();
+	
+	private ObjectProperty<Gender> gender = new SimpleObjectProperty<>();
+	private ObservableList<Gender> genderList =  FXCollections.observableArrayList();
 
-
-
-
+	public CustomerEditViewModel() {
+		genderList.addAll(Gender.values());
+	}
+	
+	public ObservableList<Gender> genderListProperty() {
+		return genderList;
+	}
+	
+	public ObjectProperty<Gender> genderProperty() {
+		return gender;
+	}
+	
 	public SimpleObjectProperty<Long> idProperty() {
 		return id;
 	}
@@ -40,7 +58,24 @@ public class CustomerEditViewModel implements ViewModel {
 	public StringProperty companyNameProperty() {
 		return companyName;
 	}
-
+	public StringProperty streetProperty() {
+		return street;
+	}
+	public StringProperty houseNrProperty() {
+		return houseNr;
+	}
+	public StringProperty postCodeProperty() {
+		return postCode;
+	}
+	public StringProperty cityProperty() {
+		return city;
+	}
+	public StringProperty phoneNrProperty() {
+		return phoneNr;
+	}
+	public StringProperty emailProperty() {
+		return email;
+	}
 
 	/**
 	 * setzt den zu bearbeitenden Artikel
@@ -51,6 +86,13 @@ public class CustomerEditViewModel implements ViewModel {
 		id.set(customer.getCustomerId());
 		firstName.set(customer.getContactFirstName());
 		firstName.set(customer.getContactLastName());
+		companyName.set(customer.getCompanyName());
+		street.set(customer.getStreet());
+		houseNr.set(customer.getHouseNr());
+		postCode.set(customer.getHouseNr());
+		phoneNr.set(customer.getContactPhoneNr());
+		email.set(customer.getContactEmail());
+		gender.set(customer.getContactGender());
 	}
 
 	public Customer getCustomer() {
@@ -59,6 +101,12 @@ public class CustomerEditViewModel implements ViewModel {
 		customer.setContactFirstName(firstName.get());
 		customer.setContactLastName(lastName.get());
 		customer.setCompanyName(companyName.get());
+		customer.setStreet(street.get());
+		customer.setHouseNr(houseNr.get());
+		customer.setPostCode(postCode.get());
+		customer.setContactPhoneNr(phoneNr.get());
+		customer.setContactEmail(email.get());
+		customer.setContactGender(gender.get());
 		return customer;
 	}
 }

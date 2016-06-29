@@ -9,17 +9,13 @@ import com.google.common.base.Strings;
 import com.google.common.primitives.Longs;
 
 import at.c02.bpj.client.Async;
-import at.c02.bpj.client.api.model.Article;
-import at.c02.bpj.client.api.model.Category;
+
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.offer.management.OfferManagementDialog;
-import at.c02.bpj.client.service.ArticleService;
 
-import at.c02.bpj.client.service.CategoryService;
 import at.c02.bpj.client.service.CustomerService;
 import de.saxsys.mvvmfx.ViewModel;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -27,7 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
+
 
 /**
  * Model für den {@link CustomerView}

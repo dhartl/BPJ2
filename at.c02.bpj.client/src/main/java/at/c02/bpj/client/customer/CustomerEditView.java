@@ -6,6 +6,7 @@ import java.text.ParsePosition;
 import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Category;
+import at.c02.bpj.client.api.model.Gender;
 import at.c02.bpj.client.converter.StringToNumberConverter;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
@@ -13,10 +14,10 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.util.StringConverter;
+
 
 /**
  * Controller von CustomerEditView.fxml
@@ -34,8 +35,22 @@ public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initia
 	private TextField customerLastName;
 	@FXML
 	private TextField companyName;
+	@FXML
+	private TextField street;
+	@FXML
+	private TextField houseNr;
+	@FXML
+	private TextField postCode;
+	@FXML
+	private TextField city;
+	@FXML
+	private TextField phoneNr;
+	@FXML
+	private TextField email;
+	@FXML
+	private ComboBox<Gender> gender;
 
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		DecimalFormat idFormat = new DecimalFormat();
@@ -52,6 +67,7 @@ public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initia
 				return c;
 			}
 		}));
+		
 		// tfPrice ist ein Feld mit 2 Nachkommazahlen
 		;
 
@@ -62,8 +78,14 @@ public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initia
 		customerFirstName.textProperty().bindBidirectional(model.firstNameProperty());
 		customerLastName.textProperty().bindBidirectional(model.lastNameProperty());
 		companyName.textProperty().bindBidirectional(model.companyNameProperty());
-
-
+		street.textProperty().bindBidirectional(model.streetProperty());
+		houseNr.textProperty().bindBidirectional(model.houseNrProperty());
+		postCode.textProperty().bindBidirectional(model.postCodeProperty());
+		city.textProperty().bindBidirectional(model.cityProperty());
+		phoneNr.textProperty().bindBidirectional(model.phoneNrProperty());
+		Bindings.bindContent(gender.itemsProperty().get(), model.genderListProperty());
+		gender.valueProperty().bindBidirectional(model.genderProperty());
+		
 	}
 
 }
