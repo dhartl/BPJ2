@@ -8,6 +8,8 @@ import at.c02.bpj.client.api.model.OfferPosition;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -15,10 +17,12 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * Controller für OfferCreateView.fxml.
@@ -49,9 +53,9 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private TableColumn<OfferPosition, Long> idOPColumn;
     @FXML
-    private TableColumn<Article, String> nameOPColumn;
+    private TableColumn<OfferPosition, String> nameOPColumn;
     @FXML
-    private TableColumn<Article, Double> priceOPColumn;
+    private TableColumn<OfferPosition, Double> priceOPColumn;
     @FXML
     private TableColumn<OfferPosition, Integer> amountOPColumn;
 
@@ -69,10 +73,19 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
 	Bindings.bindContent(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
-	idOPColumn.setCellValueFactory(new PropertyValueFactory<>("offerPositionId"));
-	nameOPColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+	idOPColumn.setCellValueFactory(new PropertyValueFactory<>("posNr"));
+
 	priceOPColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 	amountOPColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+	nameOPColumn
+		.setCellValueFactory(new Callback<CellDataFeatures<OfferPosition, String>, ObservableValue<String>>() {
+		    @Override
+		    public ObservableValue<String> call(CellDataFeatures<OfferPosition, String> param) {
+			return new SimpleStringProperty(param.getValue().getArticle().getName());
+		    }
+		});
+
 	// amountOPColumn.setCellFactory(TextFieldTableCell.<OfferPosition>
 	// forTableColumn());
 	//
