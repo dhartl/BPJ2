@@ -2,6 +2,7 @@ package at.c02.bpj.client.offer.management;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.Collection;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
@@ -202,6 +203,7 @@ public class OfferManagementViewModel implements ViewModel {
 	public final at.c02.bpj.client.api.model.Offer getSelectedOffer() {
 		return this.selectedOfferProperty().get();
 	}
+
 
 	public final void setSelectedOffer(final at.c02.bpj.client.api.model.Offer selectedOffer) {
 		this.selectedOfferProperty().set(selectedOffer);
