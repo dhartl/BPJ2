@@ -30,9 +30,9 @@
             		
                               		<TableView fx:id="tblOfferPositions" prefHeight="254.0" prefWidth="350.0">
             			<columns>
-            				<TableColumn fx:id="idOPColumn" prefWidth="75.0" text="Id" />
-            				<TableColumn fx:id="nameOPColumn" prefWidth="75.0" text="Name" />
-            				<TableColumn fx:id="priceOPColumn" prefWidth="75.0" text="Preis" />
+            				<TableColumn fx:id="idOPColumn" prefWidth="60" text="Pos.-Nr." />
+            				<TableColumn fx:id="nameOPColumn" prefWidth="200" text="Artikelname" />
+            				<TableColumn fx:id="priceOPColumn" prefWidth="100" text="Preis pro Einheit" />
             				<TableColumn fx:id="amountOPColumn" prefWidth="75.0" text="Menge" editable="true"  />
             			</columns>
             		</TableView>

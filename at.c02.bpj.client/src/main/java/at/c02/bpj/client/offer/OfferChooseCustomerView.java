@@ -10,8 +10,6 @@ import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -109,56 +107,23 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	    }
 	});
 
-	Bindings.selectString(model.selectedCustomerProperty(),
-		model.selectedCustomerProperty().get().streetProperty().toString());
+	lblCustomerStreet.textProperty()
+		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "street"));
 
-	Bindings.bindBidirectional(lblCustomerStreet.textProperty(),
-		model.selectedCustomerProperty().get().streetProperty());
+	lblCustomerHouseNr.textProperty()
+		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "houseNr"));
 
-	Bindings.bindBidirectional(lblCustomerHouseNr.textProperty(),
-		model.selectedCustomerProperty().get().houseNrProperty());
+	lblCustomerCity.textProperty()
+		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "city"));
 
-	Bindings.bindBidirectional(lblCustomerCity.textProperty(),
-		model.selectedCustomerProperty().get().cityProperty());
+	lblCustomerPostCode.textProperty()
+		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "postCode"));
 
-	Bindings.bindBidirectional(lblCustomerPostCode.textProperty(),
-		model.selectedCustomerProperty().get().postCodeProperty());
+	lblCustomerContactPartnerFN.textProperty().bind(
+		Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "contactFirstName"));
 
-	Bindings.bindBidirectional(lblCustomerContactPartnerFN.textProperty(),
-		model.selectedCustomerProperty().get().contactFirstName());
-
-	Bindings.bindBidirectional(lblCustomerContactPartnerLN.textProperty(),
-		model.selectedCustomerProperty().get().contactLasttName());
-
-	cbxCustomer.valueProperty().addListener(new ChangeListener<Customer>() {
-
-	    @Override
-	    public void changed(ObservableValue<? extends Customer> observable, Customer oldValue, Customer newValue) {
-
-		Bindings.selectString(model.selectedCustomerProperty(),
-			model.selectedCustomerProperty().get().streetProperty().toString());
-
-		Bindings.bindBidirectional(lblCustomerStreet.textProperty(),
-			model.selectedCustomerProperty().get().streetProperty());
-
-		Bindings.bindBidirectional(lblCustomerHouseNr.textProperty(),
-			model.selectedCustomerProperty().get().houseNrProperty());
-
-		Bindings.bindBidirectional(lblCustomerCity.textProperty(),
-			model.selectedCustomerProperty().get().cityProperty());
-
-		Bindings.bindBidirectional(lblCustomerPostCode.textProperty(),
-			model.selectedCustomerProperty().get().postCodeProperty());
-
-		Bindings.bindBidirectional(lblCustomerContactPartnerFN.textProperty(),
-			model.selectedCustomerProperty().get().contactFirstName());
-
-		Bindings.bindBidirectional(lblCustomerContactPartnerLN.textProperty(),
-			model.selectedCustomerProperty().get().contactLasttName());
-
-	    }
-
-	});
+	lblCustomerContactPartnerLN.textProperty()
+		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "contactLastName"));
 
     }
 
