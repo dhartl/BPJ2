@@ -61,7 +61,7 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private TableColumn<OfferPosition, Double> priceOPColumn;
     @FXML
-    private TableColumn<OfferPosition, Integer> amountOPColumn;
+	private TableColumn<OfferPosition, Number> amountOPColumn;
 
     @FXML
     private Button btnSaveAndClose;
@@ -96,7 +96,10 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 
 	idOPColumn.setCellValueFactory(new PropertyValueFactory<>("posNr"));
 
-	priceOPColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+		amountOPColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
+
+		amountOPColumn.setCellFactory(col -> new IntegerEditingCell());
+
 	amountOPColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
 	nameOPColumn
@@ -126,12 +129,13 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	    row.setContextMenu(createContextMenuOP(row));
 	    return row;
 	});
-		Bindings.bindContent(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
+		Bindings.bindContentBidirectional(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
+		tblOfferPositions.setEditable(true);
     }
 
     private ContextMenu createContextMenuOP(TableRow<OfferPosition> row) {
 
-		MenuItem miEditPosition = new MenuItem("Position ändern");
+		MenuItem miEditPosition = new MenuItem("Position entfernen");
 
 	miEditPosition.setOnAction(event -> onEditOfferPosition(row.getItem()));
 
@@ -140,7 +144,7 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     }
 
     private Object onEditOfferPosition(OfferPosition item) {
-
+		tblOfferPositions.itemsProperty().get().remove(item);
 	return null;
     }
 

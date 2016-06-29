@@ -61,12 +61,12 @@ public class OfferCreateViewModel implements ViewModel {
 						() -> newValue.offerPositionsProperty().stream()
 								.mapToDouble(pos -> pos.getPrice() * pos.getAmount()).sum(),
 						newValue.offerPositionsProperty()));
-		Bindings.bindContent(offerPositions, offer.get().offerPositionsProperty());
+		Bindings.bindContentBidirectional(offerPositions, offer.get().offerPositionsProperty());
 	}
 
 	private void unbindOffer(Offer oldValue) {
 		sumPrice.unbind();
-		Bindings.unbindContent(offerPositions, offer.get().offerPositionsProperty());
+		Bindings.unbindContentBidirectional(offerPositions, offer.get().offerPositionsProperty());
 	}
 
 	public void setOffer(Offer offer) {
