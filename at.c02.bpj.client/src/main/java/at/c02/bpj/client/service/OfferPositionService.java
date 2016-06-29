@@ -18,4 +18,8 @@ public class OfferPositionService {
 	return Services.executeCall(offerPositionApi.getOfferPosition());
     }
 
+    public OfferPosition saveOfferPosition(OfferPosition offerPosition) throws ServiceException {
+	return Services.executeCall(offerPositionApi.saveOfferPosition(offerPosition));
+    }
+
 }

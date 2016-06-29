@@ -30,14 +30,15 @@ public class OfferCreateViewModel implements ViewModel {
 
     private ArticleService articleService;
     private OfferService offerService;
+    private long positionNumber;
 
     public ObjectProperty<Offer> offerProperty() {
 	return offer;
     }
 
     // ArticleService wird mittels ConstruktorInjection gesetzt
-    public OfferCreateViewModel(ArticleService articleService, OfferService offerService, Offer param_offer) {
-	offer.set(param_offer);
+    public OfferCreateViewModel(ArticleService articleService, OfferService offerService) {
+	positionNumber = 0;
 	this.articleService = articleService;
 	this.offerService = offerService;
 	Bindings.bindContent(offerPositionsProperty(), offer.get().offerPositionsProperty());
@@ -89,9 +90,13 @@ public class OfferCreateViewModel implements ViewModel {
      * Fügt eine neue Position zum Angebot hinzu
      */
     public void addPositiontoOffer(Article article) {
+	positionNumber++;
 	OfferPosition newOfferPosition = new OfferPosition();
 	newOfferPosition.setArticle(article);
 	newOfferPosition.setPrice(article.getPrice());
+	newOfferPosition.setPosNr(positionNumber);
+	long nmbr = 1;
+	newOfferPosition.setAmount(nmbr);
 
 	offerPositions.add(newOfferPosition);
     }

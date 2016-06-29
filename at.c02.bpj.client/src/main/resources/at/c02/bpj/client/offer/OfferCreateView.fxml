@@ -33,7 +33,7 @@
             				<TableColumn fx:id="idOPColumn" prefWidth="75.0" text="Id" />
             				<TableColumn fx:id="nameOPColumn" prefWidth="75.0" text="Name" />
             				<TableColumn fx:id="priceOPColumn" prefWidth="75.0" text="Preis" />
-            				<TableColumn fx:id="amountOPColumn" prefWidth="75.0" text="Menge" />
+            				<TableColumn fx:id="amountOPColumn" prefWidth="75.0" text="Menge" editable="true"  />
             			</columns>
             		</TableView>
                         <TitledPane animated="false" text="Angebot speichern">

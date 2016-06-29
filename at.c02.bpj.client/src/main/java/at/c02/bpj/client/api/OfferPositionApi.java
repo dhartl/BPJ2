@@ -2,7 +2,6 @@ package at.c02.bpj.client.api;
 
 import java.util.List;
 
-import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.OfferPosition;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -33,7 +32,7 @@ public interface OfferPositionApi {
      * @param offerPosition
      * @return die gespeicherte OfferPosition
      */
-    @POST("offerPositions")
-    Call<OfferPosition> saveOfferPositions(@Body Article offerPosition);
+    @POST("offerPosition")
+    Call<OfferPosition> saveOfferPosition(@Body OfferPosition offerPosition);
 
 }

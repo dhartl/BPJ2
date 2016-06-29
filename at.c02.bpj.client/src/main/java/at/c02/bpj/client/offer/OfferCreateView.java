@@ -70,16 +70,39 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 
 	Bindings.bindContent(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
 	idOPColumn.setCellValueFactory(new PropertyValueFactory<>("offerPositionId"));
-	nameOPColumn.setCellValueFactory(new PropertyValueFactory<>("articleId"));
+	nameOPColumn.setCellValueFactory(new PropertyValueFactory<>("articleProperty().get().getName()"));
 	priceOPColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 	amountOPColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+	// amountOPColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-	// Einfügen des Kontext-Menüs für jede Zeile
+	// Einfügen des Kontext-Menüs für jede Zeile --ARTIKELTABELLE
 	tblArticles.setRowFactory(table -> {
 	    final TableRow<Article> row = new TableRow<>();
 	    row.setContextMenu(createContextMenu(row));
 	    return row;
 	});
+
+	// Einfügen des Kontext-Menüs für jede Zeile --POSITIONSTABELLE
+	tblOfferPositions.setRowFactory(table -> {
+	    final TableRow<OfferPosition> row = new TableRow<>();
+	    row.setContextMenu(createContextMenuOP(row));
+	    return row;
+	});
+    }
+
+    private ContextMenu createContextMenuOP(TableRow<OfferPosition> row) {
+
+	MenuItem miEditPosition = new MenuItem("Position ändern");
+
+	miEditPosition.setOnAction(event -> onEditOfferPosition(row.getItem()));
+
+	ContextMenu contextMenu = new ContextMenu(miEditPosition);
+	return contextMenu;
+    }
+
+    private Object onEditOfferPosition(OfferPosition item) {
+
+	return null;
     }
 
     public void onbtnSaveOffer() {
@@ -90,7 +113,6 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 
     private ContextMenu createContextMenu(TableRow<Article> row) {
 
-	// Article article = row.getItem();
 	MenuItem miNewPositiontoOffer = new MenuItem("Zum Angebot hinzufügen");
 	// Bei Click auf "Zum Angebot hinzufügen..." wird
 	// onAddtoOfferArticleClick
@@ -106,6 +128,8 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	model.addPositiontoOffer(article);
     }
 
+    // kann nicht bei Initialize gemacht werden weil da das offer property noch
+    // null ist
     public void showOfferData() {
 	offCustomerID.setText(model.offerProperty().get().customerProperty().get().getCustomerId().toString());
 	offCompanyName.textProperty()
