@@ -273,6 +273,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        ArrayList<Offer>Anbot = new ArrayList<Offer>();
 		        //Anbot.add(model.getSelectedOffer().getCustomer().companyNameProperty().toString());
 		        Anbot.add(model.getSelectedOffer());
+		        int gesamtpreis = 0;
 		        System.out.println(Anbot);
 		        for (Offer offer : Anbot) 
 		        {
@@ -281,14 +282,20 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        for (Offer offer : Anbot) 
 		        {
 		        	for(int i=0; i<offer.getOfferPositions().size(); i++)
-		        	
-//		        	document.add(new Paragraph("Artikel " + i + ": " + offer.getOfferPositions().get(i).getArticle().getName()
-//		        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
+		        	{
+		        	document.add(new Paragraph("Artikel " + i + ": " + offer.getOfferPositions().get(i).getArticle().getName()
+		        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
+		        	gesamtpreis+=offer.getOfferPositions().get(i).getArticle().getPrice();
+		        	System.out.println("Gesamtpreis: " + gesamtpreis);
 		        	System.out.println(offer.getOfferPositions().get(i).getArticle().getName() + offer.getOfferPositions().get(i).getArticle().getPrice()+offer.getOfferPositions().get(i).getOfferPositionId().toString());
-		        	//System.out.println(offer.getOfferPositions().get(i).getArticle().getName() + offer.getOfferPositions().get(i).getArticle().getPrice()+offer.getOfferPositions().get(i).getOfferPositionId().toString());
-//		        	System.out.println(offer.getOfferPositions().size());
-		        	
+		        	System.out.println(offer.getOfferPositions().get(i).getArticle().getName() + offer.getOfferPositions().get(i).getArticle().getPrice()+offer.getOfferPositions().get(i).getOfferPositionId().toString());
+		        	System.out.println(offer.getOfferPositions().size());
+		        	}
 		    	}
+		        document.add(new Paragraph("\n"));
+		        document.add(new Paragraph("Wir erlauben uns, Ihnen für diese Bestellung " + gesamtpreis + " Euro in Rechnung zu stellen."));
+		        document.add(new Paragraph("\n"));
+		        document.add(new Paragraph("Vielen Dank für Ihr Vertrauen!"));
 //		       String name;
 //		       for (int i=0; i<Anbot.size(); i++)
 //		       {
@@ -308,10 +315,11 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 //		        		})
 //		        		model.getSelectedOffer().getOfferPositions().toString()));
 		        document.add(new Paragraph("\n\n\n"));
-		        document.add(new Paragraph("\n\n\n"));
+//		        document.add(new Paragraph("\n\n\n"));
 		        
 		        
 		        document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + model.getSelectedOffer().getCompletedDt()));
+		        document.add(new Paragraph("\n"));
 		        document.add(new Paragraph("Hochachtungsvoll,"));
 		        document.add(new Paragraph(model.getSelectedOffer().getEmployee().getFirstname() + " " + model.getSelectedOffer().getEmployee().getLastname()));
 		        
