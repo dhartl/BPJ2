@@ -6,6 +6,7 @@ import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.Offer;
 import at.c02.bpj.client.api.model.OfferPosition;
 import at.c02.bpj.client.service.ArticleService;
+import at.c02.bpj.client.service.OfferPositionService;
 import at.c02.bpj.client.service.OfferService;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.binding.Bindings;
@@ -30,6 +31,7 @@ public class OfferCreateViewModel implements ViewModel {
 
     private ArticleService articleService;
     private OfferService offerService;
+    private OfferPositionService offerPositionService;
     private long positionNumber;
 
     public ObjectProperty<Offer> offerProperty() {
@@ -37,9 +39,11 @@ public class OfferCreateViewModel implements ViewModel {
     }
 
     // ArticleService wird mittels ConstruktorInjection gesetzt
-    public OfferCreateViewModel(ArticleService articleService, OfferService offerService) {
+    public OfferCreateViewModel(ArticleService articleService, OfferService offerService,
+	    OfferPositionService offerPositionService) {
 	positionNumber = 0;
 	this.articleService = articleService;
+	this.offerPositionService = offerPositionService;
 	this.offerService = offerService;
 	Bindings.bindContent(offerPositionsProperty(), offer.get().offerPositionsProperty());
 	loadPositions();
@@ -97,11 +101,21 @@ public class OfferCreateViewModel implements ViewModel {
 	newOfferPosition.setPosNr(positionNumber);
 	long nmbr = 1;
 	newOfferPosition.setAmount(nmbr);
+	// newOfferPosition.setOfferId(offer.get());
 
 	offerPositions.add(newOfferPosition);
     }
 
     public void saveOffer() {
-	offerService.saveOffer(offer.get());
+	Offer savedOffer = new Offer();
+	savedOffer = offerService.saveOffer(offer.get());
+
+	// Speichert alle OfferPositionen ab (wäre nicht automatisch mit
+	// Angebotgespeichert)
+	for (OfferPosition op : offerPositions) {
+	    op.offerIdProperty().set(savedOffer);
+
+	    offerPositionService.saveOfferPosition(op);
+	}
     }
 }

@@ -10,9 +10,22 @@ public class OfferPosition {
     private ObjectProperty<Double> price = new SimpleObjectProperty<>();
     private ObjectProperty<Long> amount = new SimpleObjectProperty<>();
     private ObjectProperty<Article> article = new SimpleObjectProperty<>();
+    private ObjectProperty<Offer> offerId = new SimpleObjectProperty<>();
 
     public OfferPosition() {
 
+    }
+
+    public final ObjectProperty<Offer> offerIdProperty() {
+	return this.offerId;
+    }
+
+    public final Offer getOfferId() {
+	return this.offerIdProperty().get();
+    }
+
+    public final void setOfferId(final Offer offerId) {
+	this.offerIdProperty().set(offerId);
     }
 
     public final ObjectProperty<Long> offerPositionIdProperty() {
