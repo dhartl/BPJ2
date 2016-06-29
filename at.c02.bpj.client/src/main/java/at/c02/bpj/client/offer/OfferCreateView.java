@@ -95,7 +95,7 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
 	tblOfferPositions.setEditable(true);
-	Bindings.bindContentBidirectional(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
+	Bindings.bindContent(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
 	idOPColumn.setCellValueFactory(new PropertyValueFactory<>("posNr"));
 
 	priceOPColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
@@ -133,11 +133,6 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	    row.setContextMenu(createContextMenuOP(row));
 	    return row;
 	});
-    }
-
-    public void recalculatePriceSummarized() {
-	offSummaryPrice.textProperty().bind(model.sumPriceProperty().asString());
-
     }
 
     private ContextMenu createContextMenuOP(TableRow<OfferPosition> row) {
