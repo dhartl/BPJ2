@@ -11,10 +11,8 @@ import com.google.common.primitives.Longs;
 import at.c02.bpj.client.Async;
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.Category;
-
 import at.c02.bpj.client.offer.management.OfferManagementDialog;
 import at.c02.bpj.client.service.ArticleService;
-
 import at.c02.bpj.client.service.CategoryService;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.ObjectProperty;
@@ -51,7 +49,7 @@ public class ArticleViewModel implements ViewModel {
 	public ArticleViewModel(CategoryService categoryService, ArticleService articleService) {
 		Async.executeUILoad(categoryService::getCategories, categoryList::setAll);
 		Async.executeUILoad(articleService::getArticles, articles::setAll);
-		//this.articleService = articleService;
+		this.articleService = articleService;
 
 		//loadArticles();
 	}

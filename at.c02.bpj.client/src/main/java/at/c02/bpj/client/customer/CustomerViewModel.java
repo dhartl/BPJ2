@@ -9,13 +9,10 @@ import com.google.common.base.Strings;
 import com.google.common.primitives.Longs;
 
 import at.c02.bpj.client.Async;
-
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.offer.management.OfferManagementDialog;
-
 import at.c02.bpj.client.service.CustomerService;
 import de.saxsys.mvvmfx.ViewModel;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -47,7 +44,7 @@ public class CustomerViewModel implements ViewModel {
 	// Service Klassen mittels Construktor-Injection setzen
 	public CustomerViewModel(CustomerService customerService) {
 		Async.executeUILoad(customerService::getCustomer, customers::setAll);
-		//this.articleService = articleService;
+		this.customerService = customerService;
 
 		//loadArticles();
 	}
@@ -112,9 +109,10 @@ public class CustomerViewModel implements ViewModel {
 //	public void deleteArticle(Article article) {
 //		// Sicherheitsabfrage
 //		Alert alert = new Alert(AlertType.WARNING);
-//		alert.setTitle("Artikel löschen");
+	// alert.setTitle("Artikel löschen");
 //		alert.setHeaderText(null);
-//		alert.setContentText(String.format("Möchten Sie den Artikel '%s' wirklich löschen?", article.getName()));
+	// alert.setContentText(String.format("Möchten Sie den Artikel '%s' wirklich
+	// löschen?", article.getName()));
 //
 //		Optional<ButtonType> result = alert.showAndWait();
 //		if (result.orElse(ButtonType.CANCEL) == ButtonType.OK) {
