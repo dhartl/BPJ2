@@ -32,7 +32,7 @@ public class OfferCreateViewModel implements ViewModel {
     private ArticleService articleService;
     private OfferService offerService;
     private OfferPositionService offerPositionService;
-    private long positionNumber;
+    private int positionNumber;
 
     public ObjectProperty<Offer> offerProperty() {
 	return offer;
@@ -99,7 +99,7 @@ public class OfferCreateViewModel implements ViewModel {
 	newOfferPosition.setArticle(article);
 	newOfferPosition.setPrice(article.getPrice());
 	newOfferPosition.setPosNr(positionNumber);
-	long nmbr = 1;
+	int nmbr = 1;
 	newOfferPosition.setAmount(nmbr);
 	// newOfferPosition.setOfferId(offer.get());
 

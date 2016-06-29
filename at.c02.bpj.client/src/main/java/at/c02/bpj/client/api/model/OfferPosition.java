@@ -6,9 +6,9 @@ import javafx.beans.property.SimpleObjectProperty;
 public class OfferPosition {
 
     private ObjectProperty<Long> offerPositionId = new SimpleObjectProperty<>();
-    private ObjectProperty<Long> posNr = new SimpleObjectProperty<>();
+    private ObjectProperty<Integer> posNr = new SimpleObjectProperty<>();
     private ObjectProperty<Double> price = new SimpleObjectProperty<>();
-    private ObjectProperty<Long> amount = new SimpleObjectProperty<>();
+    private ObjectProperty<Integer> amount = new SimpleObjectProperty<>();
     private ObjectProperty<Article> article = new SimpleObjectProperty<>();
     private ObjectProperty<Offer> offerId = new SimpleObjectProperty<>();
 
@@ -40,15 +40,15 @@ public class OfferPosition {
 	this.offerPositionIdProperty().set(offerPositionId);
     }
 
-    public final ObjectProperty<Long> posNrProperty() {
+    public final ObjectProperty<Integer> posNrProperty() {
 	return this.posNr;
     }
 
-    public final Long getPosNr() {
+    public final Integer getPosNr() {
 	return this.posNrProperty().get();
     }
 
-    public final void setPosNr(final Long posNr) {
+    public final void setPosNr(final Integer posNr) {
 	this.posNrProperty().set(posNr);
     }
 
@@ -64,15 +64,15 @@ public class OfferPosition {
 	this.priceProperty().set(price);
     }
 
-    public final ObjectProperty<Long> amountProperty() {
+    public final ObjectProperty<Integer> amountProperty() {
 	return this.amount;
     }
 
-    public final Long getAmount() {
+    public final Integer getAmount() {
 	return this.amountProperty().get();
     }
 
-    public final void setAmount(final Long amount) {
+    public final void setAmount(final Integer amount) {
 	this.amountProperty().set(amount);
     }
 
