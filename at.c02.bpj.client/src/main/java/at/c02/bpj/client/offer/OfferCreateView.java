@@ -1,6 +1,8 @@
 package at.c02.bpj.client.offer;
 
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.ParsePosition;
 import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Article;
@@ -8,14 +10,23 @@ import at.c02.bpj.client.api.model.OfferPosition;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * Controller für OfferCreateView.fxml.
@@ -30,6 +41,12 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private TableView<Article> tblArticles;
     @FXML
+    private Label offCustomerID;
+    @FXML
+    private Label offCompanyName;
+    @FXML
+    private TextField offSummaryPrice;
+    @FXML
     private TableView<OfferPosition> tblOfferPositions;
     @FXML
     private TableColumn<Article, Long> idColumn;
@@ -38,16 +55,38 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private TableColumn<Article, Double> priceColumn;
     @FXML
-    private TableColumn<Article, Long> idOPColumn;
+    private TableColumn<OfferPosition, Long> idOPColumn;
     @FXML
-    private TableColumn<Article, String> nameOPColumn;
+    private TableColumn<OfferPosition, String> nameOPColumn;
     @FXML
-    private TableColumn<Article, Double> priceOPColumn;
+    private TableColumn<OfferPosition, Double> priceOPColumn;
     @FXML
-    private TableColumn<Article, Double> amountOPColumn;
+    private TableColumn<OfferPosition, Number> amountOPColumn;
+
+    @FXML
+    private Button btnSaveAndClose;
+
+    private DecimalFormat priceFormat;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+	priceFormat = new DecimalFormat("0.00");
+	priceFormat.setMaximumFractionDigits(2);
+	// offSummaryPrice ist ein Feld mit 2 Nachkommazahlen
+	offSummaryPrice.setTextFormatter(new TextFormatter<>(c -> {
+	    ParsePosition parsePosition = new ParsePosition(0);
+	    Object object = priceFormat.parse(c.getControlNewText(), parsePosition);
+
+	    if (object == null || parsePosition.getIndex() < c.getControlNewText().length()) {
+		return null;
+	    } else {
+		return c;
+	    }
+	}));
+
+	offSummaryPrice.setEditable(false);
+
 	// Die Artikel-Tabelle zeigt genau das an, was in der ArticlesProperty
 	// des Models ist
 	Bindings.bindContent(tblArticles.itemsProperty().get(), model.articlesProperty());
@@ -55,29 +94,94 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 	priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-	// Einfügen des Kontext-Menüs für jede Zeile
+	idOPColumn.setCellValueFactory(new PropertyValueFactory<>("posNr"));
+
+	amountOPColumn.setCellValueFactory(cellData -> cellData.getValue().amountProperty());
+
+	amountOPColumn.setCellFactory(col -> new IntegerEditingCell());
+
+	amountOPColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+	priceOPColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+	nameOPColumn
+		.setCellValueFactory(new Callback<CellDataFeatures<OfferPosition, String>, ObservableValue<String>>() {
+		    @Override
+		    public ObservableValue<String> call(CellDataFeatures<OfferPosition, String> param) {
+			return new SimpleStringProperty(param.getValue().getArticle().getName());
+		    }
+		});
+
+	// amountOPColumn.setCellFactory(TextFieldTableCell.<OfferPosition>
+	// forTableColumn());
+	//
+	// amountOPColumn.setEditable(true);
+
+	// Einfügen des Kontext-Menüs für jede Zeile --ARTIKELTABELLE
 	tblArticles.setRowFactory(table -> {
 	    final TableRow<Article> row = new TableRow<>();
 	    row.setContextMenu(createContextMenu(row));
 	    return row;
 	});
+
+	// Einfügen des Kontext-Menüs für jede Zeile --POSITIONSTABELLE -- nur
+	// wenn rowcell nicht editable sein kann
+	tblOfferPositions.setRowFactory(table -> {
+	    final TableRow<OfferPosition> row = new TableRow<>();
+	    row.setContextMenu(createContextMenuOP(row));
+	    return row;
+	});
+	Bindings.bindContentBidirectional(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
+	tblOfferPositions.setEditable(true);
+    }
+
+    private ContextMenu createContextMenuOP(TableRow<OfferPosition> row) {
+
+	MenuItem miEditPosition = new MenuItem("Position entfernen");
+
+	miEditPosition.setOnAction(event -> onEditOfferPosition(row.getItem()));
+
+	ContextMenu contextMenu = new ContextMenu(miEditPosition);
+	return contextMenu;
+    }
+
+    private Object onEditOfferPosition(OfferPosition item) {
+	tblOfferPositions.itemsProperty().get().remove(item);
+	return null;
+    }
+
+    public void onbtnSaveOffer() {
+	model.saveOffer();
+	Stage stage = (Stage) btnSaveAndClose.getScene().getWindow();
+	stage.close();
     }
 
     private ContextMenu createContextMenu(TableRow<Article> row) {
 
-	Article article = row.getItem();
 	MenuItem miNewPositiontoOffer = new MenuItem("Zum Angebot hinzufügen");
 	// Bei Click auf "Zum Angebot hinzufügen..." wird
 	// onAddtoOfferArticleClick
 	// aufgerufen
-	miNewPositiontoOffer.setOnAction(event -> onAddtoOfferArticleClick(article));
+	miNewPositiontoOffer.setOnAction(event -> onAddtoOfferArticleClick(row.getItem()));
 
 	ContextMenu contextMenu = new ContextMenu(miNewPositiontoOffer);
 	return contextMenu;
     }
 
     private void onAddtoOfferArticleClick(Article article) {
+	showOfferData();
 	model.addPositiontoOffer(article);
     }
 
+    // kann nicht bei Initialize gemacht werden weil da das offer property noch
+    // null ist
+    public void showOfferData() {
+
+	offCustomerID.textProperty()
+		.bind(model.offerProperty().get().customerProperty().get().customerIdProperty().asString());
+	offCompanyName.textProperty()
+		.bindBidirectional(model.offerProperty().get().customerProperty().get().companyNameProperty());
+
+	offSummaryPrice.textProperty().bind(model.sumPriceProperty().asString());
+    }
 }

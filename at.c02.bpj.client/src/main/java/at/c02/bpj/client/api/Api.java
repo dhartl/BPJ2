@@ -41,7 +41,6 @@ public class Api {
 		createAndRegisterService(CustomerApi.class, context);
 		createAndRegisterService(EmployeeApi.class, context);
 		createAndRegisterService(OfferApi.class, context);
-		createAndRegisterService(OfferPositionApi.class, context);
 		
 	}
 

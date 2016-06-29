@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -39,7 +40,7 @@ public class Offer extends ModLogEntity<Long> {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "employeeId")
     private Employee employee;
-    @OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<OfferPosition> offerPositions = new LinkedHashSet<>();
 
     @Override
