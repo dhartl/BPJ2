@@ -101,6 +101,7 @@ public class OfferCreateViewModel implements ViewModel {
 	newOfferPosition.setPosNr(positionNumber);
 	int nmbr = 1;
 	newOfferPosition.setAmount(nmbr);
+
 	// newOfferPosition.setOfferId(offer.get());
 
 	offerPositions.add(newOfferPosition);
