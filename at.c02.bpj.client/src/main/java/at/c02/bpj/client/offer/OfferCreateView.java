@@ -47,13 +47,13 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private TableColumn<Article, Double> priceColumn;
     @FXML
-    private TableColumn<Article, Long> idOPColumn;
+    private TableColumn<OfferPosition, Long> idOPColumn;
     @FXML
     private TableColumn<Article, String> nameOPColumn;
     @FXML
     private TableColumn<Article, Double> priceOPColumn;
     @FXML
-    private TableColumn<Article, Double> amountOPColumn;
+    private TableColumn<OfferPosition, Integer> amountOPColumn;
 
     @FXML
     private Button btnSaveAndClose;
@@ -70,10 +70,13 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 
 	Bindings.bindContent(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
 	idOPColumn.setCellValueFactory(new PropertyValueFactory<>("offerPositionId"));
-	nameOPColumn.setCellValueFactory(new PropertyValueFactory<>("articleProperty().get().getName()"));
+	nameOPColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 	priceOPColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 	amountOPColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-	// amountOPColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+	// amountOPColumn.setCellFactory(TextFieldTableCell.<OfferPosition>
+	// forTableColumn());
+	//
+	// amountOPColumn.setEditable(true);
 
 	// Einfügen des Kontext-Menüs für jede Zeile --ARTIKELTABELLE
 	tblArticles.setRowFactory(table -> {

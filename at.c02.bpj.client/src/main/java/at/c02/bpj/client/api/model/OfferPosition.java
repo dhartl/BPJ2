@@ -1,14 +1,16 @@
 package at.c02.bpj.client.api.model;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 
 public class OfferPosition {
 
     private ObjectProperty<Long> offerPositionId = new SimpleObjectProperty<>();
-    private ObjectProperty<Integer> posNr = new SimpleObjectProperty<>();
+    private IntegerProperty posNr = new SimpleIntegerProperty();
     private ObjectProperty<Double> price = new SimpleObjectProperty<>();
-    private ObjectProperty<Integer> amount = new SimpleObjectProperty<>();
+    private IntegerProperty amount = new SimpleIntegerProperty();
     private ObjectProperty<Article> article = new SimpleObjectProperty<>();
     private ObjectProperty<Offer> offerId = new SimpleObjectProperty<>();
 
@@ -40,7 +42,7 @@ public class OfferPosition {
 	this.offerPositionIdProperty().set(offerPositionId);
     }
 
-    public final ObjectProperty<Integer> posNrProperty() {
+    public final IntegerProperty posNrProperty() {
 	return this.posNr;
     }
 
@@ -64,7 +66,7 @@ public class OfferPosition {
 	this.priceProperty().set(price);
     }
 
-    public final ObjectProperty<Integer> amountProperty() {
+    public final IntegerProperty amountProperty() {
 	return this.amount;
     }
 
