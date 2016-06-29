@@ -135,11 +135,6 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	});
     }
 
-    public void recalculatePriceSummarized() {
-	offSummaryPrice.textProperty().bind(model.sumPriceProperty().asString());
-
-    }
-
     private ContextMenu createContextMenuOP(TableRow<OfferPosition> row) {
 
 	MenuItem miEditPosition = new MenuItem("Position entfernen");
@@ -173,8 +168,13 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	return contextMenu;
     }
 
+    private boolean first = true;
+
     private void onAddtoOfferArticleClick(Article article) {
-	showOfferData();
+	if (first) {
+	    showOfferData();
+	}
+	first = false;
 	model.addPositiontoOffer(article);
     }
 
@@ -187,7 +187,8 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	offCompanyName.textProperty()
 		.bindBidirectional(model.offerProperty().get().customerProperty().get().companyNameProperty());
 
-	offSummaryPrice.textProperty().bind(model.sumPriceProperty().asString());
+	Bindings.bindBidirectional(offSummaryPrice.textProperty(), model.sumPriceProperty(), priceFormat);
+
     }
 
 }
