@@ -99,12 +99,12 @@ public class OfferManagementViewModel implements ViewModel {
 		}
 		
 		if (startDate != null && endDate != null) {
-			System.out.println("test");
-			if (!startDate.isBefore(offer.getCreatedDt().toLocalDate())) {
+			if (!startDate.isBefore(offer.getCreatedDt().toLocalDate()) && 
+					!startDate.equals(offer.getCreatedDt().toLocalDate())) {
 				return false;
 			}
-			if (!endDate.isAfter(offer.getCreatedDt().toLocalDate())) {
-					System.out.print(offer.getCreatedDt().toLocalDate());
+			if (!endDate.isAfter(offer.getCreatedDt().toLocalDate()) &&
+					!endDate.equals(offer.getCreatedDt().toLocalDate())) {
 					return false;
 			}
 		}
