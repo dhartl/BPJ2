@@ -125,13 +125,13 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 		// Bearbeiten ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
 		miEditArticle.disableProperty().bind(row.emptyProperty());
 
-		MenuItem miDeleteArticle = new MenuItem("Löschen");
+		//MenuItem miDeleteArticle = new MenuItem("Löschen");
 		// Bei Click auf "Löschen" wird onDeleteArticleClick aufgerufen
-		miDeleteArticle.setOnAction(event -> onDeleteArticleClick(row.getItem()));
+		//miDeleteArticle.setOnAction(event -> onDeleteArticleClick(row.getItem()));
 		// Löschen ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
-		miDeleteArticle.disableProperty().bind(row.emptyProperty());
+		//miDeleteArticle.disableProperty().bind(row.emptyProperty());
 
-		ContextMenu contextMenu = new ContextMenu(miNewArticle, miEditArticle, miDeleteArticle);
+		ContextMenu contextMenu = new ContextMenu(miNewArticle, miEditArticle);
 		return contextMenu;
 	}
 

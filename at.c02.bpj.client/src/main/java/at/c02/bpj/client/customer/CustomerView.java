@@ -108,13 +108,13 @@ public class CustomerView implements FxmlView<CustomerViewModel>, Initializable 
 		// Bearbeiten ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
 		miEditCustomer.disableProperty().bind(row.emptyProperty());
 
-		MenuItem miDeleteCustomer = new MenuItem("Löschen");
+		//MenuItem miDeleteCustomer = new MenuItem("Löschen");
 		// Bei Click auf "Löschen" wird onDeleteArticleClick aufgerufen
 		//miDeleteCustomer.setOnAction(event -> onDeleteCustomerClick(row.getItem()));
 		// Löschen ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
-		miDeleteCustomer.disableProperty().bind(row.emptyProperty());
+		//miDeleteCustomer.disableProperty().bind(row.emptyProperty());
 
-		ContextMenu contextMenu = new ContextMenu(miNewCustomer, miEditCustomer, miDeleteCustomer);
+		ContextMenu contextMenu = new ContextMenu(miNewCustomer, miEditCustomer);
 		return contextMenu;
 	}
 
