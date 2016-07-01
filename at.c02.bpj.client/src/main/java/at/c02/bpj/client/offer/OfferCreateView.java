@@ -71,7 +71,7 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     @FXML
     private TableColumn<OfferPosition, String> nameOPColumn;
     @FXML
-    private TableColumn<OfferPosition, Double> priceOPColumn;
+    private TableColumn<OfferPosition, Number> priceOPColumn;
     @FXML
     private TableColumn<OfferPosition, Number> amountOPColumn;
 
@@ -116,6 +116,10 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	amountOPColumn.setCellFactory(col -> new IntegerEditingCell());
 
 	amountOPColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+	priceOPColumn.setCellValueFactory(cellData -> cellData.getValue().priceProperty());
+
+	priceOPColumn.setCellFactory(col -> new DoubleEditingCell());
 
 	priceOPColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 

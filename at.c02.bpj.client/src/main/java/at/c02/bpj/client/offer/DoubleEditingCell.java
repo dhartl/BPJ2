@@ -6,12 +6,12 @@ import at.c02.bpj.client.api.model.OfferPosition;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 
-public class IntegerEditingCell extends TableCell<OfferPosition, Number> {
+public class DoubleEditingCell extends TableCell<OfferPosition, Number> {
 
     private final TextField textField = new TextField();
-    private final Pattern intPattern = Pattern.compile("-?\\d+");
+    private final Pattern doublePattern = Pattern.compile("C=(\\d+\\.\\d+)");
 
-    public IntegerEditingCell() {
+    public DoubleEditingCell() {
 	textField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
 	    if (!isNowFocused) {
 		processEdit();
@@ -22,8 +22,8 @@ public class IntegerEditingCell extends TableCell<OfferPosition, Number> {
 
     private void processEdit() {
 	String text = textField.getText();
-	if (intPattern.matcher(text).matches()) {
-	    commitEdit(Integer.parseInt(text));
+	if (doublePattern.matcher(text).matches()) {
+	    commitEdit(Double.parseDouble(text));
 	} else {
 	    cancelEdit();
 	}
@@ -66,6 +66,6 @@ public class IntegerEditingCell extends TableCell<OfferPosition, Number> {
     @Override
     public void commitEdit(Number value) {
 	super.commitEdit(value);
-	((OfferPosition) this.getTableRow().getItem()).setAmount(value.intValue());
+	((OfferPosition) this.getTableRow().getItem()).priceProperty().set(value.doubleValue());
     }
 }
