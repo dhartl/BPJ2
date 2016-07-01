@@ -30,6 +30,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label fx:id="lblOfferNumber" GridPane.columnIndex="1" />
@@ -101,16 +102,16 @@
                <font>
                   <Font size="15.0" />
                </font></Label>
+               <Label text="Mitarbeiter: " GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
              <ComboBox fx:id="cbxCustomer" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
             </ComboBox>
-                   <Label alignment="CENTER_RIGHT" text="Mitarbeiter: " GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-               <font>
-                  <Font size="15.0" />
-               </font></Label>
-            <ComboBox fx:id="cbxEmployees" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  
             <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                <children>
                   <Label fx:id="lblCustomerCity" alignment="CENTER">
@@ -130,16 +131,37 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </FlowPane>
+            
+             <FlowPane alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+               <children>
+            
+                  <Label fx:id="lblEmployee" alignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font></Label>
+                    
+               </children>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </FlowPane>
+            
+            
             <Label  prefHeight="27.0" prefWidth="429.0" text="Kunde zuweisen:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
+            
  
          </children>
          <children>
             <Button fx:id="btnCreateNewCustomer" onAction="#onbtnCustomerManagement" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">Kunde suchen / neu erstellen</Button>
          </children>
+         
       </GridPane>
    </top>
+   <center>
+   
+    </center>
 </BorderPane>

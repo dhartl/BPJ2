@@ -116,6 +116,10 @@ public class OfferChooseCustomerModel implements ViewModel {
 	this.employeeService = employeeService;
 	employeeList.addAll(employeeService.getEmployee());
 	customersList.addAll(customerService.getCustomer());
+
+	// TODO: Employee ID von UC001 bekommen
+	selectedEmployee.set(employeeService.getEmployee().get(1));
+
     }
 
 }

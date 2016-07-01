@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Customer;
-import at.c02.bpj.client.api.model.Employee;
 import at.c02.bpj.client.customer.CustomerView;
 import at.c02.bpj.client.customer.CustomerViewModel;
 import de.saxsys.mvvmfx.FluentViewLoader;
@@ -35,7 +34,7 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
     private ComboBox<Customer> cbxCustomer;
 
     @FXML
-    private ComboBox<Employee> cbxEmployees;
+    private Label lblEmployee;
 
     @FXML
     private Label lblOfferNumber;
@@ -97,23 +96,6 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 
 	});
 
-	Bindings.bindContent(cbxEmployees.itemsProperty().get(), model.employeeListProperty());
-	cbxEmployees.valueProperty().bindBidirectional(model.selectedEmployeeProperty());
-	cbxEmployees.getSelectionModel().selectFirst();
-
-	cbxEmployees.setConverter(new StringConverter<Employee>() {
-
-	    @Override
-	    public String toString(Employee employee) {
-		return employee.getLastname() + " " + employee.getFirstname();
-	    }
-
-	    @Override
-	    public Employee fromString(String string) {
-		return null;
-	    }
-	});
-
 	// Bindings für Kundendaten
 	lblCustomerStreet.textProperty()
 		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "street"));
@@ -133,6 +115,9 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	lblCustomerContactPartnerLN.textProperty()
 		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "contactLastName"));
 
+	// Binding angemeldetr Mitarbeiter
+
+	lblEmployee.textProperty().bind(Bindings.selectString(model.selectedEmployeeProperty(), "username"));
     }
 
     public void onbtnCustomerManagement() {
@@ -150,7 +135,7 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 
     // Speichert Angebot und öffnet Bearbeitungsfenster
     public void onbtnChoosenCustomer() {
-	if (cbxCustomer.getValue() == null || cbxEmployees.getValue() == null) {
+	if (cbxCustomer.getValue() == null) {
 	    Alert noInputAlert = new Alert(AlertType.WARNING);
 	    noInputAlert.setHeaderText("Eingabe fehlerhaft");
 	    noInputAlert.setContentText("Bitte Mitarbeiter und Kunde angeben");
