@@ -181,9 +181,37 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     }
 
     public void onbtnSaveOffer() {
-	model.saveOffer();
-	Stage stage = (Stage) btnSaveAndClose.getScene().getWindow();
-	stage.close();
+	boolean business_rules_ok = true;
+
+	if (!model.offerPositionsProperty().isEmpty()) {
+
+	    for (OfferPosition op : model.offerPositionsProperty()) {
+		if (op.amountProperty().get() > 99 || op.amountProperty().get() < 1) {
+		    business_rules_ok = false;
+		}
+		if (op.priceProperty().get() > 1000000 || op.priceProperty().get() < 0) {
+		    business_rules_ok = false;
+		}
+
+	    }
+	} else {
+	    business_rules_ok = false;
+	}
+
+	if (!business_rules_ok) {
+	    Alert noInputAlert = new Alert(AlertType.WARNING);
+	    noInputAlert.setHeaderText("Speichern nicht möglich");
+	    noInputAlert.setContentText(
+		    "Der Preis oder die Menge eines oder meherer Positionen verletzen die Geschäftsregeln!");
+	    noInputAlert.showAndWait();
+	    return;
+	}
+
+	if (business_rules_ok) {
+	    model.saveOffer();
+	    Stage stage = (Stage) btnSaveAndClose.getScene().getWindow();
+	    stage.close();
+	}
     }
 
     private ContextMenu createContextMenu(TableRow<Article> row) {
