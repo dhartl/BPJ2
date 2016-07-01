@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
+import at.c02.bpj.client.customer.CustomerView;
+import at.c02.bpj.client.customer.CustomerViewModel;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
@@ -71,6 +73,9 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
     @FXML
     private Button btnChoosenCustomer;
 
+    @FXML
+    private Button btnCreateNewCustomer;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -128,6 +133,19 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	lblCustomerContactPartnerLN.textProperty()
 		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "contactLastName"));
 
+    }
+
+    public void onbtnNewCustomer() {
+	Parent root;
+	ViewTuple<CustomerView, CustomerViewModel> viewTuple = FluentViewLoader.fxmlView(CustomerView.class).load();
+	// Übergabe des erstellten Angebotes an das neue Fenster
+	root = viewTuple.getView();
+	Stage stage = new Stage();
+	Scene scene = new Scene(root, 800, 600);
+
+	stage.setTitle("Kunde neu anlegen");
+	stage.setScene(scene);
+	stage.show();
     }
 
     // Speichert Angebot und öffnet Bearbeitungsfenster
