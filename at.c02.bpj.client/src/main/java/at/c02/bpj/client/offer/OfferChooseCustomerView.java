@@ -5,11 +5,14 @@ import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
+import at.c02.bpj.client.customer.CustomerView;
+import at.c02.bpj.client.customer.CustomerViewModel;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.binding.Bindings;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -20,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.StringConverter;
 
 public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerModel>, Initializable {
@@ -68,6 +72,9 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 
     @FXML
     private Button btnChoosenCustomer;
+
+    @FXML
+    private Button btnCreateNewCustomer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -128,6 +135,19 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 
     }
 
+    public void onbtnCustomerManagement() {
+	Parent root;
+	ViewTuple<CustomerView, CustomerViewModel> viewTuple = FluentViewLoader.fxmlView(CustomerView.class).load();
+	// Übergabe des erstellten Angebotes an das neue Fenster
+	root = viewTuple.getView();
+	Stage stage = new Stage();
+	Scene scene = new Scene(root, 800, 600);
+
+	stage.setTitle("Kunde neu anlegen");
+	stage.setScene(scene);
+	stage.show();
+    }
+
     // Speichert Angebot und öffnet Bearbeitungsfenster
     public void onbtnChoosenCustomer() {
 	if (cbxCustomer.getValue() == null || cbxEmployees.getValue() == null) {
@@ -148,9 +168,24 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 	    viewTuple.getViewModel().offerProperty().set(model.offerProperty().get());
 	    root = viewTuple.getView();
 	    Stage stage = new Stage();
+	    Scene scene = new Scene(root, 800, 600);
+
 	    stage.setTitle("Positionen zuweisen");
-	    stage.setScene(new Scene(root, 800, 600));
+
 	    stage.show();
+	    stage.setScene(scene);
+
+	    scene.getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
+		// Löst .shutdown in controller aus -- Wenn shutdown = true wird
+		// geschlossen -- wenn false nicht
+		@Override
+		public void handle(WindowEvent ev) {
+		    if (!viewTuple.getCodeBehind().shutdown()) {
+			ev.consume();
+		    }
+
+		}
+	    });
 
 	}
     }

@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +23,8 @@ public class OfferPosition extends ModLogEntity<Long> {
     @Column(name = "offerPositionId")
     private Long offerPositionId;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    // in EntitätenKlassen am Server wird der JOIN in der Datenbank deklariert.
+	@ManyToOne(optional = false)
+	// in EntitätenKlassen am Server wird der JOIN in der Datenbank deklariert.
     @JoinColumn(name = "offerId")
     private Offer offer;
     @Column(name = "posNr", nullable = false)
@@ -34,7 +33,7 @@ public class OfferPosition extends ModLogEntity<Long> {
     private BigDecimal price;
     @Column(name = "amount", nullable = false)
     private Integer amount;
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(optional = false)
     @JoinColumn(name = "articleId")
     private Article article;
 

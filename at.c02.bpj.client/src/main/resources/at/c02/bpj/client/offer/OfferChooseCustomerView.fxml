@@ -6,6 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.offer.OfferChooseCustomerView">
    <bottom>
@@ -14,11 +15,11 @@
             <Insets bottom="20.0" />
          </BorderPane.margin></Button>
    </bottom>
-   <center>
+   <top>
       <GridPane BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="293.0" minWidth="10.0" prefWidth="173.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="452.0" minWidth="10.0" prefWidth="427.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -129,13 +130,16 @@
                   <Insets left="20.0" />
                </GridPane.margin>
             </FlowPane>
-            <Label prefHeight="27.0" prefWidth="429.0" text=" Bitte wählen Sie einen Kunden aus :">
+            <Label  prefHeight="27.0" prefWidth="429.0" text="Kunde zuweisen:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
  
          </children>
+         <children>
+            <Button fx:id="btnCreateNewCustomer" onAction="#onbtnCustomerManagement" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">Kunde suchen / neu erstellen</Button>
+         </children>
       </GridPane>
-   </center>
+   </top>
 </BorderPane>

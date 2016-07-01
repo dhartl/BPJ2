@@ -1,17 +1,19 @@
 package at.c02.bpj.client.offer;
 
-import java.util.regex.Pattern;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 
 import at.c02.bpj.client.api.model.OfferPosition;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 
-public class IntegerEditingCell extends TableCell<OfferPosition, Number> {
+public class DoubleEditingCell extends TableCell<OfferPosition, Number> {
 
     private final TextField textField = new TextField();
-    private final Pattern intPattern = Pattern.compile("-?\\d+");
+	NumberFormat doubleFormat = createFormat();
 
-    public IntegerEditingCell() {
+    public DoubleEditingCell() {
 	textField.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
 	    if (!isNowFocused) {
 		processEdit();
@@ -20,12 +22,17 @@ public class IntegerEditingCell extends TableCell<OfferPosition, Number> {
 	textField.setOnAction(event -> processEdit());
     }
 
-    private void processEdit() {
+	private NumberFormat createFormat() {
+		DecimalFormat decimalFormat = new DecimalFormat();
+		return decimalFormat;
+	}
+
+	private void processEdit() {
 	String text = textField.getText();
-	if (intPattern.matcher(text).matches()) {
-	    commitEdit(Integer.parseInt(text));
-	} else {
-	    cancelEdit();
+		try {
+			commitEdit(doubleFormat.parse(text));
+		} catch (ParseException ex) {
+			cancelEdit();
 	}
     }
 
@@ -66,6 +73,6 @@ public class IntegerEditingCell extends TableCell<OfferPosition, Number> {
     @Override
     public void commitEdit(Number value) {
 	super.commitEdit(value);
-	((OfferPosition) this.getTableRow().getItem()).setAmount(value.intValue());
+	((OfferPosition) this.getTableRow().getItem()).priceProperty().set(value.doubleValue());
     }
 }
