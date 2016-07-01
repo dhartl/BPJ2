@@ -30,7 +30,7 @@ private OfferRepository offerRepository;
 	 * @return Liste aller Angebote
 	 */
 	public List<Offer> getAllOffers() {
-		return offerRepository.findAll();
+		return offerRepository.findAllFetching();
 	}
 
 	/**

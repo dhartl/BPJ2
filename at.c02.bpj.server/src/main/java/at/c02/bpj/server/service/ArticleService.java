@@ -16,7 +16,7 @@ public class ArticleService {
 
     private ArticleRepository articleRepository;
 
-    // Spring managed diese Klasse. @Autowired-Felder werden automatisch befüllt
+	// Spring managed diese Klasse. @Autowired-Felder werden automatisch befüllt
     @Autowired
     public void setArticleRepository(ArticleRepository articleRepository) {
 	this.articleRepository = articleRepository;
@@ -28,14 +28,14 @@ public class ArticleService {
      * @return Liste aller Artikel
      */
     public List<Article> getAllArticles() {
-	return articleRepository.findAll();
+		return articleRepository.findAllFetchCategory();
     }
 
     /**
-     * löscht den Artikel mit der Id articleId
-     * 
-     * @param articleId
-     */
+	 * löscht den Artikel mit der Id articleId
+	 * 
+	 * @param articleId
+	 */
     public void deleteArticle(long articleId) {
 	articleRepository.delete(articleId);
     }

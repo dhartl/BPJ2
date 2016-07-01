@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,14 +33,14 @@ public class Offer extends ModLogEntity<Long> {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private OfferStatus status;
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(optional = false)
     @JoinColumn(name = "customerId")
     private Customer customer;
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@ManyToOne(optional = false)
     @JoinColumn(name = "employeeId")
     private Employee employee;
-	@OneToMany(mappedBy = "offer", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
-    private Set<OfferPosition> offerPositions = new LinkedHashSet<>();
+	@OneToMany(mappedBy = "offer", orphanRemoval = true, cascade = CascadeType.ALL)
+	private Set<OfferPosition> offerPositions = new LinkedHashSet<>();
 
     @Override
     public Long getId() {
