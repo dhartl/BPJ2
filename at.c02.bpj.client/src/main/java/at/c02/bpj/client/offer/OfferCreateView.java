@@ -3,6 +3,7 @@ package at.c02.bpj.client.offer;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.ParsePosition;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Article;
@@ -14,7 +15,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -25,6 +30,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -62,6 +68,9 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     private TableColumn<OfferPosition, Double> priceOPColumn;
     @FXML
     private TableColumn<OfferPosition, Number> amountOPColumn;
+
+    @FXML
+    private BorderPane mainPane;
 
     @FXML
     private Button btnSaveAndClose;
@@ -135,17 +144,38 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	tblOfferPositions.setEditable(true);
     }
 
+    public boolean shutdown() {
+	if (!model.offerPositionsProperty().isEmpty()) {
+	    Alert confInputAlert = new Alert(AlertType.CONFIRMATION);
+	    confInputAlert.setHeaderText("Angebot verwerfen");
+	    confInputAlert.setContentText("Wollen Sie das Angebot wirklich verwerfen?");
+	    ButtonType buttonTypeOne = new ButtonType("Yes", ButtonData.OK_DONE);
+	    ButtonType buttonTypeCancel = new ButtonType("No", ButtonData.CANCEL_CLOSE);
+	    confInputAlert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
+	    Optional<ButtonType> result = confInputAlert.showAndWait();
+	    if (result.get().getButtonData() == ButtonData.CANCEL_CLOSE) {
+		return false;
+	    }
+	    if (result.get().getButtonData() == ButtonData.OK_DONE) {
+		return true;
+	    }
+
+	}
+	return true;
+    }
+
     private ContextMenu createContextMenuOP(TableRow<OfferPosition> row) {
 
 	MenuItem miEditPosition = new MenuItem("Position entfernen");
 
-	miEditPosition.setOnAction(event -> onEditOfferPosition(row.getItem()));
+	miEditPosition.setOnAction(event -> onDeleteOfferPosition(row.getItem()));
 
 	ContextMenu contextMenu = new ContextMenu(miEditPosition);
 	return contextMenu;
     }
 
-    private Object onEditOfferPosition(OfferPosition item) {
+    private Object onDeleteOfferPosition(OfferPosition item) {
+	model.positionNumber--;
 	tblOfferPositions.itemsProperty().get().remove(item);
 	return null;
     }
