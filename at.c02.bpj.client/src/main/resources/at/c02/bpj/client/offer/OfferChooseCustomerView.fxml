@@ -138,7 +138,7 @@
  
          </children>
          <children>
-            <Button fx:id="btnCreateNewCustomer" onAction="#onbtnNewCustomer" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">Neuen Kunden anlegen</Button>
+            <Button fx:id="btnCreateNewCustomer" onAction="#onbtnCustomerManagement" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">Kunde suchen / neu erstellen</Button>
          </children>
       </GridPane>
    </top>

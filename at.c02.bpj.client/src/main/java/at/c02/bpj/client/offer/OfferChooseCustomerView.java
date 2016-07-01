@@ -135,7 +135,7 @@ public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerMode
 
     }
 
-    public void onbtnNewCustomer() {
+    public void onbtnCustomerManagement() {
 	Parent root;
 	ViewTuple<CustomerView, CustomerViewModel> viewTuple = FluentViewLoader.fxmlView(CustomerView.class).load();
 	// Übergabe des erstellten Angebotes an das neue Fenster

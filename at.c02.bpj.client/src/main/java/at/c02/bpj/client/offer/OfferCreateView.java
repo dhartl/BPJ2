@@ -8,13 +8,19 @@ import java.util.ResourceBundle;
 
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.OfferPosition;
+import at.c02.bpj.client.article.ArticleView;
+import at.c02.bpj.client.article.ArticleViewModel;
+import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
+import de.saxsys.mvvmfx.ViewTuple;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -217,13 +223,29 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
     private ContextMenu createContextMenu(TableRow<Article> row) {
 
 	MenuItem miNewPositiontoOffer = new MenuItem("Zum Angebot hinzufügen");
+	MenuItem miManageArticle = new MenuItem("Artikel bearbeiten / neu anlegen");
 	// Bei Click auf "Zum Angebot hinzufügen..." wird
 	// onAddtoOfferArticleClick
 	// aufgerufen
 	miNewPositiontoOffer.setOnAction(event -> onAddtoOfferArticleClick(row.getItem()));
+	miManageArticle.setOnAction(event -> onOpenArticleManagement());
 
-	ContextMenu contextMenu = new ContextMenu(miNewPositiontoOffer);
+	ContextMenu contextMenu = new ContextMenu(miNewPositiontoOffer, miManageArticle);
 	return contextMenu;
+    }
+
+    private Object onOpenArticleManagement() {
+	Parent root;
+	ViewTuple<ArticleView, ArticleViewModel> viewTuple = FluentViewLoader.fxmlView(ArticleView.class).load();
+	// Übergabe des erstellten Angebotes an das neue Fenster
+	root = viewTuple.getView();
+	Stage stage = new Stage();
+	Scene scene = new Scene(root, 800, 600);
+
+	stage.setTitle("Artikel bearbeiten / new anlegen");
+	stage.setScene(scene);
+	stage.show();
+	return null;
     }
 
     private void onAddtoOfferArticleClick(Article article) {
