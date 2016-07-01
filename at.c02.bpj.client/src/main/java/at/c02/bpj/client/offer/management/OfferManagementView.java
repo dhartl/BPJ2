@@ -275,15 +275,17 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        Anbot.add(model.getSelectedOffer());
 		        int gesamtpreis = 0;
 		        System.out.println(Anbot);
+//		        for (Offer offer : Anbot) 
+//		        {
+//		        	System.out.println(offer.getCustomer().getCompanyName().toString());
+//				}
 		        for (Offer offer : Anbot) 
 		        {
-		        	System.out.println(offer.getCustomer().getCompanyName().toString());
-				}
-		        for (Offer offer : Anbot) 
-		        {
+		        	int j=0;
 		        	for(int i=0; i<offer.getOfferPositions().size(); i++)
 		        	{
-		        	document.add(new Paragraph("Artikel " + i + ": " + offer.getOfferPositions().get(i).getArticle().getName()
+		        	j++;	
+		        	document.add(new Paragraph("Artikel " + j + ": " + offer.getOfferPositions().get(i).getArticle().getName()
 		        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
 		        	gesamtpreis+=offer.getOfferPositions().get(i).getArticle().getPrice();
 		        	System.out.println("Gesamtpreis: " + gesamtpreis);
