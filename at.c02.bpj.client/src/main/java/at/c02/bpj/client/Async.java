@@ -10,7 +10,16 @@ import java.util.function.Supplier;
 import javafx.application.Platform;
 
 public class Async {
+	private static boolean fxInitialized;
 	private static AsyncExecutor executor;
+
+	public static boolean isFxInitialized() {
+		return fxInitialized;
+	}
+
+	public static void setFxInitialized(boolean fxInitialized) {
+		Async.fxInitialized = fxInitialized;
+	}
 
 	public static void execute(Runnable runnable) {
 		if (executor == null) {
@@ -35,7 +44,11 @@ public class Async {
 			createExecutor();
 		}
 		executor.execute(supplier, (returnValue) -> {
-			Platform.runLater(() -> callback.accept(returnValue));
+			if (isFxInitialized()) {
+				Platform.runLater(() -> callback.accept(returnValue));
+			} else {
+				callback.accept(returnValue);
+			}
 		});
 	}
 

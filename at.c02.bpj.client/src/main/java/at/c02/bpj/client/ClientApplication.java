@@ -30,6 +30,7 @@ public class ClientApplication extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
+		Async.setFxInitialized(true);
 		setupDependencyInjection();
 
 		// Exceptions, die nicht behandelt werden, werden vom UI-ErrorHandler

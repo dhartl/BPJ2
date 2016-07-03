@@ -37,6 +37,7 @@ public class ArticleViewModel implements ViewModel {
 	private ObservableList<Article> articles = FXCollections.observableArrayList();
 	private ObservableList<Category> categoryList = FXCollections.observableArrayList();
 	private ArticleService articleService;
+	private CategoryService categoryService;
 
 	private FilteredList<Article> filteredArticleList = new FilteredList<>(articles);
 	
@@ -47,20 +48,21 @@ public class ArticleViewModel implements ViewModel {
 	
 	// Service Klassen mittels Construktor-Injection setzen
 	public ArticleViewModel(CategoryService categoryService, ArticleService articleService) {
-		Async.executeUILoad(categoryService::getCategories, categoryList::setAll);
-		Async.executeUILoad(articleService::getArticles, articles::setAll);
+		this.categoryService = categoryService;
 		this.articleService = articleService;
-
-		//loadArticles();
+		loadArticles();
+		loadCategories();
 	}
 	
-
-
 	/**
 	 * Lädt die Artikel
 	 */
 	public void loadArticles() {
 		Async.executeUILoad(articleService::getArticles, articles::setAll);
+	}
+
+	public void loadCategories() {
+		Async.executeUILoad(categoryService::getCategories, categoryList::setAll);
 	}
 
 	public ObservableList<Article> articlesProperty() {
@@ -83,9 +85,7 @@ public class ArticleViewModel implements ViewModel {
 	 * Erstellt einen neuen Artikel
 	 */
 	public void newArticle() {
-		ArticleEditDialog dialog = new ArticleEditDialog();
-		dialog.setArticle(new Article());
-		Optional<Article> article = dialog.showAndWait();
+		Optional<Article> article = articleService.createArticle();
 		if (article.isPresent()) {
 			Article newArticle = articleService.saveArticle(article.get());
 			articles.add(newArticle);
@@ -98,9 +98,7 @@ public class ArticleViewModel implements ViewModel {
 	 * @param article
 	 */
 	public void editArticle(Article article) {
-		ArticleEditDialog dialog = new ArticleEditDialog();
-		dialog.setArticle(article);
-		Optional<Article> newArticle = dialog.showAndWait();
+		Optional<Article> newArticle = articleService.editArticle(article);
 		if (newArticle.isPresent()) {
 			// Speichert den Artikel
 			Article savedArticle = articleService.saveArticle(newArticle.get());

@@ -1,5 +1,6 @@
 package at.c02.bpj.client.ui;
 
+import de.saxsys.mvvmfx.Context;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.binding.Bindings;
@@ -14,6 +15,8 @@ public class MainViewModel implements ViewModel {
 	private ObservableList<MainMenuItem> mainMenuItems = FXCollections.observableArrayList();
 	private ObjectProperty<MainMenuItem> selectedMenuItem = new SimpleObjectProperty<>();
 
+	private Context context;
+
 	public MainViewModel() {
 		centerNode.bind(Bindings.createObjectBinding(this::updateCenterNode, selectedMenuItem));
 	}
@@ -23,7 +26,7 @@ public class MainViewModel implements ViewModel {
 		if (selectedItem == null) {
 			return null;
 		} else {
-			return FluentViewLoader.fxmlView(selectedItem.getViewModelClass()).load().getView();
+			return FluentViewLoader.fxmlView(selectedItem.getViewModelClass()).context(context).load().getView();
 		}
 	}
 
@@ -53,6 +56,10 @@ public class MainViewModel implements ViewModel {
 
 	public final void setSelectedMenuItem(final at.c02.bpj.client.ui.MainMenuItem selectedMenuItem) {
 		this.selectedMenuItemProperty().set(selectedMenuItem);
+	}
+
+	public void setContext(Context context) {
+		this.context = context;
 	}
 
 }
