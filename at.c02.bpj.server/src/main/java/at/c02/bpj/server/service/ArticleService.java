@@ -51,4 +51,8 @@ public class ArticleService {
 	return articleRepository.save(article);
     }
 
+	public Article getArticleById(Long articleId) {
+		return articleRepository.findOne(articleId);
+	}
+
 }

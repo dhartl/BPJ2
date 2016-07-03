@@ -9,22 +9,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import at.c02.bpj.server.entity.Category;
-import at.c02.bpj.server.repository.CategoryRepository;
+import at.c02.bpj.server.service.CategoryService;
 
 @Controller
 @RequestMapping("category")
 public class CategoryController {
 
-	private CategoryRepository categoryRepository;
+	private CategoryService categoryService;
 
 	@Autowired
-	public void setCategoryRepository(CategoryRepository categoryRepository) {
-		this.categoryRepository = categoryRepository;
+	public void setCategoryService(CategoryService categoryService) {
+		this.categoryService = categoryService;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<Category> findAllCategories() {
-		return categoryRepository.findAll();
+		return categoryService.findAll();
 	}
 }

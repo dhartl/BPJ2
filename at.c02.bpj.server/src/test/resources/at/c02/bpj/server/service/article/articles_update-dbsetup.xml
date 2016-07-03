@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <category categoryId="1" name="Elektromotor-Prüfstand" sortNr="1"/>
+  <category categoryId="2" name="Inverter Testsystem" sortNr="2"/>
+  <article articleId="1" name="Elektromotor-Prüfstand A" price="100.00" description="Beschreibung für Elektromotor-Prüfstand A" categoryId="1" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <employee/>
+  <customer/>
+  <offer/>
+  <offerposition/>
+</dataset>

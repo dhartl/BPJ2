@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <category categoryId="1" name="Elektromotor-Prüfstand" sortNr="1"/>
+  <article articleId="1" name="Elektromotor-Prüfstand A" price="100.00" description="Beschreibung für Elektromotor-Prüfstand A" categoryId="1" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <article articleId="2" name="Elektromotor-Prüfstand B" price="35300.00" description="Beschreibung für Elektromotor-Prüfstand B" categoryId="1" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <article articleId="3" name="Elektromotor-Prüfstand C" price="8700.00" description="Beschreibung für Elektromotor-Prüfstand C" categoryId="1" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <employee/>
+  <customer/>
+  <offer/>
+  <offerposition/>
+ </dataset>
