@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <offer status="CREATED" customerId="1" employeeId="1" />
+  <offerPosition posNr="1" price="100.00" amount="2" articleId="1"/>
+  <offerPosition posNr="2" price="50.00" amount="5" articleId="2"/>
+</dataset>

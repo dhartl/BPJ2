@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <category categoryId="1" name="Elektromotor-Pr&#252;fstand" sortNr="1"/>
+  <article articleId="1" name="Elektromotor-Pr&#252;fstand A" price="55900.00" description="Beschreibung f&#252;r Elektromotor-Pr&#252;fstand A" categoryId="1" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <article articleId="2" name="Elektromotor-Pr&#252;fstand B" price="35300.00" description="Beschreibung f&#252;r Elektromotor-Pr&#252;fstand B" categoryId="1" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <article articleId="3" name="Elektromotor-Prüfstand C" price="8700.00" description="Beschreibung für Elektromotor-Prüfstand C" categoryId="1" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <employee employeeId="1" username="danhar" password="$2a$04$bVurSMKjTDk/nVNkbiUvQuKw6NxTsXGuvCyYQ/2ebfnze036mEWSe" firstname="Daniel" lastname="Hartl" email="daniel.hartl@salesmate.at"/>
+  <customer customerId="1" companyName="PriceRite Warehouse Club" street="Wa&#223;mannsdorfer Chaussee" houseNr="32" postCode="22769" city="Hamburg" contactFirstName="Maik" contactLastName="Ritter" contactEmail="MaikRitter@warehouse.com" contactGender="M" contactPhoneNr="040 58 42 80" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <offer offerId="2" createdDt="2016-07-03 18:52:42.0" status="CREATED" customerId="1" employeeId="1" insDt="2016-07-03 18:52:43.0" insUserId="0"/>
+  <offerPosition offerPositionId="1" offerId="2" posNr="1" price="100.00" amount="2" articleId="1" insDt="2016-07-03 18:52:43.0" insUserId="0"/>
+  <offerPosition offerPositionId="2" offerId="2" posNr="2" price="50.00" amount="5" articleId="2" insDt="2016-07-03 18:52:43.0" insUserId="0"/>
+</dataset>
