@@ -24,7 +24,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 
 /**
  * Model für den {@link ArticleView}
@@ -107,25 +106,6 @@ public class ArticleViewModel implements ViewModel {
 		}
 	}
 
-	/**
-	 * Löscht den Artikel
-	 * 
-	 * @param article
-	 */
-
-	public void deleteArticle(Article article) {
-		// Sicherheitsabfrage
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setTitle("Artikel löschen");
-		alert.setHeaderText(null);
-		alert.setContentText(String.format("Möchten Sie den Artikel '%s' wirklich löschen?", article.getName()));
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.orElse(ButtonType.CANCEL) == ButtonType.OK) {
-			articleService.deleteArticle(article);
-			loadArticles();
-		}
-	}
 		public void onSearchButtonClick() {
 		
 		if (Strings.isNullOrEmpty(searchArticleID.getValue()) &&  searchArticleName.getValue() == null &&

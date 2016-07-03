@@ -3,14 +3,11 @@ package at.c02.bpj.server.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import at.c02.bpj.server.entity.Customer;
 import at.c02.bpj.server.service.CustomerService;
@@ -28,18 +25,12 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 	
-// gibt einen Basispfad für alle Controllermethoden an.
+	// gibt einen Basispfad für alle Controllermethoden an.
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<Customer> getAllCustomers() {
 		List<Customer> customer = customerService.getAllCustomers();
 		return customer;
-	}
-
-	@RequestMapping(method = RequestMethod.DELETE, path = "/{customerid}")
-	@ResponseStatus(value = HttpStatus.OK)
-	public void deleteCustomer(@PathVariable("customerid") long customerid) {
-		customerService.deleteCustomer(customerid);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)

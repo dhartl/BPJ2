@@ -18,11 +18,6 @@ public class ArticleService {
 		return Services.executeCall(articleApi.getArticles());
 	}
 
-	public void deleteArticle(Article article) throws ServiceException {
-		Services.executeCall(articleApi.deleteArticle(article.getArticleId()));
-
-	}
-
 	public Article saveArticle(Article article) throws ServiceException {
 		return Services.executeCall(articleApi.saveArticle(article));
 	}

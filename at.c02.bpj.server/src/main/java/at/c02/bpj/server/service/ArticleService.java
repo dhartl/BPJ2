@@ -32,15 +32,6 @@ public class ArticleService {
     }
 
     /**
-	 * löscht den Artikel mit der Id articleId
-	 * 
-	 * @param articleId
-	 */
-    public void deleteArticle(long articleId) {
-	articleRepository.delete(articleId);
-    }
-
-    /**
      * erstellt oder aktualisiert den Artikel. Ob ein Artikel bereits existiert
      * wird an der ArtikelId bestimmt
      * 

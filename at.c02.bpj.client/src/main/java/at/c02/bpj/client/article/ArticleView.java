@@ -3,12 +3,8 @@ package at.c02.bpj.client.article;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.controlsfx.control.table.TableFilter;
-
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.Category;
-
-
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
@@ -21,10 +17,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
@@ -125,7 +121,7 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 		// Bearbeiten ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
 		miEditArticle.disableProperty().bind(row.emptyProperty());
 
-		//MenuItem miDeleteArticle = new MenuItem("Löschen");
+		// MenuItem miDeleteArticle = new MenuItem("Löschen");
 		// Bei Click auf "Löschen" wird onDeleteArticleClick aufgerufen
 		//miDeleteArticle.setOnAction(event -> onDeleteArticleClick(row.getItem()));
 		// Löschen ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
@@ -143,16 +139,12 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 		model.editArticle(article);
 	}
 
-	public void onDeleteArticleClick(Article article) {
-		model.deleteArticle(article);
-	}
-	
 	@FXML
 	public void onSearchButtonClick() {
 		model.onSearchButtonClick();
 	}
 	
-	//OfferManagment UC006 öffnen im Fenster
+	// OfferManagment UC006 öffnen im Fenster
 	public void onOfferManagement() {
 		model.openOfferManagement();
 	}
