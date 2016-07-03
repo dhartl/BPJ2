@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane prefHeight="684.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.article.ArticleView">
+<BorderPane stylesheets="/at/c02/bpj/client/ui/styles.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.article.ArticleView">
   <top>
       <GridPane fx:id="searchGridPane" alignment="TOP_CENTER" vgap="2.0" hgap="5.0">
         <columnConstraints>
@@ -41,11 +41,14 @@
    </top>
    <center>
 		<TableView fx:id="tblArticles">
+			<columnResizePolicy>
+        		<TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY" />
+    		</columnResizePolicy>
 			<columns>
-				<TableColumn fx:id="idColumn" minWidth="-Infinity" prefWidth="115.0" text="Id" />
-				<TableColumn fx:id="nameColumn" prefWidth="75.0" text="Name" />
-				<TableColumn fx:id="priceColumn" prefWidth="75.0" text="Preis" />
-            	<TableColumn fx:id="categoryColumn" prefWidth="75.0" text="Category" />
+				<TableColumn fx:id="idColumn" prefWidth="75" text="Id" styleClass="align-right"/>
+				<TableColumn fx:id="nameColumn" prefWidth="200" text="Name" />
+				<TableColumn fx:id="priceColumn" prefWidth="75" text="Preis" styleClass="align-right"/>
+            	<TableColumn fx:id="categoryColumn" prefWidth="200" text="Kategorie" />
 			</columns>
 		</TableView>
    </center>
