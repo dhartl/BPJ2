@@ -5,8 +5,8 @@ import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.util.ResourceBundle;
 
-import at.c02.bpj.client.api.model.Category;
 import at.c02.bpj.client.api.model.Gender;
+import at.c02.bpj.client.converter.StringToGenderConverter;
 import at.c02.bpj.client.converter.StringToNumberConverter;
 import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.InjectViewModel;
@@ -16,8 +16,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.util.StringConverter;
-
 
 /**
  * Controller von CustomerEditView.fxml
@@ -50,7 +48,6 @@ public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initia
 	@FXML
 	private ComboBox<Gender> gender;
 
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		DecimalFormat idFormat = new DecimalFormat();
@@ -67,7 +64,9 @@ public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initia
 				return c;
 			}
 		}));
-		
+
+		gender.setConverter(new StringToGenderConverter());
+
 		// tfPrice ist ein Feld mit 2 Nachkommazahlen
 		;
 
@@ -83,9 +82,10 @@ public class CustomerEditView implements FxmlView<CustomerEditViewModel>, Initia
 		postCode.textProperty().bindBidirectional(model.postCodeProperty());
 		city.textProperty().bindBidirectional(model.cityProperty());
 		phoneNr.textProperty().bindBidirectional(model.phoneNrProperty());
+		email.textProperty().bindBidirectional(model.emailProperty());
 		Bindings.bindContent(gender.itemsProperty().get(), model.genderListProperty());
 		gender.valueProperty().bindBidirectional(model.genderProperty());
-		
+
 	}
 
 }

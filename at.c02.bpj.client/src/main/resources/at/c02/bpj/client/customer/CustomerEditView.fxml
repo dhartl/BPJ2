@@ -8,50 +8,62 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.c02.bpj.client.customer.CustomerEditView">
-   <center>
-      <GridPane BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints prefWidth="100.0" />
-          <ColumnConstraints prefWidth="200.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints prefHeight="30.0" />
-          <RowConstraints prefHeight="30.0" />
-          <RowConstraints prefHeight="30.0" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-          <RowConstraints prefHeight="30.0" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" />
-        </rowConstraints>
-         <children>
-            <Label text="Customer Id" />
-            <Label text="Vorname" GridPane.rowIndex="1" />
-            <Label text="Nachname" GridPane.rowIndex="2" />
-            <TextField fx:id="customerId" disable="true" GridPane.columnIndex="1" />
-            <TextField fx:id="customerFirstName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="customerLastName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Unternehmen" GridPane.rowIndex="6" />
-            <TextField fx:id="companyName" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label text="Straße" GridPane.rowIndex="7" />
-            <TextField fx:id="street" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label text="Hausnummer" GridPane.rowIndex="8" />
-            <Label text="PLZ" GridPane.rowIndex="9" />
-            <Label text="Stadt" GridPane.rowIndex="10" />
-            <TextField fx:id="houseNr" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <TextField fx:id="postCode" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <TextField fx:id="city" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <Label text="Geschlecht" GridPane.rowIndex="3" />
-            <Label text="Telefonnummer" GridPane.rowIndex="4" />
-            <Label text="Email" GridPane.rowIndex="5" />
-            <ComboBox fx:id="gender" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="phoneNr" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-         </children>
-      </GridPane>
-   </center>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="at.c02.bpj.client.customer.CustomerEditView">
+	<center>
+		<GridPane BorderPane.alignment="CENTER" vgap="2.0" hgap="5.0">
+			<columnConstraints>
+				<ColumnConstraints prefWidth="100.0" />
+				<ColumnConstraints prefWidth="200.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+				<RowConstraints />
+			</rowConstraints>
+			<children>
+				<Label text="Customer Id" />
+				<TextField fx:id="customerId" disable="true"
+					GridPane.columnIndex="1" />
+				<Label text="Vorname" GridPane.rowIndex="1" />
+				<TextField fx:id="customerFirstName" GridPane.columnIndex="1"
+					GridPane.rowIndex="1" />
+				<Label text="Nachname" GridPane.rowIndex="2" />
+				<TextField fx:id="customerLastName" GridPane.columnIndex="1"
+					GridPane.rowIndex="2" />
+				<Label text="Unternehmen" GridPane.rowIndex="6" />
+				<TextField fx:id="companyName" GridPane.columnIndex="1"
+					GridPane.rowIndex="6" />
+				<Label text="Straße" GridPane.rowIndex="7" />
+				<TextField fx:id="street" GridPane.columnIndex="1"
+					GridPane.rowIndex="7" />
+				<Label text="Hausnummer" GridPane.rowIndex="8" />
+				<TextField fx:id="houseNr" GridPane.columnIndex="1"
+					GridPane.rowIndex="8" />
+				<Label text="PLZ" GridPane.rowIndex="9" />
+				<TextField fx:id="postCode" GridPane.columnIndex="1"
+					GridPane.rowIndex="9" />
+				<Label text="Stadt" GridPane.rowIndex="10" />
+				<TextField fx:id="city" GridPane.columnIndex="1"
+					GridPane.rowIndex="10" />
+				<Label text="Geschlecht" GridPane.rowIndex="3" />
+				<ComboBox fx:id="gender" maxWidth="Infinity"
+					GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="Telefonnummer" GridPane.rowIndex="4" />
+				<TextField fx:id="phoneNr" GridPane.columnIndex="1"
+					GridPane.rowIndex="4" />
+				<Label text="Email" GridPane.rowIndex="5" />
+				<TextField fx:id="email" GridPane.columnIndex="1"
+					GridPane.rowIndex="5" />
+			</children>
+		</GridPane>
+	</center>
 </BorderPane>

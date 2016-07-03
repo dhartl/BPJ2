@@ -1,10 +1,8 @@
 package at.c02.bpj.client.customer;
 
 
-import at.c02.bpj.client.api.model.Category;
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Gender;
-import at.c02.bpj.client.service.CategoryService;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -85,11 +83,12 @@ public class CustomerEditViewModel implements ViewModel {
 	public void editCustomer(Customer customer) {
 		id.set(customer.getCustomerId());
 		firstName.set(customer.getContactFirstName());
-		firstName.set(customer.getContactLastName());
+		lastName.set(customer.getContactLastName());
 		companyName.set(customer.getCompanyName());
+		city.set(customer.getCity());
 		street.set(customer.getStreet());
 		houseNr.set(customer.getHouseNr());
-		postCode.set(customer.getHouseNr());
+		postCode.set(customer.getPostCode());
 		phoneNr.set(customer.getContactPhoneNr());
 		email.set(customer.getContactEmail());
 		gender.set(customer.getContactGender());
@@ -104,6 +103,7 @@ public class CustomerEditViewModel implements ViewModel {
 		customer.setStreet(street.get());
 		customer.setHouseNr(houseNr.get());
 		customer.setPostCode(postCode.get());
+		customer.setCity(city.get());
 		customer.setContactPhoneNr(phoneNr.get());
 		customer.setContactEmail(email.get());
 		customer.setContactGender(gender.get());

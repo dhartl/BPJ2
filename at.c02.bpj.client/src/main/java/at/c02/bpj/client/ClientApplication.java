@@ -50,9 +50,8 @@ public class ClientApplication extends Application {
 
 	private void initializeMenuItems(MainViewModel mainViewModel) {
 		mainViewModel.getMainMenuItems().addAll(new MainMenuItem("Artikel", ArticleView.class),
-				new MainMenuItem("Angebote", OfferManagementView.class),
-				new MainMenuItem("Neues Angebot", OfferChooseCustomerView.class),
-				new MainMenuItem("Kunden", CustomerView.class));
+				new MainMenuItem("Kunden", CustomerView.class), new MainMenuItem("Angebote", OfferManagementView.class),
+				new MainMenuItem("Neues Angebot", OfferChooseCustomerView.class));
 	}
 
 	/**
