@@ -9,8 +9,8 @@ import at.c02.bpj.server.entity.Offer;
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
-	@Query("select offer from Offer offer join fetch offer.offerPositions positions "
-			+ "join fetch positions.article article join fetch article.category "
-			+ "join fetch offer.customer join fetch offer.employee")
+	@Query("select distinct offer from Offer offer left join fetch offer.offerPositions positions "
+			+ "left join fetch positions.article article left join fetch article.category "
+			+ "left join fetch offer.customer left join fetch offer.employee")
 	List<Offer> findAllFetching();
 }
