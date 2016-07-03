@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <category/>
+  <article/>
+  <employee/>
+  <customer customerId="1" companyName="PriceRite Warehouse Club" street="Waßmannsdorfer Chaussee" houseNr="32" postCode="22769" city="Hamburg" contactFirstName="Maik" contactLastName="Ritter" contactEmail="MaikRitter@warehouse.com" contactGender="M" contactPhoneNr="040 58 42 80" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <offer/>
+  <offerposition/>
+</dataset>

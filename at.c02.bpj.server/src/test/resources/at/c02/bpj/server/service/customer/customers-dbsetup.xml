@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <category/>
+  <article/>
+  <employee/>
+  <customer customerId="1" companyName="PriceRite Warehouse Club" street="Waßmannsdorfer Chaussee" houseNr="32" postCode="22769" city="Hamburg" contactFirstName="Maik" contactLastName="Ritter" contactEmail="MaikRitter@warehouse.com" contactGender="M" contactPhoneNr="040 58 42 80" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <customer customerId="2" companyName="Super Place" street="Joachimstaler Str." houseNr="88" postCode="56759" city="Laubach" contactFirstName="Bernd" contactLastName="Trommler" contactEmail="BerndTrommler@superplace.com" contactGender="M" contactPhoneNr="06762 61 78 41" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <customer customerId="3" companyName="Sofa Express" street="Dreiheiligenstrasse" houseNr="81" postCode="5232" city="Hilprechtsham" contactFirstName="Antje" contactLastName="Schmitz" contactEmail="AntjeSchmitz@sofaexpress.de" contactGender="F" contactPhoneNr="0660 347 81 46" insDt="2016-07-03 15:45:40.0" insUserId="0"/>
+  <offer/>
+  <offerposition/>
+</dataset>
