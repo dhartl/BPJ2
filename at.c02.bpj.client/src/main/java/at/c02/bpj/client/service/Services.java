@@ -42,6 +42,9 @@ public class Services {
 
 	public static <S> void handleUnsuccessfulResponse(Response<S> response) throws ServiceException {
 		String message = null;
+		if (response.code() == 401) {
+			throw new ServiceException("Der Benutzername oder das Password sind ungültig!");
+		}
 		ServerError parseError = Api.parseError(response);
 		if (parseError != null) {
 			message = parseError.getMessage();
