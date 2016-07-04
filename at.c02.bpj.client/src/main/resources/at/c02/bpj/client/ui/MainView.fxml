@@ -2,13 +2,33 @@
  
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane fx:id="mainView" prefWidth="1200" prefHeight="700"
+<BorderPane stylesheets="/at/c02/bpj/client/ui/styles.css"
+	fx:id="mainView" prefWidth="1200" prefHeight="700"
 	xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="at.c02.bpj.client.ui.MainView">
 	<left>
 		<ListView fx:id="lvMenu" prefWidth="200"
 			BorderPane.alignment="CENTER" />
 	</left>
+	<bottom>
+		<BorderPane>
+			<top>
+				<Separator orientation="HORIZONTAL" />
+			</top>
+			<center>
+				<VBox disable="true">
+					<Label fx:id="lblUsername" />
+				</VBox>
+				<BorderPane.margin>
+					<Insets bottom="5" left="10" right="10" top="2" />
+				</BorderPane.margin>
+			</center>
+		</BorderPane>
+	</bottom>
 </BorderPane>
   
