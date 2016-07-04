@@ -2,6 +2,7 @@ package at.c02.bpj.client.test;
 
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.Category;
+import at.c02.bpj.client.api.model.Offer;
 
 public class TestData {
 
@@ -20,4 +21,9 @@ public class TestData {
 	public static Article article2() {
 		return TestDataBuilder.createArticle(2L, "Artikel2", "Beschreibung2", 200d, category2());
 	}
+/*	
+	public static Offer offer1() {
+		return TestDataBuilder.createOffer(1000, "2016-06-01", "2016-06-10", "COMPLETED", "A-GmbH", "Gmoser");
+	}
+*/
 }
