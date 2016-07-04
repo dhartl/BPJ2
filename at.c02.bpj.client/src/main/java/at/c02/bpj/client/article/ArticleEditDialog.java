@@ -16,8 +16,7 @@ public class ArticleEditDialog extends Dialog<Article> {
 
 	public ArticleEditDialog() {
 		// Laden von ArticleEditView
-		viewTuple = FluentViewLoader
-				.fxmlView(ArticleEditView.class).load();
+		viewTuple = FluentViewLoader.fxmlView(ArticleEditView.class).load();
 		getDialogPane().setContent(viewTuple.getView());
 		// Speichern-Button
 		final ButtonType saveType = new ButtonType("Speichern", ButtonData.OK_DONE);

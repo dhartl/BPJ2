@@ -1,6 +1,5 @@
 package at.c02.bpj.client.customer;
 
-
 import at.c02.bpj.client.api.model.Customer;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
@@ -17,8 +16,7 @@ public class CustomerEditDialog extends Dialog<Customer> {
 
 	public CustomerEditDialog() {
 		// Laden von ArticleEditView
-		viewTuple = FluentViewLoader
-				.fxmlView(CustomerEditView.class).load();
+		viewTuple = FluentViewLoader.fxmlView(CustomerEditView.class).load();
 		getDialogPane().setContent(viewTuple.getView());
 		// Speichern-Button
 		final ButtonType saveType = new ButtonType("Speichern", ButtonData.OK_DONE);

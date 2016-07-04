@@ -8,21 +8,21 @@ import at.c02.bpj.client.api.model.Offer;
 
 public class OfferService {
 
-    public OfferApi offerApi;
+	public OfferApi offerApi;
 
-    public OfferService(OfferApi offerApi) {
-	super();
-	this.offerApi = offerApi;
-    }
+	public OfferService(OfferApi offerApi) {
+		super();
+		this.offerApi = offerApi;
+	}
 
-    public List<Offer> getOffer() throws ServiceException {
-	return Services.executeCall(offerApi.getOffer());
-    }
+	public List<Offer> getOffer() throws ServiceException {
+		return Services.executeCall(offerApi.getOffer());
+	}
 
-    public Offer saveOffer(Offer offer) throws ServiceException {
-	return Services.executeCall(offerApi.saveOffer(offer));
-    }
-	
+	public Offer saveOffer(Offer offer) throws ServiceException {
+		return Services.executeCall(offerApi.saveOffer(offer));
+	}
+
 	// hier wird methode offer hinzugefügt
 	public void exportOffer(File selectedFile, Offer offer) {
 		// hier wird dokument angelegt

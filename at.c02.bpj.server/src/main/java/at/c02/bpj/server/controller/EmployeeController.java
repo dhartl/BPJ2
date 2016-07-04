@@ -15,7 +15,7 @@ import at.c02.bpj.server.service.EmployeeService;
 @Controller // sehr wichtig - Sagt Spring, dass die Klasse erzeugt werden muss
 @RequestMapping(path = "employee")
 public class EmployeeController {
-	
+
 	private EmployeeService employeeService;
 
 	@Autowired
@@ -24,7 +24,7 @@ public class EmployeeController {
 	public void setEmployeeService(EmployeeService employeeService) {
 		this.employeeService = employeeService;
 	}
-	
+
 	// gibt einen Basispfad für alle Controllermethoden an.
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody

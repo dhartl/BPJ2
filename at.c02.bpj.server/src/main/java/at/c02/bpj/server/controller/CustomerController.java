@@ -15,7 +15,7 @@ import at.c02.bpj.server.service.CustomerService;
 @Controller // sehr wichtig - Sagt Spring, dass die Klasse erzeugt werden muss
 @RequestMapping(path = "customer")
 public class CustomerController {
-	
+
 	private CustomerService customerService;
 
 	@Autowired
@@ -24,7 +24,7 @@ public class CustomerController {
 	public void setCustomerService(CustomerService customerService) {
 		this.customerService = customerService;
 	}
-	
+
 	// gibt einen Basispfad für alle Controllermethoden an.
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody

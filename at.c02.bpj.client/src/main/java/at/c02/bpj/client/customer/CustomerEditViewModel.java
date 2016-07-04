@@ -1,6 +1,5 @@
 package at.c02.bpj.client.customer;
 
-
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Gender;
 import de.saxsys.mvvmfx.ViewModel;
@@ -10,7 +9,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 
 /**
  * Model für {@link CustomerEditView}
@@ -27,22 +25,22 @@ public class CustomerEditViewModel implements ViewModel {
 	private StringProperty city = new SimpleStringProperty();
 	private StringProperty phoneNr = new SimpleStringProperty();
 	private StringProperty email = new SimpleStringProperty();
-	
+
 	private ObjectProperty<Gender> gender = new SimpleObjectProperty<>();
-	private ObservableList<Gender> genderList =  FXCollections.observableArrayList();
+	private ObservableList<Gender> genderList = FXCollections.observableArrayList();
 
 	public CustomerEditViewModel() {
 		genderList.addAll(Gender.values());
 	}
-	
+
 	public ObservableList<Gender> genderListProperty() {
 		return genderList;
 	}
-	
+
 	public ObjectProperty<Gender> genderProperty() {
 		return gender;
 	}
-	
+
 	public SimpleObjectProperty<Long> idProperty() {
 		return id;
 	}
@@ -50,27 +48,35 @@ public class CustomerEditViewModel implements ViewModel {
 	public StringProperty firstNameProperty() {
 		return firstName;
 	}
+
 	public StringProperty lastNameProperty() {
 		return lastName;
 	}
+
 	public StringProperty companyNameProperty() {
 		return companyName;
 	}
+
 	public StringProperty streetProperty() {
 		return street;
 	}
+
 	public StringProperty houseNrProperty() {
 		return houseNr;
 	}
+
 	public StringProperty postCodeProperty() {
 		return postCode;
 	}
+
 	public StringProperty cityProperty() {
 		return city;
 	}
+
 	public StringProperty phoneNrProperty() {
 		return phoneNr;
 	}
+
 	public StringProperty emailProperty() {
 		return email;
 	}

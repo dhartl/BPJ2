@@ -15,7 +15,7 @@ import at.c02.bpj.server.service.OfferService;
 @Controller // sehr wichtig - Sagt Spring, dass die Klasse erzeugt werden muss
 @RequestMapping(path = "offer")
 public class OfferController {
-	
+
 	private OfferService offerService;
 
 	@Autowired
@@ -24,8 +24,8 @@ public class OfferController {
 	public void setOfferService(OfferService offerService) {
 		this.offerService = offerService;
 	}
-	
-// gibt einen Basispfad für alle Controllermethoden an.
+
+	// gibt einen Basispfad für alle Controllermethoden an.
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<Offer> getAllOffers() {

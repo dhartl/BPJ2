@@ -1,7 +1,9 @@
 package at.c02.bpj.client.offer;
 
-import java.sql.Date;
+import java.util.Date;
 
+import at.c02.bpj.client.Async;
+import at.c02.bpj.client.AuthContext;
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
 import at.c02.bpj.client.api.model.Offer;
@@ -18,108 +20,83 @@ import javafx.collections.ObservableList;
 
 public class OfferChooseCustomerModel implements ViewModel {
 
-    // Angebot - Properties
-    private OfferService offerService;
-    private CustomerService customerService;
-    private EmployeeService employeeService;
+	// Angebot - Properties
+	private CustomerService customerService;
 
-    // OfferService wird mittels Construktor-Injection gesetzt
+	private ObjectProperty<Offer> offer = new SimpleObjectProperty<>();
+	private SimpleObjectProperty<Long> id = new SimpleObjectProperty<>();
 
-    private ObjectProperty<Offer> offer = new SimpleObjectProperty<>();
-    private SimpleObjectProperty<Long> id = new SimpleObjectProperty<>();
+	public ObjectProperty<Offer> offerProperty() {
+		return offer;
+	}
 
-    // private ObjectProperty<Date> createdDt = new SimpleObjectProperty<>();
+	/**
+	 * Erstellt ein neues Angebot
+	 */
+	public void newOffer() {
 
-    public ObjectProperty<Offer> offerProperty() {
-	return offer;
-    }
+		Offer newOffer = new Offer();
+		newOffer.setCreatedDt(new Date());
+		newOffer.setStatus(OfferStatus.CREATED);
+		newOffer.setEmployee(selectedEmployee.get());
+		newOffer.setCustomer(selectedCustomer.get());
+		newOffer.setOfferId(id.get());
+		offer.set(newOffer);
 
-    // public SimpleObjectProperty<Long> idProperty() {
-    // return id;
-    // }
-    //
-    // public ObjectProperty<Date> createdDtProperty() {
-    // return createdDt;
-    // }
+	}
 
-    /**
-     * Erstellt ein neues Angebot
-     */
-    public void newOffer() {
+	// Mitarbeiterwahl
+	private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
 
-	Offer newOffer = new Offer();
-	java.util.Date date = new java.util.Date();
-	java.sql.Date d = new Date(date.getTime());
-	newOffer.setCreatedDt(d);
-	newOffer.setStatus(OfferStatus.CREATED);
-	newOffer.setEmployee(selectedEmployee.get());
-	newOffer.setCustomer(selectedCustomer.get());
-	newOffer.setOfferId(id.get());
-	// Offer offer = new Offer();
-	// offer.setValue(offerService.saveOffer(newOffer));
-	// // id.set(offer.getOfferId());
-	// // createdDt.set(offer.getCreatedDt());
-	offer.set(newOffer);
+	private ObjectProperty<Employee> employee = new SimpleObjectProperty<>();
 
-    }
+	private ObjectProperty<Employee> selectedEmployee = new SimpleObjectProperty<>();
 
-    // Mitarbeiterwahl
-    private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
+	// Properties
+	public ObjectProperty<Employee> employeeProperty() {
+		return employee;
+	}
 
-    private ObjectProperty<Employee> employee = new SimpleObjectProperty<>();
+	public ObservableList<Employee> employeeListProperty() {
+		return employeeList;
+	}
 
-    private ObjectProperty<Employee> selectedEmployee = new SimpleObjectProperty<>();
+	public ObjectProperty<Employee> selectedEmployeeProperty() {
+		return selectedEmployee;
+	}
 
-    // Properties
-    public ObjectProperty<Employee> employeeProperty() {
-	return employee;
-    }
+	// Kundenauswahl
 
-    public ObservableList<Employee> employeeListProperty() {
-	return employeeList;
-    }
+	private ObservableList<Customer> customersList = FXCollections.observableArrayList();
 
-    public ObjectProperty<Employee> selectedEmployeeProperty() {
-	return selectedEmployee;
-    }
+	private ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
 
-    // Kundenauswahl
+	private ObjectProperty<Customer> selectedCustomer = new SimpleObjectProperty<>();
 
-    private ObservableList<Customer> customersList = FXCollections.observableArrayList();
+	// Properties
 
-    private ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
+	public StringProperty streetProperty() {
+		return selectedCustomer.get().streetProperty();
+	}
 
-    private ObjectProperty<Customer> selectedCustomer = new SimpleObjectProperty<>();
+	public ObjectProperty<Customer> customerProperty() {
+		return customer;
+	}
 
-    // Properties
+	public ObservableList<Customer> customerListProperty() {
+		return customersList;
+	}
 
-    public StringProperty streetProperty() {
-	return selectedCustomer.get().streetProperty();
-    }
+	public ObjectProperty<Customer> selectedCustomerProperty() {
+		return selectedCustomer;
+	}
 
-    public ObjectProperty<Customer> customerProperty() {
-	return customer;
-    }
+	public OfferChooseCustomerModel(EmployeeService employeeService, CustomerService customerService,
+			OfferService offerService) {
+		this.customerService = customerService;
+		Async.executeUILoad(customerService::getCustomer, customersList::setAll);
+		selectedEmployee.set(AuthContext.getInstance().getCurrentUser());
 
-    public ObservableList<Customer> customerListProperty() {
-	return customersList;
-    }
-
-    public ObjectProperty<Customer> selectedCustomerProperty() {
-	return selectedCustomer;
-    }
-
-    public OfferChooseCustomerModel(EmployeeService employeeService, CustomerService customerService,
-	    OfferService offerService) {
-	this.offerService = offerService;
-	this.customerService = customerService;
-	this.employeeService = employeeService;
-	employeeList.addAll(employeeService.getEmployee());
-	customersList.addAll(customerService.getCustomer());
-
-	// TODO: Employee ID von UC001 bekommen
-	selectedEmployee.set(employeeService.getEmployee().get(1));
-
-    }
+	}
 
 }

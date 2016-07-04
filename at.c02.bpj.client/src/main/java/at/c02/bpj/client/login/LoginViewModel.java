@@ -14,7 +14,6 @@ public class LoginViewModel implements ViewModel {
 	private StringProperty username = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
 
-
 	private LoginService loginService;
 
 	public LoginViewModel(LoginService loginService) {

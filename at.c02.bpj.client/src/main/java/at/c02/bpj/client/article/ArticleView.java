@@ -45,7 +45,7 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 	private TableColumn<Article, Double> priceColumn;
 	@FXML
 	private TableColumn<Article, String> categoryColumn;
-	
+
 	@FXML
 	private GridPane searchGridPane;
 	@FXML
@@ -56,19 +56,16 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 	private ComboBox<Category> categoryField;
 	@FXML
 	private Button searchButton;
-	
-	
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Die Artikel-Tabelle zeigt genau das an, was in der ArticlesProperty
 		// des Models ist
-		
+
 		Bindings.bindContent(tblArticles.itemsProperty().get(), model.articlesProperty());
 		idColumn.setCellValueFactory(new PropertyValueFactory<>("articleId"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 		priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
 
 		categoryColumn.setCellValueFactory(new Callback<CellDataFeatures<Article, String>, ObservableValue<String>>() {
 			@Override
@@ -76,14 +73,14 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 				return new SimpleStringProperty(param.getValue().getCategory().getName());
 			}
 		});
-		
+
 		// Einfügen des Kontext-Menüs für jede Zeile
 		tblArticles.setRowFactory(table -> {
 			final TableRow<Article> row = new TableRow<>();
 			row.setContextMenu(createContextMenu(row));
 			return row;
 		});
-		
+
 		// für ComboBox Category (Binding zwischen ComboBox Feld und
 		// CategoryProperty
 		Bindings.bindContent(categoryField.itemsProperty().get(), model.categoryProperty());
@@ -101,13 +98,10 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 				return null;
 			}
 		});
-		
 
 		idField.textProperty().bindBidirectional(model.searchArticleIdProperty());
 		nameField.textProperty().bindBidirectional(model.searchArticleNameProperty());
-		
-		
-		
+
 	}
 
 	private ContextMenu createContextMenu(TableRow<Article> row) {
@@ -123,9 +117,10 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 
 		// MenuItem miDeleteArticle = new MenuItem("Löschen");
 		// Bei Click auf "Löschen" wird onDeleteArticleClick aufgerufen
-		//miDeleteArticle.setOnAction(event -> onDeleteArticleClick(row.getItem()));
+		// miDeleteArticle.setOnAction(event ->
+		// onDeleteArticleClick(row.getItem()));
 		// Löschen ist nur enabled, wenn die Zeile einen Datensatz beinhaltet
-		//miDeleteArticle.disableProperty().bind(row.emptyProperty());
+		// miDeleteArticle.disableProperty().bind(row.emptyProperty());
 
 		ContextMenu contextMenu = new ContextMenu(miNewArticle, miEditArticle);
 		return contextMenu;
@@ -143,7 +138,7 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 	public void onSearchButtonClick() {
 		model.onSearchButtonClick();
 	}
-	
+
 	// OfferManagment UC006 öffnen im Fenster
 	public void onOfferManagement() {
 		model.openOfferManagement();
