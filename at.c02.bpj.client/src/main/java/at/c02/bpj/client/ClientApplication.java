@@ -41,7 +41,7 @@ public class ClientApplication extends Application {
 		// Dieser erstellt einen Popup-Dialog mit der Fehlermeldung
 		Thread.currentThread().setUncaughtExceptionHandler(new UiErrorHandler());
 
-		stage.setTitle("BPJ2 Application");
+		stage.setTitle("SalesMate - BPJ2");
 
 		ViewTuple<MainView, MainViewModel> viewTuple = FluentViewLoader.fxmlView(MainView.class).load();
 		initializeMenuItems(viewTuple.getViewModel());
