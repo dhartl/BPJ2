@@ -7,6 +7,9 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 /**
  * Klasse, die automatisch Einfüge- und Änderungsdatum speichert
  * 
@@ -72,6 +75,13 @@ public abstract class ModLogEntity<T> extends BaseEntity<T> {
 	}
 
 	private static Long getCurrentUserId() {
-		return 0L; // TODO: User aus aktueller Anmeldung verwenden
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null) {
+			Employee employee = (Employee) authentication.getPrincipal();
+			if (employee != null) {
+				return employee.getEmployeeId();
+			}
+		}
+		return 0L;
 	}
 }
