@@ -24,6 +24,8 @@ public class DoubleEditingCell extends TableCell<OfferPosition, Number> {
 
 	private NumberFormat createFormat() {
 		DecimalFormat decimalFormat = new DecimalFormat();
+		decimalFormat.setMaximumFractionDigits(2);
+		decimalFormat.setGroupingUsed(false);
 		return decimalFormat;
 	}
 
