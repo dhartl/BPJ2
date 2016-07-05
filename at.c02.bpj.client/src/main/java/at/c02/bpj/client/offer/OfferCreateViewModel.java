@@ -15,8 +15,6 @@ import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -33,9 +31,6 @@ public class OfferCreateViewModel implements ViewModel {
 	private ObservableList<Article> articles = FXCollections.observableArrayList();
 
 	private ObservableList<OfferPosition> offerPositions = FXCollections.observableArrayList();
-
-	private StringProperty customerId = new SimpleStringProperty();
-	private StringProperty customerName = new SimpleStringProperty();
 
 	private ArticleService articleService;
 	private OfferService offerService;
@@ -73,8 +68,6 @@ public class OfferCreateViewModel implements ViewModel {
 							.mapToDouble(pos -> pos.getPrice() * pos.getAmount()).sum(),
 					newValue.offerPositionsProperty()));
 			Bindings.bindContentBidirectional(offerPositions, newValue.offerPositionsProperty());
-			customerId.bind(Bindings.select(newValue, "customer", "customerId").asString());
-			customerName.bind(Bindings.selectString(newValue, "customer", "companyName"));
 		}
 	}
 
@@ -82,8 +75,6 @@ public class OfferCreateViewModel implements ViewModel {
 		if (oldValue != null) {
 			sumPrice.unbind();
 			Bindings.unbindContentBidirectional(offerPositions, oldValue.offerPositionsProperty());
-			customerId.unbind();
-			customerName.unbind();
 		}
 	}
 
@@ -134,29 +125,4 @@ public class OfferCreateViewModel implements ViewModel {
 		Offer savedOffer = offerService.saveOffer(offer);
 		offerScope.setOffer(savedOffer);
 	}
-
-	public final StringProperty customerIdProperty() {
-		return this.customerId;
-	}
-
-	public final java.lang.String getCustomerId() {
-		return this.customerIdProperty().get();
-	}
-
-	public final void setCustomerId(final java.lang.String customerId) {
-		this.customerIdProperty().set(customerId);
-	}
-
-	public final StringProperty customerNameProperty() {
-		return this.customerName;
-	}
-
-	public final java.lang.String getCustomerName() {
-		return this.customerNameProperty().get();
-	}
-
-	public final void setCustomerName(final java.lang.String customerName) {
-		this.customerNameProperty().set(customerName);
-	}
-
 }
