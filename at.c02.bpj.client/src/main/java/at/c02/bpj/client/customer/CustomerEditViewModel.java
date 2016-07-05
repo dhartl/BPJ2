@@ -1,10 +1,8 @@
 package at.c02.bpj.client.customer;
 
 
-import at.c02.bpj.client.api.model.Category;
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Gender;
-import at.c02.bpj.client.service.CategoryService;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -78,7 +76,7 @@ public class CustomerEditViewModel implements ViewModel {
 	}
 
 	/**
-	 * setzt den zu bearbeitenden Artikel
+	 * setzt den zu bearbeitenden Kunden
 	 * 
 	 * @param customer
 	 */

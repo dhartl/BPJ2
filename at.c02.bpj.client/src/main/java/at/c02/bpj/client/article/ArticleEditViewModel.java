@@ -12,6 +12,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /**
  * Model für {@link ArticleEditView}
@@ -60,14 +62,18 @@ public class ArticleEditViewModel implements ViewModel {
 	 * @param article
 	 */
 	public void editArticle(Article article) {
+
 		id.set(article.getArticleId());
 		name.set(article.getName());
 		price.set(article.getPrice());
 		description.set(article.getDescription());
 		category.set(article.getCategory());
+		
 	}
 
 	public Article getArticle() {
+		
+
 		Article article = new Article();
 		article.setArticleId(id.get());
 		article.setName(name.get());
@@ -75,5 +81,6 @@ public class ArticleEditViewModel implements ViewModel {
 		article.setDescription(description.get());
 		article.setCategory(category.get());
 		return article;
+		
 	}
 }

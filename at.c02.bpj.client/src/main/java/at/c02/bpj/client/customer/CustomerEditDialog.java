@@ -9,14 +9,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 
 /**
- * Dialog zum Erstellen oder Bearbeiten eines Artikels
+ * Dialog zum Erstellen oder Bearbeiten eines Kunden
  */
 public class CustomerEditDialog extends Dialog<Customer> {
 
 	private ViewTuple<CustomerEditView, CustomerEditViewModel> viewTuple;
 
 	public CustomerEditDialog() {
-		// Laden von ArticleEditView
+		// Laden von CustomerEditView
 		viewTuple = FluentViewLoader
 				.fxmlView(CustomerEditView.class).load();
 		getDialogPane().setContent(viewTuple.getView());
@@ -39,7 +39,7 @@ public class CustomerEditDialog extends Dialog<Customer> {
 	/**
 	 * Setzt den zu bearbeitenden Artikel
 	 * 
-	 * @param article
+	 * @param customer
 	 */
 	public void setCustomer(Customer customer) {
 		viewTuple.getViewModel().editCustomer(customer);

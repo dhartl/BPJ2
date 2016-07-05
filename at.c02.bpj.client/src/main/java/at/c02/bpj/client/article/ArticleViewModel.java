@@ -103,6 +103,7 @@ public class ArticleViewModel implements ViewModel {
 		Optional<Article> newArticle = dialog.showAndWait();
 		if (newArticle.isPresent()) {
 			// Speichert den Artikel
+			
 			Article savedArticle = articleService.saveArticle(newArticle.get());
 			// aktualisiert den Artikel in der Articles-Liste
 			articles.set(articles.indexOf(article), savedArticle);
