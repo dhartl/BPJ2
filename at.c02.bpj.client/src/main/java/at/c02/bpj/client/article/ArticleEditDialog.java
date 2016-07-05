@@ -35,7 +35,7 @@ public class ArticleEditDialog extends Dialog<Article> {
 				{
 					Alert noInputAlert = new Alert(AlertType.WARNING);
 				    noInputAlert.setHeaderText("Eingabe fehlerhaft");
-				    noInputAlert.setContentText("Bitte Namen angeben");
+				    noInputAlert.setContentText("Bitte Pflichtfelder ausfüllen!");
 				    noInputAlert.showAndWait();
 				    
 				}
