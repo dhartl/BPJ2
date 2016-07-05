@@ -82,7 +82,7 @@ public class CustomerEditViewModel implements ViewModel {
 	}
 
 	/**
-	 * setzt den zu bearbeitenden Artikel
+	 * setzt den zu bearbeitenden Kunden
 	 * 
 	 * @param customer
 	 */
