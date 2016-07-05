@@ -10,12 +10,10 @@ import retrofit2.http.POST;
 
 public interface CustomerApi {
 
-
-	
 	@GET("customer")
 	Call<List<Customer>> getCustomer();
-	
+
 	@POST("customer")
 	Call<Customer> saveCustomer(@Body Customer customer);
-	
+
 }

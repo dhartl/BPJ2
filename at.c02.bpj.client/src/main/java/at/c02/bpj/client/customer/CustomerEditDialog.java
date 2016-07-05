@@ -5,18 +5,20 @@ import at.c02.bpj.client.api.model.Customer;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Alert.AlertType;
 
 /**
- * Dialog zum Erstellen oder Bearbeiten eines Artikels
+ * Dialog zum Erstellen oder Bearbeiten eines Kunden
  */
 public class CustomerEditDialog extends Dialog<Customer> {
 
 	private ViewTuple<CustomerEditView, CustomerEditViewModel> viewTuple;
 
 	public CustomerEditDialog() {
-		// Laden von ArticleEditView
+		// Laden von CustomerEditView
 		viewTuple = FluentViewLoader
 				.fxmlView(CustomerEditView.class).load();
 		getDialogPane().setContent(viewTuple.getView());
@@ -29,7 +31,22 @@ public class CustomerEditDialog extends Dialog<Customer> {
 			if (saveType.equals(buttonType)) {
 				// Nur wenn Speichern gedrückt wurde, wird der Artikel
 				// zurückgeliefert
-				return viewTuple.getViewModel().getCustomer();
+				
+				
+				Customer customer= viewTuple.getViewModel().getCustomer();
+				
+				if (customer.getContactFirstName().isEmpty() || customer.getContactLastName().isEmpty()
+						|| customer.getCompanyName().isEmpty() || customer.getContactPhoneNr().isEmpty())
+				{
+					Alert noInputAlert = new Alert(AlertType.WARNING);
+				    noInputAlert.setHeaderText("Eingabe fehlerhaft");
+				    noInputAlert.setContentText("Bitte Pflichtfelder ausfüllen!");
+				    noInputAlert.showAndWait();
+				}
+				else
+				{
+					return customer;
+				}
 			}
 			// sonst NULL
 			return null;
@@ -39,7 +56,7 @@ public class CustomerEditDialog extends Dialog<Customer> {
 	/**
 	 * Setzt den zu bearbeitenden Artikel
 	 * 
-	 * @param article
+	 * @param customer
 	 */
 	public void setCustomer(Customer customer) {
 		viewTuple.getViewModel().editCustomer(customer);

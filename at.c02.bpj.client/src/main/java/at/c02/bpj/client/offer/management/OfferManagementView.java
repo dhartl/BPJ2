@@ -25,6 +25,8 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.fonts.FontsResourceAnchor;
 
@@ -279,15 +281,31 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 //		        {
 //		        	System.out.println(offer.getCustomer().getCompanyName().toString());
 //				}
+		        
 		        for (Offer offer : Anbot) 
 		        {
-		        	int j=0;
+		        	PdfPTable table = new PdfPTable(5);
+			        PdfPCell cell = new PdfPCell();
+			        cell.setRowspan(offer.getOfferPositions().size());
+			        cell.setColspan(3);
+//			        document.add(table);
+//			        document.add(cell);
+//			        document.(table.addCell("row 1; cell 1"));
+//			        table.addCell("row 1; cell 2");
+//			        table.addCell("row 2; cell 1");
+//			        table.addCell("row 2; cell 2");
+			        
 		        	for(int i=0; i<offer.getOfferPositions().size(); i++)
 		        	{
-		        	j++;	
-		        	document.add(new Paragraph("Artikel " + j + ": " + offer.getOfferPositions().get(i).getArticle().getName()
-		        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
-		        	gesamtpreis+=offer.getOfferPositions().get(i).getArticle().getPrice();
+		        		
+//		        		document.add(new PdfPCell(table) table.addCell("Artikel " + i + ": " + offer.getOfferPositions().get(i).getArticle().getName()
+//			        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
+		        		document.add(new Paragraph("Artikel " + i + ": " + offer.getOfferPositions().get(i).getArticle().getName()
+			        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
+			        	gesamtpreis+=offer.getOfferPositions().get(i).getArticle().getPrice();
+//		        	document.add(new Paragraph("Artikel " + i + ": " + offer.getOfferPositions().get(i).getArticle().getName()
+//		        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
+//		        	gesamtpreis+=offer.getOfferPositions().get(i).getArticle().getPrice();
 		        	System.out.println("Gesamtpreis: " + gesamtpreis);
 		        	System.out.println(offer.getOfferPositions().get(i).getArticle().getName() + offer.getOfferPositions().get(i).getArticle().getPrice()+offer.getOfferPositions().get(i).getOfferPositionId().toString());
 		        	System.out.println(offer.getOfferPositions().get(i).getArticle().getName() + offer.getOfferPositions().get(i).getArticle().getPrice()+offer.getOfferPositions().get(i).getOfferPositionId().toString());

@@ -1,6 +1,5 @@
 package at.c02.bpj.client.article;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -32,19 +31,19 @@ public class ArticleViewModel implements ViewModel {
 	/**
 	 * Liste aller Artikel
 	 */
-	
+
 	private ObservableList<Article> articles = FXCollections.observableArrayList();
 	private ObservableList<Category> categoryList = FXCollections.observableArrayList();
 	private ArticleService articleService;
 	private CategoryService categoryService;
 
 	private FilteredList<Article> filteredArticleList = new FilteredList<>(articles);
-	
+
 	// Search Field Properties für Bindings
 	private ObjectProperty<Category> searchCategory = new SimpleObjectProperty<>();
 	private StringProperty searchArticleID = new SimpleStringProperty();
 	private StringProperty searchArticleName = new SimpleStringProperty();
-	
+
 	// Service Klassen mittels Construktor-Injection setzen
 	public ArticleViewModel(CategoryService categoryService, ArticleService articleService) {
 		this.categoryService = categoryService;
@@ -52,7 +51,7 @@ public class ArticleViewModel implements ViewModel {
 		loadArticles();
 		loadCategories();
 	}
-	
+
 	/**
 	 * Lädt die Artikel
 	 */
@@ -71,7 +70,7 @@ public class ArticleViewModel implements ViewModel {
 	public ObservableList<Category> categoryProperty() {
 		return categoryList;
 	}
-	
+
 	public List<Article> getArticles() {
 		return articles;
 	}
@@ -100,95 +99,94 @@ public class ArticleViewModel implements ViewModel {
 		Optional<Article> newArticle = articleService.editArticle(article);
 		if (newArticle.isPresent()) {
 			// Speichert den Artikel
+			
 			Article savedArticle = articleService.saveArticle(newArticle.get());
 			// aktualisiert den Artikel in der Articles-Liste
 			articles.set(articles.indexOf(article), savedArticle);
 		}
 	}
 
-		public void onSearchButtonClick() {
-		
-		if (Strings.isNullOrEmpty(searchArticleID.getValue()) &&  searchArticleName.getValue() == null &&
-				searchArticleID.getValue() == null && searchCategory.getValue() == null){
-		
-				 Alert noInputAlert= new Alert(AlertType.WARNING);
-			        noInputAlert.setHeaderText("Keine Eingabe vorhanden");
-			        noInputAlert.setContentText("Bitte mindestens ein Suchkriterium eingeben");
-			        noInputAlert.showAndWait();
+	public void onSearchButtonClick() {
+
+		if (Strings.isNullOrEmpty(searchArticleID.getValue()) && searchArticleName.getValue() == null
+				&& searchArticleID.getValue() == null && searchCategory.getValue() == null) {
+
+			Alert noInputAlert = new Alert(AlertType.WARNING);
+			noInputAlert.setHeaderText("Keine Eingabe vorhanden");
+			noInputAlert.setContentText("Bitte mindestens ein Suchkriterium eingeben");
+			noInputAlert.showAndWait();
 		}
-		
+
 		filteredArticleList.setPredicate(this::checkArticleMatchesSearch);
-		
+
 		if (filteredArticleList.isEmpty()) {
-			Alert noMatchFoundAlert= new Alert(AlertType.INFORMATION);
-	        noMatchFoundAlert.setHeaderText("Kein Angebot mit angegebenen Suchkriterien gefunden");
+			Alert noMatchFoundAlert = new Alert(AlertType.INFORMATION);
+			noMatchFoundAlert.setHeaderText("Kein Angebot mit angegebenen Suchkriterien gefunden");
 			noMatchFoundAlert.setContentText("Bitte prüfen Sie die angegebenen Suchkriterien");
-	        noMatchFoundAlert.showAndWait();
+			noMatchFoundAlert.showAndWait();
 		}
 	}
-		
-		private boolean checkArticleMatchesSearch(Article article) {
-			String articleId = searchArticleID.getValue();
-			Category category = searchCategory.getValue();
-			String articleName = searchArticleName.getValue();
 
-			if (!Strings.isNullOrEmpty(articleId) && !Objects.equal(article.getArticleId(), Longs.tryParse(articleId))) {
-				return false;
-			}
-			
-			if (!Strings.isNullOrEmpty(articleName) && !Objects.equal(article.getName(), articleName)) {
-				return false;
-			}
-			
+	private boolean checkArticleMatchesSearch(Article article) {
+		String articleId = searchArticleID.getValue();
+		Category category = searchCategory.getValue();
+		String articleName = searchArticleName.getValue();
 
-
-			if (category != null && !Objects.equal(category.getCategoryId(), article.getCategory().getCategoryId())) {
-				return false;
-			}
-
-			return true;
-		}
-		
-		public ObservableList<Category> categoryListProperty() {
-			return categoryList;
-		}
-		public ObservableList<Article> articleListProperty() {
-			return filteredArticleList;
-		}
-		public final StringProperty searchArticleIdProperty() {
-			return this.searchArticleID;
-		}
-		public final java.lang.String getSearchArticleId() {
-			return this.searchArticleIdProperty().get();
-		}
-		public final StringProperty searchArticleNameProperty() {
-			return this.searchArticleName;
-		}
-		public final java.lang.String getSearchArticleName() {
-			return this.searchArticleNameProperty().get();
-		}
-		public final void setSearchArticleId(final java.lang.String searchArticleId) {
-			this.searchArticleIdProperty().set(searchArticleId);
-		}
-		public final ObjectProperty<Category> searchCategoryProperty() {
-			return this.searchCategory;
+		if (!Strings.isNullOrEmpty(articleId) && !Objects.equal(article.getArticleId(), Longs.tryParse(articleId))) {
+			return false;
 		}
 
-		public final at.c02.bpj.client.api.model.Category getSearchCategory() {
-			return this.searchCategoryProperty().get();
+		if (!Strings.isNullOrEmpty(articleName) && !Objects.equal(article.getName(), articleName)) {
+			return false;
 		}
 
-		public final void setSearchCategory(final at.c02.bpj.client.api.model.Category searchCategory) {
-			this.searchCategoryProperty().set(searchCategory);
+		if (category != null && !Objects.equal(category.getCategoryId(), article.getCategory().getCategoryId())) {
+			return false;
 		}
-		
-		
-		
-		
-		
-		
-		
-		
+
+		return true;
+	}
+
+	public ObservableList<Category> categoryListProperty() {
+		return categoryList;
+	}
+
+	public ObservableList<Article> articleListProperty() {
+		return filteredArticleList;
+	}
+
+	public final StringProperty searchArticleIdProperty() {
+		return this.searchArticleID;
+	}
+
+	public final java.lang.String getSearchArticleId() {
+		return this.searchArticleIdProperty().get();
+	}
+
+	public final StringProperty searchArticleNameProperty() {
+		return this.searchArticleName;
+	}
+
+	public final java.lang.String getSearchArticleName() {
+		return this.searchArticleNameProperty().get();
+	}
+
+	public final void setSearchArticleId(final java.lang.String searchArticleId) {
+		this.searchArticleIdProperty().set(searchArticleId);
+	}
+
+	public final ObjectProperty<Category> searchCategoryProperty() {
+		return this.searchCategory;
+	}
+
+	public final at.c02.bpj.client.api.model.Category getSearchCategory() {
+		return this.searchCategoryProperty().get();
+	}
+
+	public final void setSearchCategory(final at.c02.bpj.client.api.model.Category searchCategory) {
+		this.searchCategoryProperty().set(searchCategory);
+	}
+
 	// UC006 öffnen des OfferManagements
 	public void openOfferManagement() {
 		OfferManagementDialog dialog = new OfferManagementDialog();

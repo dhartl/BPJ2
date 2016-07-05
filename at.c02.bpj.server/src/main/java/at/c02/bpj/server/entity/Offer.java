@@ -20,86 +20,86 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "offer")
 public class Offer extends ModLogEntity<Long> {
-    private static final long serialVersionUID = -2083968170968404079L;
+	private static final long serialVersionUID = -2083968170968404079L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "offerId")
-    private Long offerId;
-    @Column(name = "createdDt")
-    private Date createdDt;
-    @Column(name = "completedDt")
-    private Date completedDt;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private OfferStatus status;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "offerId")
+	private Long offerId;
+	@Column(name = "createdDt")
+	private Date createdDt;
+	@Column(name = "completedDt")
+	private Date completedDt;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private OfferStatus status;
 	@ManyToOne(optional = false)
-    @JoinColumn(name = "customerId")
-    private Customer customer;
+	@JoinColumn(name = "customerId")
+	private Customer customer;
 	@ManyToOne(optional = false)
-    @JoinColumn(name = "employeeId")
-    private Employee employee;
+	@JoinColumn(name = "employeeId")
+	private Employee employee;
 	@OneToMany(mappedBy = "offer", orphanRemoval = true, cascade = CascadeType.ALL)
 	private Set<OfferPosition> offerPositions = new LinkedHashSet<>();
 
-    @Override
-    public Long getId() {
-	return getOfferId();
-    }
+	@Override
+	public Long getId() {
+		return getOfferId();
+	}
 
-    public Long getOfferId() {
-	return offerId;
-    }
+	public Long getOfferId() {
+		return offerId;
+	}
 
-    public void setOfferId(Long offerId) {
-	this.offerId = offerId;
-    }
+	public void setOfferId(Long offerId) {
+		this.offerId = offerId;
+	}
 
-    public Date getCreatedDt() {
-	return createdDt;
-    }
+	public Date getCreatedDt() {
+		return createdDt;
+	}
 
-    public void setCreatedDt(Date createdDt) {
-	this.createdDt = createdDt;
-    }
+	public void setCreatedDt(Date createdDt) {
+		this.createdDt = createdDt;
+	}
 
-    public Date getCompletedDt() {
-	return completedDt;
-    }
+	public Date getCompletedDt() {
+		return completedDt;
+	}
 
-    public void setCompletedDt(Date completedDt) {
-	this.completedDt = completedDt;
-    }
+	public void setCompletedDt(Date completedDt) {
+		this.completedDt = completedDt;
+	}
 
-    public OfferStatus getStatus() {
-	return status;
-    }
+	public OfferStatus getStatus() {
+		return status;
+	}
 
-    public void setStatus(OfferStatus status) {
-	this.status = status;
-    }
+	public void setStatus(OfferStatus status) {
+		this.status = status;
+	}
 
-    public Customer getCustomer() {
-	return customer;
-    }
+	public Customer getCustomer() {
+		return customer;
+	}
 
-    public void setCustomer(Customer customer) {
-	this.customer = customer;
-    }
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
-    public Employee getEmployee() {
-	return employee;
-    }
+	public Employee getEmployee() {
+		return employee;
+	}
 
-    public void setEmployee(Employee employee) {
-	this.employee = employee;
-    }
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 
-    public Set<OfferPosition> getOfferPositions() {
-	return offerPositions;
-    }
+	public Set<OfferPosition> getOfferPositions() {
+		return offerPositions;
+	}
 
-    public void setOfferPositions(Set<OfferPosition> offerPositions) {
-	this.offerPositions = offerPositions;
-    }
+	public void setOfferPositions(Set<OfferPosition> offerPositions) {
+		this.offerPositions = offerPositions;
+	}
 }

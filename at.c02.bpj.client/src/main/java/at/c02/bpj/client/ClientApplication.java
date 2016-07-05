@@ -1,9 +1,12 @@
 package at.c02.bpj.client;
 
+import java.util.Optional;
+
 import at.c02.bpj.client.api.Api;
 import at.c02.bpj.client.article.ArticleView;
 import at.c02.bpj.client.customer.CustomerView;
-import at.c02.bpj.client.offer.OfferChooseCustomerView;
+import at.c02.bpj.client.login.LoginDialog;
+import at.c02.bpj.client.offer.OfferCreateStepView;
 import at.c02.bpj.client.offer.management.OfferManagementView;
 import at.c02.bpj.client.service.Services;
 import at.c02.bpj.client.ui.MainMenuItem;
@@ -45,13 +48,18 @@ public class ClientApplication extends Application {
 
 		Parent root = viewTuple.getView();
 		stage.setScene(new Scene(root));
-		stage.show();
+
+		LoginDialog loginDialog = new LoginDialog();
+		Optional<Boolean> loginResult = loginDialog.showAndWait();
+		if (loginResult.isPresent() && loginResult.get()) {
+			stage.show();
+		}
 	}
 
 	private void initializeMenuItems(MainViewModel mainViewModel) {
 		mainViewModel.getMainMenuItems().addAll(new MainMenuItem("Artikel", ArticleView.class),
 				new MainMenuItem("Kunden", CustomerView.class), new MainMenuItem("Angebote", OfferManagementView.class),
-				new MainMenuItem("Neues Angebot", OfferChooseCustomerView.class));
+				new MainMenuItem("Neues Angebot", OfferCreateStepView.class));
 	}
 
 	/**

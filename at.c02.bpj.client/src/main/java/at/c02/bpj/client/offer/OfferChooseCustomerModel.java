@@ -1,125 +1,86 @@
 package at.c02.bpj.client.offer;
 
-import java.sql.Date;
-
+import at.c02.bpj.client.Async;
 import at.c02.bpj.client.api.model.Customer;
-import at.c02.bpj.client.api.model.Employee;
 import at.c02.bpj.client.api.model.Offer;
-import at.c02.bpj.client.api.model.OfferStatus;
 import at.c02.bpj.client.service.CustomerService;
-import at.c02.bpj.client.service.EmployeeService;
-import at.c02.bpj.client.service.OfferService;
+import de.saxsys.mvvmfx.InjectScope;
 import de.saxsys.mvvmfx.ViewModel;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class OfferChooseCustomerModel implements ViewModel {
 
-    // Angebot - Properties
-    private OfferService offerService;
-    private CustomerService customerService;
-    private EmployeeService employeeService;
+	// Angebot - Properties
+	private CustomerService customerService;
 
-    // OfferService wird mittels Construktor-Injection gesetzt
+	@InjectScope
+	private OfferScope offerScope;
 
-    private ObjectProperty<Offer> offer = new SimpleObjectProperty<>();
-    private SimpleObjectProperty<Long> id = new SimpleObjectProperty<>();
+	// Kundenauswahl
 
-    // private ObjectProperty<Date> createdDt = new SimpleObjectProperty<>();
+	private ObservableList<Customer> customersList = FXCollections.observableArrayList();
 
-    public ObjectProperty<Offer> offerProperty() {
-	return offer;
-    }
+	private ObjectProperty<Customer> selectedCustomer = new SimpleObjectProperty<>();
 
-    // public SimpleObjectProperty<Long> idProperty() {
-    // return id;
-    // }
-    //
-    // public ObjectProperty<Date> createdDtProperty() {
-    // return createdDt;
-    // }
+	// Properties
 
-    /**
-     * Erstellt ein neues Angebot
-     */
-    public void newOffer() {
+	public StringProperty streetProperty() {
+		return selectedCustomer.get().streetProperty();
+	}
 
-	Offer newOffer = new Offer();
-	java.util.Date date = new java.util.Date();
-	java.sql.Date d = new Date(date.getTime());
-	newOffer.setCreatedDt(d);
-	newOffer.setStatus(OfferStatus.CREATED);
-	newOffer.setEmployee(selectedEmployee.get());
-	newOffer.setCustomer(selectedCustomer.get());
-	newOffer.setOfferId(id.get());
-	// Offer offer = new Offer();
-	// offer.setValue(offerService.saveOffer(newOffer));
-	// // id.set(offer.getOfferId());
-	// // createdDt.set(offer.getCreatedDt());
-	offer.set(newOffer);
+	public ObservableList<Customer> customerListProperty() {
+		return customersList;
+	}
 
-    }
+	public ObjectProperty<Customer> selectedCustomerProperty() {
+		return selectedCustomer;
+	}
 
-    // Mitarbeiterwahl
-    private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
+	public OfferChooseCustomerModel(CustomerService customerService) {
+		this.customerService = customerService;
+	}
 
-    private ObjectProperty<Employee> employee = new SimpleObjectProperty<>();
+	public void initialize() {
+		Async.executeUILoad(customerService::getCustomer, customers -> {
+			customersList.setAll(customers);
+		});
 
-    private ObjectProperty<Employee> selectedEmployee = new SimpleObjectProperty<>();
+		offerScope.offerProperty().addListener((observable, oldValue, newValue) -> {
+			unbindOffer(oldValue);
+			bindOffer(newValue);
+		});
+		bindOffer(offerScope.offerProperty().get());
 
-    // Properties
-    public ObjectProperty<Employee> employeeProperty() {
-	return employee;
-    }
+	}
 
-    public ObservableList<Employee> employeeListProperty() {
-	return employeeList;
-    }
+	private void bindOffer(Offer newValue) {
+		if (newValue != null) {
+			selectedCustomer.bindBidirectional(newValue.customerProperty());
+		}
+	}
 
-    public ObjectProperty<Employee> selectedEmployeeProperty() {
-	return selectedEmployee;
-    }
+	private void unbindOffer(Offer oldValue) {
+		if (oldValue != null) {
+			Bindings.unbindBidirectional(oldValue, selectedCustomer);
+		}
+	}
 
-    // Kundenauswahl
-
-    private ObservableList<Customer> customersList = FXCollections.observableArrayList();
-
-    private ObjectProperty<Customer> customer = new SimpleObjectProperty<>();
-
-    private ObjectProperty<Customer> selectedCustomer = new SimpleObjectProperty<>();
-
-    // Properties
-
-    public StringProperty streetProperty() {
-	return selectedCustomer.get().streetProperty();
-    }
-
-    public ObjectProperty<Customer> customerProperty() {
-	return customer;
-    }
-
-    public ObservableList<Customer> customerListProperty() {
-	return customersList;
-    }
-
-    public ObjectProperty<Customer> selectedCustomerProperty() {
-	return selectedCustomer;
-    }
-
-    public OfferChooseCustomerModel(EmployeeService employeeService, CustomerService customerService,
-	    OfferService offerService) {
-	this.offerService = offerService;
-	this.customerService = customerService;
-	this.employeeService = employeeService;
-	employeeList.addAll(employeeService.getEmployee());
-	customersList.addAll(customerService.getCustomer());
-
-	// TODO: Employee ID von UC001 bekommen
-	selectedEmployee.set(employeeService.getEmployee().get(1));
-
-    }
+	public boolean validateSelectedCustomer() {
+		if (selectedCustomer.get() == null) {
+			Alert noInputAlert = new Alert(AlertType.WARNING);
+			noInputAlert.setHeaderText("Eingabe fehlerhaft");
+			noInputAlert.setContentText("Bitte Mitarbeiter und Kunde angeben");
+			noInputAlert.showAndWait();
+			return false;
+		}
+		return true;
+	}
 
 }

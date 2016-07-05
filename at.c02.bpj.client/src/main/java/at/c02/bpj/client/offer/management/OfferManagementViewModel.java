@@ -2,7 +2,8 @@ package at.c02.bpj.client.offer.management;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.Collection;
+import java.time.ZoneId;
+import java.util.Date;
 
 import com.google.common.base.Objects;
 import com.google.common.base.Strings;
@@ -33,7 +34,7 @@ import javafx.scene.control.Alert.AlertType;
  * Model (Logik) für den {@link OfferManagementView}
  */
 public class OfferManagementViewModel implements ViewModel {
-	
+
 	private ObservableList<Offer> offersList = FXCollections.observableArrayList();
 	private ObservableList<Employee> employeesList = FXCollections.observableArrayList();
 	private ObservableList<Customer> customersList = FXCollections.observableArrayList();
@@ -49,7 +50,6 @@ public class OfferManagementViewModel implements ViewModel {
 	private ObjectProperty<Offer> selectedOffer = new SimpleObjectProperty<>();
 	private OfferService offerService;
 
-	
 	// Service Klassen mittels Construktor-Injection setzen
 	public OfferManagementViewModel(EmployeeService employeeService, CustomerService customerService,
 			OfferService offerService) {
@@ -66,24 +66,24 @@ public class OfferManagementViewModel implements ViewModel {
 	}
 
 	public void onSearchButtonClick() {
-		
-		if (Strings.isNullOrEmpty(searchOfferId.getValue()) && searchStartDate.getValue() == null && 
-				searchEndDate.getValue() == null && searchCustomer.getValue() == null &&
-				searchEmployee.getValue() == null) {
-		
-				 Alert noInputAlert= new Alert(AlertType.WARNING);
-			        noInputAlert.setHeaderText("Keine Eingabe vorhanden");
-			        noInputAlert.setContentText("Bitte mindestens ein Suchkriterium eingeben");
-			        noInputAlert.showAndWait();
+
+		if (Strings.isNullOrEmpty(searchOfferId.getValue()) && searchStartDate.getValue() == null
+				&& searchEndDate.getValue() == null && searchCustomer.getValue() == null
+				&& searchEmployee.getValue() == null) {
+
+			Alert noInputAlert = new Alert(AlertType.WARNING);
+			noInputAlert.setHeaderText("Keine Eingabe vorhanden");
+			noInputAlert.setContentText("Bitte mindestens ein Suchkriterium eingeben");
+			noInputAlert.showAndWait();
 		}
-		
+
 		filteredOfferList.setPredicate(this::checkOfferMatchesSearch);
-		
+
 		if (filteredOfferList.isEmpty()) {
-			Alert noMatchFoundAlert= new Alert(AlertType.INFORMATION);
-	        noMatchFoundAlert.setHeaderText("Kein Angebot mit angegebenen Suchkriterien gefunden");
+			Alert noMatchFoundAlert = new Alert(AlertType.INFORMATION);
+			noMatchFoundAlert.setHeaderText("Kein Angebot mit angegebenen Suchkriterien gefunden");
 			noMatchFoundAlert.setContentText("Bitte prüfen Sie die angegebenen Suchkriterien");
-	        noMatchFoundAlert.showAndWait();
+			noMatchFoundAlert.showAndWait();
 		}
 	}
 
@@ -97,15 +97,15 @@ public class OfferManagementViewModel implements ViewModel {
 		if (!Strings.isNullOrEmpty(offerId) && !Objects.equal(offer.getOfferId(), Longs.tryParse(offerId))) {
 			return false;
 		}
-		
+
 		if (startDate != null && endDate != null) {
-			if (!startDate.isBefore(offer.getCreatedDt().toLocalDate()) && 
-					!startDate.equals(offer.getCreatedDt().toLocalDate())) {
+			if (!startDate.isBefore(toLocalDate(offer.getCreatedDt()))
+					&& !startDate.equals(toLocalDate(offer.getCreatedDt()))) {
 				return false;
 			}
-			if (!endDate.isAfter(offer.getCreatedDt().toLocalDate()) &&
-					!endDate.equals(offer.getCreatedDt().toLocalDate())) {
-					return false;
+			if (!endDate.isAfter(toLocalDate(offer.getCreatedDt()))
+					&& !endDate.equals(toLocalDate(offer.getCreatedDt()))) {
+				return false;
 			}
 		}
 
@@ -117,6 +117,10 @@ public class OfferManagementViewModel implements ViewModel {
 		}
 
 		return true;
+	}
+
+	private LocalDate toLocalDate(Date date) {
+		return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
 
 	public void onExportButtonClick(File selectedFile) {
@@ -203,7 +207,6 @@ public class OfferManagementViewModel implements ViewModel {
 	public final at.c02.bpj.client.api.model.Offer getSelectedOffer() {
 		return this.selectedOfferProperty().get();
 	}
-
 
 	public final void setSelectedOffer(final at.c02.bpj.client.api.model.Offer selectedOffer) {
 		this.selectedOfferProperty().set(selectedOffer);

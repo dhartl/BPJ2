@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
 public class Category {
 	private LongProperty categoryId = new SimpleLongProperty();
 	private StringProperty name = new SimpleStringProperty();

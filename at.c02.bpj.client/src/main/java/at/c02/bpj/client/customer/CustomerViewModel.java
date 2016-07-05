@@ -27,7 +27,7 @@ import javafx.scene.control.Alert.AlertType;
  */
 public class CustomerViewModel implements ViewModel {
 	/**
-	 * Liste aller Artikel
+	 * Liste aller Kunden
 	 */
 	
 	private ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -46,13 +46,13 @@ public class CustomerViewModel implements ViewModel {
 		Async.executeUILoad(customerService::getCustomer, customers::setAll);
 		this.customerService = customerService;
 
-		//loadArticles();
+		//loadCustomers();
 	}
 	
 
 
 	/**
-	 * Lädt die Artikel
+	 * Lädt die Kunden
 	 */
 	public void loadCustomers() {
 		Async.executeUILoad(customerService::getCustomer, customers::setAll);
@@ -95,31 +95,13 @@ public class CustomerViewModel implements ViewModel {
 		if (newCustomer.isPresent()) {
 			// Speichert den Kunden
 			Customer savedCustomer = customerService.saveCustomer(newCustomer.get());
-			// aktualisiert den Artikel in der Articles-Liste
+			// aktualisiert den Kunden in der Customer-Liste
 			customers.set(customers.indexOf(customer), savedCustomer);
 		}
 	}
 
-	/**
-	 * Löscht den Artikel
-	 * 
-	 * @param customer
-	 */
 
-//	public void deleteArticle(Article article) {
-//		// Sicherheitsabfrage
-//		Alert alert = new Alert(AlertType.WARNING);
-	// alert.setTitle("Artikel löschen");
-//		alert.setHeaderText(null);
-	// alert.setContentText(String.format("Möchten Sie den Artikel '%s' wirklich
-	// löschen?", article.getName()));
-//
-//		Optional<ButtonType> result = alert.showAndWait();
-//		if (result.orElse(ButtonType.CANCEL) == ButtonType.OK) {
-//			articleService.deleteArticle(article);
-//			loadArticles();
-//		}
-//	}
+
 		public void onSearchButtonClick() {
 		
 		if (Strings.isNullOrEmpty(searchCustomerID.getValue()) &&  searchCustomerFirstName.getValue() == null &&

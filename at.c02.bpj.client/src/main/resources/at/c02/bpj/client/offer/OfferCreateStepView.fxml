@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="at.c02.bpj.client.offer.OfferCreateStepView">
+	<center>
+		<fx:include fx:id="stepContext" source="/at/c02/bpj/client/ui/MultiStepView.fxml" />
+	</center>
+</BorderPane>
+  

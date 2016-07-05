@@ -25,7 +25,7 @@ import javafx.scene.layout.GridPane;
 
 
 /**
- * Controller für ArticleView.fxml.
+ * Controller für CustomerView.fxml.
  */
 public class CustomerView implements FxmlView<CustomerViewModel>, Initializable {
 
@@ -38,11 +38,11 @@ public class CustomerView implements FxmlView<CustomerViewModel>, Initializable 
 	@FXML
 	private TableColumn<Customer, Long> idColumn;
 	@FXML
-	private TableColumn<Article, String> firstnameColumn;
+	private TableColumn<Customer, String> firstnameColumn;
 	@FXML
-	private TableColumn<Article, String> lastnameColumn;
+	private TableColumn<Customer, String> lastnameColumn;
 	@FXML
-	private TableColumn<Article, String> companynameColumn;
+	private TableColumn<Customer, String> companynameColumn;
 	
 	@FXML
 	private GridPane searchGridPane;

@@ -11,6 +11,6 @@ public interface OfferRepository extends JpaRepository<Offer, Long> {
 
 	@Query("select distinct offer from Offer offer left join fetch offer.offerPositions positions "
 			+ "left join fetch positions.article article left join fetch article.category "
-			+ "left join fetch offer.customer left join fetch offer.employee")
+			+ "left join fetch offer.customer left join fetch offer.employee " + "order by offer.offerId")
 	List<Offer> findAllFetching();
 }

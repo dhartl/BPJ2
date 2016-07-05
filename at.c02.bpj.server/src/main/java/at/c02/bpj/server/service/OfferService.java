@@ -11,22 +11,20 @@ import at.c02.bpj.server.repository.OfferRepository;
 @Service
 public class OfferService {
 
-	
-private OfferRepository offerRepository;
+	private OfferRepository offerRepository;
 
-	
 	public OfferRepository getOfferRepository() {
-	return offerRepository;
+		return offerRepository;
 	}
 
 	@Autowired
 	public void setOfferRepository(OfferRepository offerRepository) {
-	this.offerRepository = offerRepository;
+		this.offerRepository = offerRepository;
 	}
-
 
 	/**
 	 * findet alle Angebote
+	 * 
 	 * @return Liste aller Angebote
 	 */
 	public List<Offer> getAllOffers() {
@@ -34,13 +32,13 @@ private OfferRepository offerRepository;
 	}
 
 	/**
-	 * erstellt oder aktualisiert Angebot. 
+	 * erstellt oder aktualisiert Angebot.
+	 * 
 	 * @param offer
 	 */
 	public Offer createOrUpdateOffer(Offer offer) {
 		offer.getOfferPositions().forEach(offerPosition -> offerPosition.setOffer(offer));
 		return offerRepository.save(offer);
 	}
-	
-	
+
 }

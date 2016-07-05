@@ -10,6 +10,7 @@ import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 
@@ -26,6 +27,9 @@ public class MainView implements FxmlView<MainViewModel>, Initializable {
 	@InjectContext
 	private Context context;
 
+	@FXML
+	private Label lblUsername;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		mainViewModel.setContext(context);
@@ -33,6 +37,7 @@ public class MainView implements FxmlView<MainViewModel>, Initializable {
 		Bindings.bindContent(lvMenu.getItems(), mainViewModel.getMainMenuItems());
 		mainViewModel.selectedMenuItemProperty().bind(lvMenu.getSelectionModel().selectedItemProperty());
 		mainView.centerProperty().bind(mainViewModel.centerNodeProperty());
+		lblUsername.textProperty().bind(mainViewModel.usernameProperty());
 	}
 
 }

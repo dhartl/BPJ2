@@ -12,7 +12,7 @@ import at.c02.bpj.server.entity.Article;
  */
 public interface ArticleRepository extends JpaRepository<Article, Long> {
 
-	@Query("select article from Article article join fetch article.category")
+	@Query("select distinct article from Article article join fetch article.category order by article.articleId")
 	List<Article> findAllFetchCategory();
 
 }

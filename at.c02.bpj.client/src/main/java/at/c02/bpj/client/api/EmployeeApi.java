@@ -10,6 +10,5 @@ public interface EmployeeApi {
 
 	@GET("employee")
 	Call<List<Employee>> getEmployee();
-	
-	
+
 }

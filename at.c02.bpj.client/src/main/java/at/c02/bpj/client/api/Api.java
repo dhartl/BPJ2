@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import at.c02.bpj.client.api.model.ServerError;
 import eu.lestard.easydi.EasyDI;
 import okhttp3.OkHttpClient;
+import okhttp3.OkHttpClient.Builder;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
@@ -27,8 +28,11 @@ public class Api {
 
 	private static Retrofit retrofit;
 
+	private static UserCredentialsAuthenticator userCredentialsAuthenticator;
+
 	public static void initialize(EasyDI context) {
 		OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+		initializeAuthentication(httpClient);
 		addRequestLogging(httpClient);
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -41,7 +45,8 @@ public class Api {
 		createAndRegisterService(CustomerApi.class, context);
 		createAndRegisterService(EmployeeApi.class, context);
 		createAndRegisterService(OfferApi.class, context);
-		
+		createAndRegisterService(LoginApi.class, context);
+
 	}
 
 	/**
@@ -53,7 +58,19 @@ public class Api {
 	private static void addRequestLogging(OkHttpClient.Builder httpClient) {
 		HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 		logging.setLevel(Level.BODY);
-		httpClient.addInterceptor(logging);
+		httpClient.addNetworkInterceptor(logging);
+	}
+
+	/**
+	 * Authentifizierung für jede Request
+	 */
+	private static void initializeAuthentication(Builder httpClient) {
+		userCredentialsAuthenticator = new UserCredentialsAuthenticator();
+		httpClient.addNetworkInterceptor(userCredentialsAuthenticator);
+	}
+
+	public static void setUserCredientials(String username, String password) {
+		userCredentialsAuthenticator.setCredentials(username, password);
 	}
 
 	/**
