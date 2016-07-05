@@ -152,6 +152,11 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 		});
 		Bindings.bindContentBidirectional(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
 		tblOfferPositions.setEditable(true);
+		offCustomerID.textProperty().bind(model.customerIdProperty());
+		offCompanyName.textProperty().bind(model.customerNameProperty());
+
+		offSummaryPrice.textProperty().bind(model.sumPriceProperty().asString());
+
 	}
 
 	public boolean shutdown() {
@@ -253,19 +258,7 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	}
 
 	private void onAddtoOfferArticleClick(Article article) {
-		showOfferData();
 		model.addPositiontoOffer(article);
 	}
 
-	// kann nicht bei Initialize gemacht werden weil da das offer property noch
-	// null ist
-	public void showOfferData() {
-
-		offCustomerID.textProperty()
-				.bind(model.offerProperty().get().customerProperty().get().customerIdProperty().asString());
-		offCompanyName.textProperty()
-				.bindBidirectional(model.offerProperty().get().customerProperty().get().companyNameProperty());
-
-		offSummaryPrice.textProperty().bind(model.sumPriceProperty().asString());
-	}
 }

@@ -32,8 +32,8 @@ public class Api {
 
 	public static void initialize(EasyDI context) {
 		OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-		addRequestLogging(httpClient);
 		initializeAuthentication(httpClient);
+		addRequestLogging(httpClient);
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080/api/")
@@ -58,7 +58,7 @@ public class Api {
 	private static void addRequestLogging(OkHttpClient.Builder httpClient) {
 		HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 		logging.setLevel(Level.BODY);
-		httpClient.addInterceptor(logging);
+		httpClient.addNetworkInterceptor(logging);
 	}
 
 	/**

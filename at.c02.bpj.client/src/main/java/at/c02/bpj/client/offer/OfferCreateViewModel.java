@@ -1,16 +1,22 @@
 package at.c02.bpj.client.offer;
 
+import java.util.Date;
 import java.util.List;
 
+import at.c02.bpj.client.AuthContext;
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.Offer;
 import at.c02.bpj.client.api.model.OfferPosition;
+import at.c02.bpj.client.api.model.OfferStatus;
 import at.c02.bpj.client.service.ArticleService;
 import at.c02.bpj.client.service.OfferService;
+import de.saxsys.mvvmfx.InjectScope;
 import de.saxsys.mvvmfx.ViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -22,21 +28,21 @@ public class OfferCreateViewModel implements ViewModel {
 	/**
 	 * Liste aller Artikel und OfferPositons
 	 */
-	private ObjectProperty<Offer> offer = new SimpleObjectProperty<>(new Offer());
-
 	private ObjectProperty<Double> sumPrice = new SimpleObjectProperty<>();
 
 	private ObservableList<Article> articles = FXCollections.observableArrayList();
 
 	private ObservableList<OfferPosition> offerPositions = FXCollections.observableArrayList();
 
+	private StringProperty customerId = new SimpleStringProperty();
+	private StringProperty customerName = new SimpleStringProperty();
+
 	private ArticleService articleService;
 	private OfferService offerService;
 	public int positionNumber;
 
-	public ObjectProperty<Offer> offerProperty() {
-		return offer;
-	}
+	@InjectScope
+	private OfferScope offerScope;
 
 	public ObjectProperty<Double> sumPriceProperty() {
 		return sumPrice;
@@ -48,33 +54,37 @@ public class OfferCreateViewModel implements ViewModel {
 		this.articleService = articleService;
 		this.offerService = offerService;
 
-		offer.addListener((observable, oldValue, newValue) -> {
+	}
+
+	public void initialize() {
+		offerScope.offerProperty().addListener((observable, oldValue, newValue) -> {
 			unbindOffer(oldValue);
 			bindOffer(newValue);
 		});
+		bindOffer(offerScope.getOffer());
 		loadArticles();
+
 	}
 
 	private void bindOffer(Offer newValue) {
-		sumPrice.bind(
-				Bindings.createObjectBinding(
-						() -> newValue.offerPositionsProperty().stream()
-								.mapToDouble(pos -> pos.getPrice() * pos.getAmount()).sum(),
-						newValue.offerPositionsProperty()));
-		Bindings.bindContentBidirectional(offerPositions, offer.get().offerPositionsProperty());
+		if (newValue != null) {
+			sumPrice.bind(Bindings.createObjectBinding(
+					() -> newValue.offerPositionsProperty().stream()
+							.mapToDouble(pos -> pos.getPrice() * pos.getAmount()).sum(),
+					newValue.offerPositionsProperty()));
+			Bindings.bindContentBidirectional(offerPositions, newValue.offerPositionsProperty());
+			customerId.bind(Bindings.select(newValue, "customer", "customerId").asString());
+			customerName.bind(Bindings.selectString(newValue, "customer", "companyName"));
+		}
 	}
 
 	private void unbindOffer(Offer oldValue) {
-		sumPrice.unbind();
-		Bindings.unbindContentBidirectional(offerPositions, offer.get().offerPositionsProperty());
-	}
-
-	public void setOffer(Offer offer) {
-		this.offer.set(offer);
-	}
-
-	public Offer getOffer() {
-		return offer.get();
+		if (oldValue != null) {
+			sumPrice.unbind();
+			Bindings.unbindContentBidirectional(offerPositions, oldValue.offerPositionsProperty());
+			customerId.unbind();
+			customerName.unbind();
+		}
 	}
 
 	public ObservableList<OfferPosition> offerPositionsProperty() {
@@ -113,13 +123,40 @@ public class OfferCreateViewModel implements ViewModel {
 		int nmbr = 1;
 		newOfferPosition.setAmount(nmbr);
 
-		offer.get().getOfferPositions().add(newOfferPosition);
+		offerScope.offerProperty().get().getOfferPositions().add(newOfferPosition);
 	}
 
 	public void saveOffer() {
-		Offer savedOffer = new Offer();
-		savedOffer = offerService.saveOffer(offer.get());
-		setOffer(savedOffer);
+		Offer offer = offerScope.offerProperty().get();
+		offer.setCreatedDt(new Date());
+		offer.setStatus(OfferStatus.CREATED);
+		offer.setEmployee(AuthContext.getInstance().getCurrentUser());
+		Offer savedOffer = offerService.saveOffer(offer);
+		offerScope.setOffer(savedOffer);
+	}
+
+	public final StringProperty customerIdProperty() {
+		return this.customerId;
+	}
+
+	public final java.lang.String getCustomerId() {
+		return this.customerIdProperty().get();
+	}
+
+	public final void setCustomerId(final java.lang.String customerId) {
+		this.customerIdProperty().set(customerId);
+	}
+
+	public final StringProperty customerNameProperty() {
+		return this.customerName;
+	}
+
+	public final java.lang.String getCustomerName() {
+		return this.customerNameProperty().get();
+	}
+
+	public final void setCustomerName(final java.lang.String customerName) {
+		this.customerNameProperty().set(customerName);
 	}
 
 }
