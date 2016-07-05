@@ -1,7 +1,5 @@
 package at.c02.bpj.client.test;
 
-import java.sql.Date;
-
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.Category;
 import at.c02.bpj.client.api.model.Customer;
@@ -9,12 +7,6 @@ import at.c02.bpj.client.api.model.Employee;
 import at.c02.bpj.client.api.model.Offer;
 import at.c02.bpj.client.api.model.OfferPosition;
 import at.c02.bpj.client.api.model.OfferStatus;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 
 public class TestDataBuilder {
 	public static Article createArticle(Long id, String name, String description, Double price, Category category) {
@@ -34,21 +26,18 @@ public class TestDataBuilder {
 		category.setSortNr(sortNr);
 		return category;
 	}
-	
-	public static Offer createOffer(Long offerId, Date createdDt, Date completedDt, 
-					OfferStatus status, Customer customer, Employee employee) {
-		Offer offer = new Offer();		
+
+	public static Offer createOffer(Long offerId, OfferStatus status, Customer customer, Employee employee) {
+		Offer offer = new Offer();
 		offer.setOfferId(offerId);
-		offer.setCreatedDt(createdDt);
-		offer.setCompletedDt(completedDt);
 		offer.setStatus(status);
 		offer.setCustomer(customer);
 		offer.setEmployee(employee);
 		return offer;
 	}
-	
-	public static OfferPosition createOfferPosition(Long offerPositionId, int posNr, double price, 
-					int amount, Article article, Offer offerId) {
+
+	public static OfferPosition createOfferPosition(Long offerPositionId, int posNr, double price, int amount,
+			Article article, Offer offerId) {
 		OfferPosition offerPosition = new OfferPosition();
 		offerPosition.setOfferId(offerId);
 		offerPosition.setPosNr(posNr);
@@ -59,7 +48,24 @@ public class TestDataBuilder {
 		offerPosition.setOfferId(offerId);
 		return offerPosition;
 	}
-	
-	
-	
+
+	public static Employee createEmployee(Long employeeId, String firstname, String lastname) {
+		Employee employee = new Employee();
+		employee.setEmployeeId(employeeId);
+		employee.setFirstname(firstname);
+		employee.setLastname(lastname);
+		return employee;
+	}
+
+	public static Customer createCustomer(Long customerId, String companyName) {
+		Customer customer = new Customer();
+		customer.setCustomerId(customerId);
+		customer.setCompanyName(companyName);
+		return customer;
+	}
+
+	public static OfferStatus createOfferStatus() {
+		return OfferStatus.COMPLETED;
+	}
+
 }
