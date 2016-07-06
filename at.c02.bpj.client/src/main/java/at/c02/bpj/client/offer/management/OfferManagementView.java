@@ -22,9 +22,13 @@ import org.apache.log4j.lf5.util.DateFormatManager;
 import com.google.common.base.Strings;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Header;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -249,7 +253,9 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        // step 2
 		        PdfWriter.getInstance(document, new FileOutputStream(filename));
 		        // step 3
-		        document.open();
+		        document.open();		        
+		        Font bold = new Font(Font.FontFamily.UNDEFINED, 12, Font.BOLD);
+		       
 		        // step 4
 		     // Create and add an Image
 //		        Image img = Image.getInstance("/at.c02.bpj.client/AVl_Logo.jpg");
@@ -257,25 +263,44 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        img.setAbsolutePosition(428f, 765f);
 //		        img.scaleAbsolute(1, 1);
 		        img.scaleToFit(150, 150);
-
 		        
+		        Date dt = new Date();
+				SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd");
+				df.setTimeZone( TimeZone.getDefault() );
+				SimpleDateFormat dg = new SimpleDateFormat( "HH:mm:ss");
+				dg.setTimeZone( TimeZone.getDefault() );
+				
+		        model.getSelectedOffer().setCompletedDt(dt);
 //		        img.setAbsolutePosition(
 //		            (PageSize.POSTCARD.getWidth() - img.getScaledWidth()) / 2,
 //		            (PageSize.POSTCARD.getHeight() - img.getScaledHeight()) / 2);
 		        document.add(img);
+		        document.add(new Paragraph("\n"));
 		        document.add(new Paragraph("Sehr geehrter Herr " + model.getSelectedOffer().getCustomer().getContactLastName() + ","));
 		        document.add(new Paragraph("\n"));
 		        document.add(new Paragraph("wie vereinbart finden Sie untenstehend unser Angebot"));
 		        document.add(new Paragraph("zu Ihrer Bestellung mit der Nummer " + 
 		        		model.getSelectedOffer().getOfferId().toString() + ":"));
-		        document.add(new Paragraph("\n\n\n"));
+		        document.add(new Paragraph("\n\n"));
+		        document.add(new Paragraph("Auftraggeber:" , bold));
+		        document.add(new Paragraph(model.getSelectedOffer().getCustomer().getContactFirstName() + " " + model.getSelectedOffer().getCustomer().getContactLastName()));
+		        document.add(new Paragraph(model.getSelectedOffer().getCustomer().getCompanyName()));
+		        document.add(new Paragraph(model.getSelectedOffer().getCustomer().getStreet() + " " + model.getSelectedOffer().getCustomer().getHouseNr()));
+		        document.add(new Paragraph(model.getSelectedOffer().getCustomer().getPostCode() + " " + model.getSelectedOffer().getCustomer().getCity()));
+		        document.add(new Paragraph("\n\n"));
+		        
+		        document.add(new Paragraph("Auftragnehmer:" ,bold));
+		        document.add(new Paragraph(model.getSelectedOffer().getEmployee().getFirstname() + " " + model.getSelectedOffer().getEmployee().getLastname()));
+		        document.add(new Paragraph(model.getSelectedOffer().getEmployee().getEmail()));
+		        document.add(new Paragraph("\n\n"));
+		        
 		        document.add(new Paragraph("Das Angebot setzt sich aus folgender(n) Position(en) zsammen:"));
 		        document.add(new Paragraph("\n"));
 
 		        ArrayList<Offer>Anbot = new ArrayList<Offer>();
 		        //Anbot.add(model.getSelectedOffer().getCustomer().companyNameProperty().toString());
 		        Anbot.add(model.getSelectedOffer());
-		        int gesamtpreis = 0;
+		        float gesamtpreis = 0;
 		        System.out.println(Anbot);
 //		        for (Offer offer : Anbot) 
 //		        {
@@ -294,15 +319,17 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 //			        table.addCell("row 1; cell 2");
 //			        table.addCell("row 2; cell 1");
 //			        table.addCell("row 2; cell 2");
-			        
+			        int j = 0;
 		        	for(int i=0; i<offer.getOfferPositions().size(); i++)
 		        	{
-		        		
+		        		j=i+1;
 //		        		document.add(new PdfPCell(table) table.addCell("Artikel " + i + ": " + offer.getOfferPositions().get(i).getArticle().getName()
 //			        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
-		        		document.add(new Paragraph("Artikel " + i + ": " + offer.getOfferPositions().get(i).getArticle().getName()
-			        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
-			        	gesamtpreis+=offer.getOfferPositions().get(i).getArticle().getPrice();
+		        		document.add(new Paragraph("Position " + j + ", Artikel: " + offer.getOfferPositions().get(i).getArticle().getName()
+		        				+ ", Preis: " + offer.getOfferPositions().get(i).getPrice() + ", Anzahl: " + offer.getOfferPositions().get(i).getAmount()));  	
+//		        		document.add(new Paragraph("Artikel " + j + ": " + offer.getOfferPositions().get(i).getArticle().getName()
+//			        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice() + ", Anzahl: " + offer.getOfferPositions().get(i).getAmount()));
+			        	gesamtpreis+=offer.getOfferPositions().get(i).getPrice() * offer.getOfferPositions().get(i).getAmount();
 //		        	document.add(new Paragraph("Artikel " + i + ": " + offer.getOfferPositions().get(i).getArticle().getName()
 //		        			+ ", Preis: " + offer.getOfferPositions().get(i).getArticle().getPrice()));
 //		        	gesamtpreis+=offer.getOfferPositions().get(i).getArticle().getPrice();
@@ -313,8 +340,9 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        	}
 		    	}
 		        document.add(new Paragraph("\n"));
-		        document.add(new Paragraph("Wir erlauben uns, Ihnen für diese Bestellung " + gesamtpreis + " Euro in Rechnung zu stellen."));
-		        document.add(new Paragraph("\n"));
+		        //document.add(new Paragraph("Wir erlauben uns, Ihnen für diese Bestellung " + model.getSelectedOffer(). + " Euro in Rechnung zu stellen.", bold));
+		        document.add(new Paragraph("Wir erlauben uns, Ihnen für diese Bestellung " + gesamtpreis + " Euro in Rechnung zu stellen.", bold));
+		        document.add(new Paragraph("\n\n"));
 		        document.add(new Paragraph("Vielen Dank für Ihr Vertrauen!"));
 //		       String name;
 //		       for (int i=0; i<Anbot.size(); i++)
@@ -334,15 +362,19 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 //		        			for (int j: model.getSelectedOffer().getOfferPositions())
 //		        		})
 //		        		model.getSelectedOffer().getOfferPositions().toString()));
-		        document.add(new Paragraph("\n\n\n"));
+		        document.add(new Paragraph("\n\n"));
 //		        document.add(new Paragraph("\n\n\n"));
 		        
 		        
-		        document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + model.getSelectedOffer().getCompletedDt()));
+//		        document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + model.getSelectedOffer().getCompletedDt().toString()));
+		        document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + df.format(dt) + " um " + dg.format(dt) + " Uhr."));
 		        document.add(new Paragraph("\n"));
+//		        Paragraph p = new Paragraph("Hochachtungsvoll,");
+//		        p.setAlignment(Element.ALIGN_BOTTOM);		        
+//		        document.add(p);
 		        document.add(new Paragraph("Hochachtungsvoll,"));
 		        document.add(new Paragraph(model.getSelectedOffer().getEmployee().getFirstname() + " " + model.getSelectedOffer().getEmployee().getLastname()));
-		        
+		        // document.setFooter(new Header("Footnote goes here"));
 		        // step 5
 		        document.close();
 		    }
