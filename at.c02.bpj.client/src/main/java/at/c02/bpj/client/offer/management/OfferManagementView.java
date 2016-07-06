@@ -346,19 +346,4 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        // step 5
 		        document.close();
 		    }
-	public void createPdf()
-			throws DocumentException, IOException {
-		        // step 1
-		        Document document = new Document();
-		        // step 2
-		       // PdfWriter.getInstance(document, new FileOutputStream(filename));
-		       ///PdfWriter.getInstance(document, new File();
-		        // step 3
-		        document.open();
-		        // step 4
-		        document.add(new Paragraph("Hello World!"));
-		        // step 5
-		        document.close();
-		    }
-
 }
