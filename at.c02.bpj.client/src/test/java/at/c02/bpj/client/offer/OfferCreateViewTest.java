@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import at.c02.bpj.client.api.OfferApi;
 import at.c02.bpj.client.api.model.Article;
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
@@ -23,7 +24,6 @@ import de.saxsys.mvvmfx.FxmlView;
 import de.saxsys.mvvmfx.Scope;
 import de.saxsys.mvvmfx.ViewModel;
 import eu.lestard.easydi.EasyDI;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
@@ -31,137 +31,139 @@ import javafx.scene.input.MouseButton;
 @RunWith(MockitoJUnitRunner.class)
 public class OfferCreateViewTest extends MvvmFxGuiTest {
 
-	@Mock
-	private OfferService offerService;
+    @Mock
+    private OfferApi offerApi;
 
-	@Mock
-	private ArticleService articleService;
+    private OfferService offerService;
 
-	private Offer offer1;
-	private Offer offer2;
-	private Employee employee1;
-	private Customer customer1;
+    @Mock
+    private ArticleService articleService;
 
-	@Override
-	public Class<? extends FxmlView<? extends ViewModel>> getViewClass() {
-		return OfferCreateView.class;
-	}
+    private Offer offer1;
+    private Offer offer2;
+    private Employee employee1;
+    private Customer customer1;
 
-	@Override
-	public List<Scope> getViewScopes() {
-		return Lists.newArrayList(new OfferScope());
-	}
+    @Override
+    public Class<? extends FxmlView<? extends ViewModel>> getViewClass() {
+	return OfferCreateView.class;
+    }
 
-	@Override
-	public void setupContext(EasyDI context) {
-		context.bindInstance(OfferService.class, offerService);
-		context.bindInstance(ArticleService.class, articleService);
+    @Override
+    public List<Scope> getViewScopes() {
+	return Lists.newArrayList(new OfferScope());
+    }
 
-		Mockito.when(articleService.getArticles()).thenReturn(Lists.newArrayList(TestData.article1()));
+    @Override
+    public void setupContext(EasyDI context) {
+	context.bindInstance(OfferService.class, offerService);
+	context.bindInstance(ArticleService.class, articleService);
 
-		Mockito.when(offerService.saveOffer(offer1)).thenReturn(offer1);
-		stage.setWidth(1000);
-		stage.setHeight(1000);
-	}
+	offerService = new OfferService(offerApi);
 
-	@Test
-	public void testInitialize() {
-		TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
+	Mockito.when(articleService.getArticles()).thenReturn(Lists.newArrayList(TestData.article1()));
+	stage.setWidth(1000);
+	stage.setHeight(1000);
+    }
 
-		TableView<Article> tblArticles = find("#tblArticles");
+    @Test
+    public void testInitialize() {
+	TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
 
-	}
+	TableView<Article> tblArticles = find("#tblArticles");
 
-	// #007 Der User wählt in der Artikelansicht einen Artikel aus und fügt ihn
-	// zum Angebot hinzu.
-	@Test
-	public void testAddArticleToOffer() {
-		TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
+    }
 
-		TableView<Article> tblArticles = find("#tblArticles");
-		click("Artikel1", MouseButton.SECONDARY).click("Zum Angebot hinzufügen");
+    // #006 Der User wählt in der Artikelansicht einen Artikel aus und fügt ihn
+    // zum Angebot hinzu.
+    @Test
+    public void testAddArticleToOffer() {
+	TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
 
-		Assert.assertEquals(1, tblOfferPositions.getItems().size());
-	}
+	click("Artikel1", MouseButton.SECONDARY).click("Zum Angebot hinzufügen");
 
-	// #008 Der User möchte das Angebot abschließen und klickt auf Speichern.
-	// Es wurde jedoch einer Position die Menge 100 zugeordnet .
-	@Test
-	public void testSaveOfferAmountError() {
-		TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
+	Assert.assertEquals(1, tblOfferPositions.getItems().size());
+    }
 
-		TableView<Article> tblArticles = find("#tblArticles");
-		click("Artikel1", MouseButton.SECONDARY).click("Zum Angebot hinzufügen");
-		// Eingabe von 100 bei Amount?
-		move(find("Menge")).moveBy(-10, 25).doubleClick(MouseButton.PRIMARY).doubleClick().type("100")
-				.press(KeyCode.ENTER);
-		// Hier Button drücken
-		OfferCreateViewModel viewModel = (OfferCreateViewModel) getViewTuple().getViewModel();
-		viewModel.saveOffer();
-		// Warnung muss aufscheinen
+    // #007 Der User möchte das Angebot abschließen und klickt auf Speichern.
+    // Es wurde jedoch einer Position die Menge 100 zugeordnet .
+    @Test
+    public void testSaveOfferAmountError() {
+	TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
 
-	}
+	click("Artikel1", MouseButton.SECONDARY).click("Zum Angebot hinzufügen");
+	// Eingabe von 100 bei Amount?
+	move(find("Menge")).moveBy(-10, 25).doubleClick(MouseButton.PRIMARY).doubleClick().type("100")
+		.press(KeyCode.ENTER);
+	// Eingabe wird validiert
+	Offer offer = new Offer();
 
-	// #009 Der User möchte das Angebot abschließen und klickt auf Speichern.
-	// Es wurde jedoch einem Artikel ein negativer Preis (Preis € -100)
-	// zugeordnet.
-	@Test
-	public void testSaveOfferPriceError() {
-		TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
+	offer.offerPositionsProperty().add(tblOfferPositions.getItems().get(0));
 
-		TableView<Article> tblArticles = find("#tblArticles");
-		click("#tblArticles").click(MouseButton.SECONDARY).click(MouseButton.PRIMARY);
-		// Eingabe von -100 bei Price?
+	Assert.assertFalse(offerService.validateOffer(offer));
+	// Kann nicht gespeichert werden!
 
-		// Hier Button drücken
-		Button btnSaveAndClose = find("#btnSaveAndClose");
-		click("#btnSaveAndClose");
-		// Warnung muss aufscheinen
+    }
 
-	}
+    // #008 Der User möchte das Angebot abschließen und klickt auf Speichern.
+    // Es wurde jedoch einem Artikel ein negativer Preis (Preis € -100)
+    // zugeordnet.
+    @Test
+    public void testSaveOfferPriceError() {
+	TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
 
-	// #010 Der User möchte das Angebot abschließen und klickt auf Speichern. Es
-	// wurde jedoch bisher kein Artikel (keine Position) dem Angebot
-	// hinzugefügt.
+	click("Artikel1", MouseButton.SECONDARY).click("Zum Angebot hinzufügen");
+	// Eingabe von -100 bei Price?
+	move(find("Preis pro Einheit")).moveBy(-10, 25).doubleClick(MouseButton.PRIMARY).doubleClick().type("-100")
+		.press(KeyCode.ENTER);
 
-	@Test
-	public void testSaveOfferOfferPositionError() {
-		TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
+	// Eingabe wird validiert
+	Offer offer = new Offer();
 
-		TableView<Article> tblArticles = find("#tblArticles");
+	offer.offerPositionsProperty().add(tblOfferPositions.getItems().get(0));
 
-		// Hier Button drücken
-		Button btnSaveAndClose = find("#btnSaveAndClose");
-		click("#btnSaveAndClose");
-		// Warnung muss aufscheinen
+	Assert.assertFalse(offerService.validateOffer(offer));
+	// Kann nicht gespeichert werden!
 
-	}
+    }
 
-	// #011 Der User tätigt folgende Eingabe: Artikel= Prüfstand xy; Preis= €
-	// 10.000,--, Menge= 1 und klickt folgend auf „Angebot speichern“.
-	@Test
-	public void testSaveOfferCompleted() {
-		TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
+    // #009 Der User möchte das Angebot abschließen und klickt auf Speichern. Es
+    // wurde jedoch bisher kein Artikel (keine Position) dem Angebot
+    // hinzugefügt.
 
-		TableView<Article> tblArticles = find("#tblArticles");
+    @Test
+    public void testSaveOfferOfferPositionError() {
 
-		// Hier Button drücken
-		Button btnSaveAndClose = find("#btnSaveAndClose");
-		click("#btnSaveAndClose");
+	// Eingabe wird validiert
+	Offer offer = new Offer();
 
-		// Assert.assertEquals(getViewTuple().getViewModel().???,
-		// btnSaveAndClose.getOnAction());
-	}
+	Assert.assertFalse(offerService.validateOffer(offer));
+	// Kann nicht gespeichert werden!
 
-	// #012 Der User schließt die Angebotserstellungsmaske und möchte somit die
-	// aktuelle Erstellung des Angebots verwerfen. @Test
-	public void testCloseOfferCreateView() {
-		TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
+    }
 
-		TableView<Article> tblArticles = find("#tblArticles");
+    // #010 Der User tätigt folgende Eingabe: Artikel= Prüfstand xy; Preis= €
+    // 10.000,--, Menge= 1 und klickt folgend auf „Angebot speichern“.
+    @Test
+    public void testSaveOfferCompleted() {
+	TableView<OfferPosition> tblOfferPositions = find("#tblOfferPositions");
 
-		this.closeCurrentWindow();
+	click("Artikel1", MouseButton.SECONDARY).click("Zum Angebot hinzufügen");
+	// Eingabe von -100 bei Price?
+	move(find("Preis pro Einheit")).moveBy(-10, 25).doubleClick(MouseButton.PRIMARY).doubleClick().type("10000")
+		.press(KeyCode.ENTER);
 
-	}
+	// Eingabe von 100 bei Amount?
+	move(find("Menge")).moveBy(-10, 25).doubleClick(MouseButton.PRIMARY).doubleClick().type("1")
+		.press(KeyCode.ENTER);
 
+	// Eingabe wird validiert
+	Offer offer = new Offer();
+
+	offer.offerPositionsProperty().add(tblOfferPositions.getItems().get(0));
+
+	Assert.assertTrue(offerService.validateOffer(offer));
+	// Kann gespeichert werden!
+
+    }
 }
