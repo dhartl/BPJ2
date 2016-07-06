@@ -18,6 +18,7 @@ import java.util.TimeZone;
 import javax.management.modelmbean.ModelMBean;
 
 import org.apache.log4j.lf5.util.DateFormatManager;
+import org.junit.experimental.theories.Theories;
 
 import com.google.common.base.Strings;
 import com.itextpdf.text.Document;
@@ -37,7 +38,13 @@ import com.itextpdf.text.pdf.fonts.FontsResourceAnchor;
 import at.c02.bpj.client.api.model.Customer;
 import at.c02.bpj.client.api.model.Employee;
 import at.c02.bpj.client.api.model.Offer;
+import at.c02.bpj.client.api.model.OfferStatus;
+import at.c02.bpj.client.offer.OfferCreateViewModel;
+import at.c02.bpj.client.offer.OfferScope;
+import at.c02.bpj.client.service.ArticleService;
+import at.c02.bpj.client.service.OfferService;
 import de.saxsys.mvvmfx.FxmlView;
+import de.saxsys.mvvmfx.InjectScope;
 import de.saxsys.mvvmfx.InjectViewModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
@@ -112,7 +119,13 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 
 	@FXML
 	private MenuItem closeMenuItem;	
+	
+	private ArticleService articleService;
+	private OfferService offerService;
+	public int positionNumber;
 
+	@InjectScope
+	private OfferScope offerScope;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -216,6 +229,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 
 
 	public void onExportButtonClick() throws DocumentException, IOException {
+
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save File To");
 		
@@ -229,7 +243,21 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 
 		fileChooser.setInitialFileName("Angebot_" + model.getSelectedOffer().getOfferId().toString() + "_" + model.getSelectedOffer().getCustomer().getCompanyName().toString()+ "_" + df.format(dt));
 		File selectedFile = fileChooser.showSaveDialog(exportButton.getScene().getWindow());
+		
+		
 		if (selectedFile != null) {
+			
+			
+//			Offer offer = offerScope.offerProperty().get();
+//			Offer offer = offerScope.offerProperty().;
+			Offer offer = model.getSelectedOffer();
+			offer.setCompletedDt(new Date());			
+			offer.setStatus(OfferStatus.COMPLETED);
+			offerScope.setOffer(offer);
+//			Offer completedOffer = offerService.saveOffer(offer);
+//			offerScope.setOffer(completedOffer);
+
+//			completeOffer();
 			model.onExportButtonClick(selectedFile);	
 			createPdf(selectedFile.toString());				
 
@@ -266,7 +294,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 				SimpleDateFormat dg = new SimpleDateFormat( "HH:mm:ss");
 				dg.setTimeZone( TimeZone.getDefault() );
 				
-		        model.getSelectedOffer().setCompletedDt(dt);
+		        //model.getSelectedOffer().setCompletedDt(dt);
 
 		        document.add(img);
 		        document.add(new Paragraph("\n"));
@@ -333,7 +361,8 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        document.add(new Paragraph("\n\n"));
 		        document.add(new Paragraph("Vielen Dank für Ihr Vertrauen!"));//		       
 		        document.add(new Paragraph("\n\n"));
-		        document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + df.format(dt) + " um " + dg.format(dt) + " Uhr."));
+//   		    document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + df.format(dt) + " um " + dg.format(dt) + " Uhr."));
+		        document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + model.getSelectedOffer().getCompletedDt() + " um " + dg.format(dt) + " Uhr."));
 		        document.add(new Paragraph("\n"));
 //		        Paragraph p = new Paragraph("Hochachtungsvoll,");
 //		        p.setAlignment(Element.ALIGN_BOTTOM);		        
@@ -343,4 +372,12 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	        
 		        document.close();		        
 		    }
+	
+	public void completeOffer() {
+		Offer offer =  offerScope.offerProperty().get();
+		offer.setCompletedDt(new Date());
+		offer.setStatus(OfferStatus.COMPLETED);
+		Offer completedOffer = offerService.saveOffer(offer);
+		offerScope.setOffer(completedOffer);
+	}
 }

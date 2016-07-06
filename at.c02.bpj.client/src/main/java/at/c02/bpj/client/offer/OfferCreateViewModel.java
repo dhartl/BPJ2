@@ -18,6 +18,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 /**
  * Model für {@link OfferCreatView}
  */
@@ -125,12 +126,5 @@ public class OfferCreateViewModel implements ViewModel {
 		Offer savedOffer = offerService.saveOffer(offer);
 		offerScope.setOffer(savedOffer);
 	}
-	
-	public void completeOffer() {
-		Offer offer = offerScope.offerProperty().get();
-		offer.setCompletedDt(new Date());
-		offer.setStatus(OfferStatus.COMPLETED);
-		Offer completedOffer = offerService.saveOffer(offer);
-		offerScope.setOffer(completedOffer);
-	}
+
 }

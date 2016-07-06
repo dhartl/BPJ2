@@ -44,6 +44,7 @@ public class OfferService {
 	// hier wird methode offer hinzugefügt
 	public void exportOffer(File selectedFile, Offer offer) {
 		// hier wird dokument angelegt
+		
 		// itext
 		// properties für text: offer.getcustomer, offer.get... stehen im
 		// client.api.model
