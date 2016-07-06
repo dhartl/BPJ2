@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 
 /**
  * Dialog zum Erstellen oder Bearbeiten eines Artikels
@@ -15,7 +16,9 @@ import javafx.scene.control.Alert.AlertType;
 public class ArticleEditDialog extends Dialog<Article> {
 
 	private ViewTuple<ArticleEditView, ArticleEditViewModel> viewTuple;
-
+	private Boolean correctValues;
+	private Article article;
+	
 	public ArticleEditDialog() {
 		// Laden von ArticleEditView
 		viewTuple = FluentViewLoader
@@ -26,12 +29,35 @@ public class ArticleEditDialog extends Dialog<Article> {
 		// Dialog hat Buttons "Speichern" und "Abbrechen"
 		getDialogPane().getButtonTypes().addAll(saveType, ButtonType.CANCEL);
 
+		
+		
+		Button saveButton = (Button) getDialogPane().lookupButton(saveType);
+		saveButton.setOnAction((event) -> {
+			article = viewTuple.getViewModel().getArticle();
+			 correctValues = (article.getName().length()>0 && article.getPrice() !=0 && article.getCategory()!= null);
+			if (correctValues) {
+				this.correctValues = true;
+				close();
+			}
+		});	
+		
+		this.setOnCloseRequest(event -> {
+
+			 
+			if (correctValues==false) {
+				event.consume();
+			}
+			
+		});
+		
 		setResultConverter(buttonType -> {
 			if (saveType.equals(buttonType)) {
 				// Nur wenn Speichern gedrückt wurde, wird der Artikel
 				// zurückgeliefert
-				Article article = viewTuple.getViewModel().getArticle();
-				if (article.getName().isEmpty() || article.getPrice() ==0 || article.getCategory().toString().isEmpty())
+				article = viewTuple.getViewModel().getArticle();
+				correctValues = (article.getName().length()>0 && article.getPrice() !=0 && article.getCategory()!= null);
+
+				if (correctValues== false)
 				{
 					Alert noInputAlert = new Alert(AlertType.WARNING);
 				    noInputAlert.setHeaderText("Eingabe fehlerhaft");
