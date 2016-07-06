@@ -46,6 +46,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -54,6 +55,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -109,7 +111,8 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 	private TableColumn<Offer, Double> priceColumn;
 
 	@FXML
-	private MenuItem closeMenuItem;
+	private MenuItem closeMenuItem;	
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -206,18 +209,15 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		model.onSearchButtonClick();
 	}
 
-	// Beende
+
 	public void closeOfferManagement() {
 		closeMenuItem.setOnAction(model.quitOfferManagement());
 	}
 
-	@FXML
+
 	public void onExportButtonClick() throws DocumentException, IOException {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Save File To");
-//		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"),
-//				new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"),
-//				new ExtensionFilter("Audio Files", "*.wav", "*.mp3", "*.aac"), new ExtensionFilter("All Files", "*.*"));
 		
 		// richtigen extension filter wählen für pdf
 		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("PDF Files", "*.pdf"));
@@ -227,41 +227,37 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd_HH_mm_ss" );
 		df.setTimeZone( TimeZone.getDefault() );
 
-		fileChooser.setInitialFileName("Angebot_" + model.getSelectedOffer().getOfferId().toString() + "_" + df.format(dt));
+		fileChooser.setInitialFileName("Angebot_" + model.getSelectedOffer().getOfferId().toString() + "_" + model.getSelectedOffer().getCustomer().getCompanyName().toString()+ "_" + df.format(dt));
 		File selectedFile = fileChooser.showSaveDialog(exportButton.getScene().getWindow());
 		if (selectedFile != null) {
 			model.onExportButtonClick(selectedFile);	
-			createPdf(selectedFile.toString());
-			//fileChooser.setInitialFileName(model.getSelectedOffer().getOfferId().toString());
-			//createPdf("D:\\Campus02\\Offers\\test1");
-			//createPdf("D:\\Campus02\\Offers\\" + selectedFile.getName());
-			//createPdf("D:\\Campus02\\Offers\\" + model.getSelectedOffer().getOfferId().toString());
-			//createPdf("E:\\Offers\\" + "Angebot_" + model.getSelectedOffer().getOfferId().toString() + "_" + df.format(dt));
-		}
+			createPdf(selectedFile.toString());				
+
+			Alert noInputAlert = new Alert(AlertType.INFORMATION);
+		    noInputAlert.setHeaderText("Information");
+		    noInputAlert.setContentText("Ihr Angebot wurde gespeichert!");
+		    noInputAlert.showAndWait();
+			}
 		
-		//createPdf("test");
-		//createPdf(model.getSelectedOffer().getOfferId().toString());
-		
-		//FileChooser chooser = new FileChooser("D:/Dateien/xml");
-		//chooser.setSelectedFile(new File("Datei - 12.12.1212.xml"));
-		//chooser.showSaveDialog(this);
+			else
+			{
+				Alert noInputAlert = new Alert(AlertType.WARNING);
+			    noInputAlert.setHeaderText("Warnung");
+			    noInputAlert.setContentText("Ihr Angebot wurde nicht gespeichert!");
+			    noInputAlert.showAndWait();
+			}
 	}
+	
 	public void createPdf(String filename)
 			throws DocumentException, IOException {
-		        // step 1
+
 		        Document document = new Document();
-		        // step 2
 		        PdfWriter.getInstance(document, new FileOutputStream(filename));
-		        // step 3
 		        document.open();		        
 		        Font bold = new Font(Font.FontFamily.UNDEFINED, 12, Font.BOLD);
-		       
-		        // step 4
-		     // Create and add an Image
-//		        Image img = Image.getInstance("/at.c02.bpj.client/AVl_Logo.jpg");
+
 		        Image img = Image.getInstance("AVl_Logo.jpg");
 		        img.setAbsolutePosition(428f, 765f);
-//		        img.scaleAbsolute(1, 1);
 		        img.scaleToFit(150, 150);
 		        
 		        Date dt = new Date();
@@ -271,9 +267,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 				dg.setTimeZone( TimeZone.getDefault() );
 				
 		        model.getSelectedOffer().setCompletedDt(dt);
-//		        img.setAbsolutePosition(
-//		            (PageSize.POSTCARD.getWidth() - img.getScaledWidth()) / 2,
-//		            (PageSize.POSTCARD.getHeight() - img.getScaledHeight()) / 2);
+
 		        document.add(img);
 		        document.add(new Paragraph("\n"));
 		        document.add(new Paragraph("Sehr geehrter Herr " + model.getSelectedOffer().getCustomer().getContactLastName() + ","));
@@ -298,21 +292,16 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        document.add(new Paragraph("\n"));
 
 		        ArrayList<Offer>Anbot = new ArrayList<Offer>();
-		        //Anbot.add(model.getSelectedOffer().getCustomer().companyNameProperty().toString());
+
 		        Anbot.add(model.getSelectedOffer());
 		        float gesamtpreis = 0;
-		        System.out.println(Anbot);
-//		        for (Offer offer : Anbot) 
-//		        {
-//		        	System.out.println(offer.getCustomer().getCompanyName().toString());
-//				}
-		        
+		       
 		        for (Offer offer : Anbot) 
 		        {
-		        	PdfPTable table = new PdfPTable(5);
-			        PdfPCell cell = new PdfPCell();
-			        cell.setRowspan(offer.getOfferPositions().size());
-			        cell.setColspan(3);
+//		        	PdfPTable table = new PdfPTable(5);
+//			        PdfPCell cell = new PdfPCell();
+//			        cell.setRowspan(offer.getOfferPositions().size());
+//			        cell.setColspan(3);
 //			        document.add(table);
 //			        document.add(cell);
 //			        document.(table.addCell("row 1; cell 1"));
@@ -340,33 +329,10 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 		        	}
 		    	}
 		        document.add(new Paragraph("\n"));
-		        //document.add(new Paragraph("Wir erlauben uns, Ihnen für diese Bestellung " + model.getSelectedOffer(). + " Euro in Rechnung zu stellen.", bold));
 		        document.add(new Paragraph("Wir erlauben uns, Ihnen für diese Bestellung " + gesamtpreis + " Euro in Rechnung zu stellen.", bold));
 		        document.add(new Paragraph("\n\n"));
-		        document.add(new Paragraph("Vielen Dank für Ihr Vertrauen!"));
-//		       String name;
-//		       for (int i=0; i<Anbot.size(); i++)
-//		       {
-//		    	   name = model.getSelectedOffer().customerProperty().getName();
-//		    	   
-//		    	   System.out.println(name);
-//		       }
-//		        for (model.getSelectedOffer().getCustomer().companyNameProperty().toString() : Anbot)
-//			        {
-//			        System.out.println(Anbot);
-//			        }
-//		        OfferManagementView angebot = new OfferManagementView();
-		        //int anbot[] = new int[];
-//		        document.add(new Paragraph(for (int i : model.getSelectedOffer()
-//		        		{
-//		        			for (int j: model.getSelectedOffer().getOfferPositions())
-//		        		})
-//		        		model.getSelectedOffer().getOfferPositions().toString()));
+		        document.add(new Paragraph("Vielen Dank für Ihr Vertrauen!"));//		       
 		        document.add(new Paragraph("\n\n"));
-//		        document.add(new Paragraph("\n\n\n"));
-		        
-		        
-//		        document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + model.getSelectedOffer().getCompletedDt().toString()));
 		        document.add(new Paragraph("Die Bestellung wurde abgeschlossen am " + df.format(dt) + " um " + dg.format(dt) + " Uhr."));
 		        document.add(new Paragraph("\n"));
 //		        Paragraph p = new Paragraph("Hochachtungsvoll,");
@@ -374,8 +340,7 @@ public class OfferManagementView implements FxmlView<OfferManagementViewModel>, 
 //		        document.add(p);
 		        document.add(new Paragraph("Hochachtungsvoll,"));
 		        document.add(new Paragraph(model.getSelectedOffer().getEmployee().getFirstname() + " " + model.getSelectedOffer().getEmployee().getLastname()));
-		        // document.setFooter(new Header("Footnote goes here"));
-		        // step 5
-		        document.close();
+	        
+		        document.close();		        
 		    }
 }
