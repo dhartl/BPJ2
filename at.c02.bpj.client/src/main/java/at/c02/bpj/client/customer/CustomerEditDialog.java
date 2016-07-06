@@ -35,8 +35,7 @@ public class CustomerEditDialog extends Dialog<Customer> {
 				
 				Customer customer= viewTuple.getViewModel().getCustomer();
 				
-				if (customer.getContactFirstName().isEmpty() || customer.getContactLastName().isEmpty()
-						|| customer.getCompanyName().isEmpty() || customer.getContactPhoneNr().isEmpty())
+				if (customer.getCompanyName().isEmpty())
 				{
 					Alert noInputAlert = new Alert(AlertType.WARNING);
 				    noInputAlert.setHeaderText("Eingabe fehlerhaft");

@@ -31,7 +31,7 @@ public class ArticleEditDialog extends Dialog<Article> {
 				// Nur wenn Speichern gedrückt wurde, wird der Artikel
 				// zurückgeliefert
 				Article article = viewTuple.getViewModel().getArticle();
-				if (article.getName().isEmpty() || article.getPrice() ==0)
+				if (article.getName().isEmpty() || article.getPrice() ==0 || article.getCategory().toString().isEmpty())
 				{
 					Alert noInputAlert = new Alert(AlertType.WARNING);
 				    noInputAlert.setHeaderText("Eingabe fehlerhaft");
