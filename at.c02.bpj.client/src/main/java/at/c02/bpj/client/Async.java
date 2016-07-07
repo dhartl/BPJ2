@@ -2,6 +2,8 @@ package at.c02.bpj.client;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
@@ -57,7 +59,8 @@ public class Async {
 		private ExecutorService executorService;
 
 		private AsyncExecutor() {
-			executorService = new ThreadPoolExecutor(4, 8, 5, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10));
+			executorService = new ThreadPoolExecutor(4, 8, 5, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10),
+					new AsyncThreadFactory());
 		}
 
 		public <T> void execute(Supplier<T> supplier, Consumer<T> callback) {
@@ -70,4 +73,15 @@ public class Async {
 
 	}
 
+	
+	private static class AsyncThreadFactory implements ThreadFactory {
+
+		@Override
+		public Thread newThread(Runnable r) {
+			Thread thread = Executors.defaultThreadFactory().newThread(r);
+			thread.setUncaughtExceptionHandler(UiErrorHandler.getInstance());
+			return thread;
+		}
+
+	}
 }

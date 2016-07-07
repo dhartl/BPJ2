@@ -39,7 +39,7 @@ public class ClientApplication extends Application {
 		// Exceptions, die nicht behandelt werden, werden vom UI-ErrorHandler
 		// verarbeitet.
 		// Dieser erstellt einen Popup-Dialog mit der Fehlermeldung
-		Thread.currentThread().setUncaughtExceptionHandler(new UiErrorHandler());
+		Thread.currentThread().setUncaughtExceptionHandler(UiErrorHandler.getInstance());
 
 		stage.setTitle("SalesMate - BPJ2");
 
