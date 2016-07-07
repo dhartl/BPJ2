@@ -42,7 +42,8 @@ public class ArticleEditDialog extends Dialog<Article> {
 		});	
 		
 		this.setOnCloseRequest(event -> {
-
+			article = viewTuple.getViewModel().getArticle();
+			correctValues = (article.getName().length()>0 && article.getPrice() !=0 && article.getCategory()!= null);
 			 
 			if (correctValues==false) {
 				event.consume();
