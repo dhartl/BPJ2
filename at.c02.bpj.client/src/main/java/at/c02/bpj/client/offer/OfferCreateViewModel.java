@@ -130,7 +130,7 @@ public class OfferCreateViewModel implements ViewModel {
 			return false;
 		}
 
-		Offer savedOffer = offerService.saveOffer(offer);
+		Offer savedOffer = offerService.createOffer(offer);
 		offerScope.setOffer(savedOffer);
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.initModality(Modality.APPLICATION_MODAL);

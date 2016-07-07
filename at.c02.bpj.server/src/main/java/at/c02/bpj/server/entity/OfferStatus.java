@@ -6,10 +6,6 @@ public enum OfferStatus {
 	 */
 	CREATED,
 	/**
-	 * Angebot wird gerade verarbeitet
-	 */
-	PROGRESS,
-	/**
 	 * Angebot wurde abgeschlossen
 	 */
 	COMPLETED;

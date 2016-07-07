@@ -125,7 +125,6 @@ public class OfferManagementViewModel implements ViewModel {
 
 	public void onExportButtonClick(File selectedFile) {
 		offerService.exportOffer(selectedFile, getSelectedOffer());
-
 	}
 
 	public ObservableList<Customer> customerListProperty() {
