@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 
+
 /**
  * Model für {@link OfferCreatView}
  */
@@ -83,8 +84,8 @@ public class OfferCreateViewModel implements ViewModel {
     }
 
     /**
-     * Lädt die Artikel
-     */
+	 * Lädt die Artikel
+	 */
     public void loadArticles() {
 	List<Article> artciles = articleService.getArticles();
 	setArticles(artciles);
@@ -103,8 +104,8 @@ public class OfferCreateViewModel implements ViewModel {
     }
 
     /**
-     * Fügt eine neue Position zum Angebot hinzu
-     */
+	 * Fügt eine neue Position zum Angebot hinzu
+	 */
     public void addPositiontoOffer(Article article) {
 	positionNumber++;
 	OfferPosition newOfferPosition = new OfferPosition();
@@ -123,9 +124,9 @@ public class OfferCreateViewModel implements ViewModel {
 	if (!isValid) {
 	    javafx.scene.control.Alert alert = new javafx.scene.control.Alert(AlertType.INFORMATION);
 	    alert.initModality(Modality.APPLICATION_MODAL);
-	    alert.setTitle("Geschäftsregeln verletzt!");
+			alert.setTitle("Geschäftsregeln verletzt!");
 	    alert.setHeaderText("Ihr Angebot wurde nicht erstellt!");
-	    alert.setContentText("Menge/Preis/Anzahl der Positionen entsprechen nicht den Geschäftsregeln!");
+			alert.setContentText("Menge/Preis/Anzahl der Positionen entsprechen nicht den Geschäftsregeln!");
 	    alert.showAndWait();
 	    return false;
 	}
@@ -139,4 +140,5 @@ public class OfferCreateViewModel implements ViewModel {
 	alert.showAndWait();
 	return true;
     }
+
 }
