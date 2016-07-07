@@ -80,7 +80,7 @@ public class OfferManagementViewTest extends MvvmFxGuiTest {
 		TableView<Offer> offerTable = find("#offerTable");
 		click("#offerField").type("1");
 		click("#searchButton");
-		Assert.assertEquals(2, offerTable.getItems().size());
+		Assert.assertEquals(1, offerTable.getItems().size());
 		Assert.assertEquals(offer1, offerTable.getItems().get(0));
 	}
 
@@ -102,6 +102,7 @@ public class OfferManagementViewTest extends MvvmFxGuiTest {
 		TableView<Offer> offerTable = find("#offerTable");
 		click("#searchButton");
 		Assert.assertTrue("Keine Suchparameter eingegeben", true);
+		press(KeyCode.ENTER);
 	}
 
 	// Suche Customer "A-GmbH"
@@ -109,7 +110,7 @@ public class OfferManagementViewTest extends MvvmFxGuiTest {
 	public void testSearchOfferCustomer() {
 		TableView<Offer> offerTable = find("#offerTable");
 
-		click("#customerField").press(KeyCode.DOWN).press(KeyCode.ENTER);
+		click("#customerField").press(KeyCode.DOWN, KeyCode.ENTER);
 		click("#searchButton");
 		Assert.assertEquals(2, offerTable.getItems().size());
 		Assert.assertEquals(customer1.getCompanyName(), offerTable.getItems().get(0).getCustomer().getCompanyName());
