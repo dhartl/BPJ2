@@ -27,6 +27,8 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 
 /**
@@ -66,6 +68,8 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 	private Label lblPositionCount;
 	@FXML
 	private Label lblTotalPrice;
+	@FXML
+	private BorderPane rootPane;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -135,6 +139,12 @@ public class OfferCreateView implements FxmlView<OfferCreateViewModel>, Initiali
 		});
 		Bindings.bindContentBidirectional(tblOfferPositions.itemsProperty().get(), model.offerPositionsProperty());
 		tblOfferPositions.setEditable(true);
+
+		rootPane.setOnKeyPressed(event -> {
+			if (event.isControlDown() && event.getCode().equals(KeyCode.S)) {
+				model.saveOffer();
+			}
+		});
 	}
 
 	public boolean shutdown() {

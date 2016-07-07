@@ -119,17 +119,6 @@ public class OfferCreateViewModel implements ViewModel {
 
 	public boolean saveOffer() {
 		Offer offer = offerScope.offerProperty().get();
-		boolean isValid = offerService.validateOffer(offer);
-		if (!isValid) {
-			javafx.scene.control.Alert alert = new javafx.scene.control.Alert(AlertType.INFORMATION);
-			alert.initModality(Modality.APPLICATION_MODAL);
-			alert.setTitle("Geschäftsregeln verletzt!");
-			alert.setHeaderText("Ihr Angebot wurde nicht erstellt!");
-			alert.setContentText("Menge/Preis/Anzahl der Positionen entsprechen nicht den Geschäftsregeln!");
-			alert.showAndWait();
-			return false;
-		}
-
 		Offer savedOffer = offerService.createOffer(offer);
 		offerScope.setOffer(savedOffer);
 		Alert alert = new Alert(AlertType.INFORMATION);
@@ -140,4 +129,11 @@ public class OfferCreateViewModel implements ViewModel {
 		return true;
 	}
 
+	public OfferService getOfferService() {
+		return offerService;
+	}
+
+	public OfferScope getOfferScope() {
+		return offerScope;
+	}
 }

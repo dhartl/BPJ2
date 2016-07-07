@@ -42,20 +42,16 @@ public class OfferService {
 
 	public boolean validateOffer(Offer offer) {
 		if (offer.getOfferPositions().isEmpty()) {
-			// throw new ServiceException("Es muss mindestens eine Position zum
-			// Angebot hinzugefügt werden!");
-			return false;
+			throw new ServiceException("Es muss mindestens eine Position zum Angebot hinzugefügt werden!");
 		}
 		for (OfferPosition op : offer.offerPositionsProperty()) {
 			if (op.amountProperty().get() > 99 || op.amountProperty().get() < 1) {
-				// throw new ServiceException("Die Menge der Position " +
-				// op.getPosNr() + " muss zwischen 1 und 99 liegen!");
-				return false;
+				throw new ServiceException(
+						"Die Menge der Position " + op.getPosNr() + " muss zwischen 1 und 99 liegen!");
 			}
 			if (op.priceProperty().get() > 1000000 || op.priceProperty().get() < 0) {
-				return false;
-				// throw new ServiceException("Der Preis der Position " +
-				// op.getPosNr() + " muss zwischen 0 und 1000000 liegen!");
+				throw new ServiceException(
+						"Der Preis der Position " + op.getPosNr() + " muss zwischen 0 und 1000000 liegen!");
 			}
 		}
 		return true;
@@ -63,6 +59,7 @@ public class OfferService {
 	}
 
 	public Offer createOffer(Offer offer) {
+		validateOffer(offer);
 		offer.setCreatedDt(new Date());
 		offer.setStatus(OfferStatus.CREATED);
 		offer.setEmployee(AuthContext.getInstance().getCurrentUser());
