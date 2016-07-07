@@ -1,11 +1,14 @@
 package at.c02.bpj.client.customer;
 
 
+
 import at.c02.bpj.client.api.model.Customer;
+
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Alert.AlertType;
@@ -16,7 +19,9 @@ import javafx.scene.control.Alert.AlertType;
 public class CustomerEditDialog extends Dialog<Customer> {
 
 	private ViewTuple<CustomerEditView, CustomerEditViewModel> viewTuple;
-
+	private Boolean correctValues;
+	private Customer customer;
+	
 	public CustomerEditDialog() {
 		// Laden von CustomerEditView
 		viewTuple = FluentViewLoader
@@ -27,25 +32,45 @@ public class CustomerEditDialog extends Dialog<Customer> {
 		// Dialog hat Buttons "Speichern" und "Abbrechen"
 		getDialogPane().getButtonTypes().addAll(saveType, ButtonType.CANCEL);
 
+		
+		
+		Button saveButton = (Button) getDialogPane().lookupButton(saveType);
+		saveButton.setOnAction((event) -> {
+			customer = viewTuple.getViewModel().getCustomer();
+			 correctValues = (customer.getCompanyName().length()>0);
+			if (correctValues) {
+				this.correctValues = true;
+				close();
+			}
+		});	
+		
+		this.setOnCloseRequest(event -> {
+
+			correctValues = (customer.getCompanyName().length()>0);
+			if (correctValues==false) {
+				event.consume();
+			}
+			
+		});
+		
 		setResultConverter(buttonType -> {
 			if (saveType.equals(buttonType)) {
 				// Nur wenn Speichern gedrückt wurde, wird der Artikel
 				// zurückgeliefert
-				
-				
-				Customer customer= viewTuple.getViewModel().getCustomer();
-				
-				if (customer.getContactFirstName().isEmpty() || customer.getContactLastName().isEmpty()
-						|| customer.getCompanyName().isEmpty() || customer.getContactPhoneNr().isEmpty())
+				customer = viewTuple.getViewModel().getCustomer();
+				correctValues = (customer.getCompanyName().length()>0);
+
+				if (correctValues== false)
 				{
 					Alert noInputAlert = new Alert(AlertType.WARNING);
 				    noInputAlert.setHeaderText("Eingabe fehlerhaft");
 				    noInputAlert.setContentText("Bitte Pflichtfelder ausfüllen!");
 				    noInputAlert.showAndWait();
+				    
 				}
 				else
 				{
-					return customer;
+				return customer;
 				}
 			}
 			// sonst NULL
