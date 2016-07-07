@@ -26,58 +26,58 @@ import javafx.scene.input.KeyCode;
 @RunWith(MockitoJUnitRunner.class)
 public class OfferChooseCustomerTest extends MvvmFxGuiTest {
 
-    @Mock
-    private CustomerService customerService;
+	@Mock
+	private CustomerService customerService;
 
-    private Customer customer1;
+	private Customer customer1;
 
-    @Override
-    public Class<? extends FxmlView<? extends ViewModel>> getViewClass() {
-	return OfferChooseCustomerView.class;
-    }
+	@Override
+	public Class<? extends FxmlView<? extends ViewModel>> getViewClass() {
+		return OfferChooseCustomerView.class;
+	}
 
-    @Override
-    public void setupContext(EasyDI context) {
-	customer1 = TestData.customer1();
+	@Override
+	public void setupContext(EasyDI context) {
+		customer1 = TestData.customer1();
 
-	Mockito.when(customerService.getCustomer()).thenReturn(Lists.newArrayList(customer1));
+		Mockito.when(customerService.getCustomer()).thenReturn(Lists.newArrayList(customer1));
 
-	context.bindInstance(CustomerService.class, customerService);
-    }
+		context.bindInstance(CustomerService.class, customerService);
+	}
 
-    @Override
-    public List<Scope> getViewScopes() {
-	return Lists.newArrayList(new OfferScope());
-    }
+	@Override
+	public List<Scope> getViewScopes() {
+		return Lists.newArrayList(new OfferScope());
+	}
 
-    @Test
-    public void testInitialize() {
-	ComboBox<Customer> cbxCustomer = find("#cbxCustomer");
-	Assert.assertEquals(1, cbxCustomer.getItems().size());
+	@Test
+	public void testInitialize() {
+		ComboBox<Customer> cbxCustomer = find("#cbxCustomer");
+		Assert.assertEquals(1, cbxCustomer.getItems().size());
 
-    }
+	}
 
-    // #005 Kunde A-GmbH wird über Combobox ausgewählt -> Details werden
-    // angezeigt.
-    @Test
-    public void testShowDetailsOfChoosenCustomer() {
-	ComboBox<Customer> cbxCustomer = find("#cbxCustomer");
-	click(cbxCustomer).press(KeyCode.DOWN).press(KeyCode.ENTER);
+	// #005 Kunde A-GmbH wird über Combobox ausgewählt -> Details werden
+	// angezeigt.
+	@Test
+	public void testShowDetailsOfChoosenCustomer() {
+		ComboBox<Customer> cbxCustomer = find("#cbxCustomer");
+		click(cbxCustomer).press(KeyCode.DOWN).press(KeyCode.ENTER);
 
-	Label lblCustomerCity = find("#lblCustomerCity");
-	Label lblCustomerStreet = find("#lblCustomerStreet");
-	Label lblCustomerHouseNr = find("#lblCustomerHouseNr");
-	Label lblCustomerPostCode = find("#lblCustomerPostCode");
-	Label lblCustomerContactPartnerFN = find("#lblCustomerContactPartnerFN");
-	Label lblCustomerContactPartnerLN = find("#lblCustomerContactPartnerLN");
-	//
+		Label lblCustomerCity = find("#lblCustomerCity");
+		Label lblCustomerStreet = find("#lblCustomerStreet");
+		Label lblCustomerHouseNr = find("#lblCustomerHouseNr");
+		Label lblCustomerPostCode = find("#lblCustomerPostCode");
+		Label lblCustomerContactPartnerFN = find("#lblCustomerContactPartnerFN");
+		Label lblCustomerContactPartnerLN = find("#lblCustomerContactPartnerLN");
+		//
 
-	Assert.assertEquals("Graz", lblCustomerCity.getText());
-	Assert.assertEquals("A-Straße", lblCustomerStreet.getText());
-	Assert.assertEquals("10", lblCustomerHouseNr.getText());
-	Assert.assertEquals("8010", lblCustomerPostCode.getText());
-	Assert.assertEquals("Max", lblCustomerContactPartnerFN.getText());
-	Assert.assertEquals("Mustermann", lblCustomerContactPartnerLN.getText());
+		Assert.assertEquals("Graz", lblCustomerCity.getText());
+		Assert.assertEquals("A-Straße", lblCustomerStreet.getText());
+		Assert.assertEquals("10", lblCustomerHouseNr.getText());
+		Assert.assertEquals("8010", lblCustomerPostCode.getText());
+		Assert.assertEquals("Max", lblCustomerContactPartnerFN.getText());
+		Assert.assertEquals("Mustermann", lblCustomerContactPartnerLN.getText());
 
-    }
+	}
 }

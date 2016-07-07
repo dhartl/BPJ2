@@ -131,7 +131,7 @@ public class ArticleView implements FxmlView<ArticleViewModel>, Initializable {
 	}
 
 	public void onEditArticleClick(Article article) {
-		
+
 		model.editArticle(article);
 	}
 

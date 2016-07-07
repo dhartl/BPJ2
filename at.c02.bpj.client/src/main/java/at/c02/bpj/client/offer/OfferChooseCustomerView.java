@@ -15,82 +15,82 @@ import javafx.util.StringConverter;
 
 public class OfferChooseCustomerView implements FxmlView<OfferChooseCustomerModel>, Initializable {
 
-    @InjectViewModel
-    private OfferChooseCustomerModel model;
+	@InjectViewModel
+	private OfferChooseCustomerModel model;
 
-    @FXML
-    private ComboBox<Customer> cbxCustomer;
+	@FXML
+	private ComboBox<Customer> cbxCustomer;
 
-    @FXML
-    private Label lblEmployee;
+	@FXML
+	private Label lblEmployee;
 
-    @FXML
-    private Label lblOfferNumber;
+	@FXML
+	private Label lblOfferNumber;
 
-    @FXML
-    private Label lblOfferDate;
+	@FXML
+	private Label lblOfferDate;
 
-    @FXML
-    private Label lblCustomerName;
+	@FXML
+	private Label lblCustomerName;
 
-    @FXML
-    private Label lblCustomerCity;
+	@FXML
+	private Label lblCustomerCity;
 
-    @FXML
-    private Label lblCustomerStreet;
+	@FXML
+	private Label lblCustomerStreet;
 
-    @FXML
-    private Label lblCustomerHouseNr;
+	@FXML
+	private Label lblCustomerHouseNr;
 
-    @FXML
-    private Label lblCustomerPostCode;
+	@FXML
+	private Label lblCustomerPostCode;
 
-    @FXML
-    private Label lblCustomerContactPartnerFN;
+	@FXML
+	private Label lblCustomerContactPartnerFN;
 
-    @FXML
-    private Label lblCustomerContactPartnerLN;
+	@FXML
+	private Label lblCustomerContactPartnerLN;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 
-	Bindings.bindContent(cbxCustomer.itemsProperty().get(), model.customerListProperty());
-	cbxCustomer.valueProperty().bindBidirectional(model.selectedCustomerProperty());
-	cbxCustomer.getSelectionModel().selectFirst();
+		Bindings.bindContent(cbxCustomer.itemsProperty().get(), model.customerListProperty());
+		cbxCustomer.valueProperty().bindBidirectional(model.selectedCustomerProperty());
+		cbxCustomer.getSelectionModel().selectFirst();
 
-	cbxCustomer.setConverter(new StringConverter<Customer>() {
+		cbxCustomer.setConverter(new StringConverter<Customer>() {
 
-	    @Override
-	    public String toString(Customer customer) {
-		return customer.getCompanyName();
-	    }
+			@Override
+			public String toString(Customer customer) {
+				return customer.getCompanyName();
+			}
 
-	    @Override
-	    public Customer fromString(String string) {
-		return null;
-	    }
+			@Override
+			public Customer fromString(String string) {
+				return null;
+			}
 
-	});
+		});
 
-	// Bindings für Kundendaten
-	lblCustomerStreet.textProperty()
-		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "street"));
+		// Bindings für Kundendaten
+		lblCustomerStreet.textProperty()
+				.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "street"));
 
-	lblCustomerHouseNr.textProperty()
-		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "houseNr"));
+		lblCustomerHouseNr.textProperty()
+				.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "houseNr"));
 
-	lblCustomerCity.textProperty()
-		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "city"));
+		lblCustomerCity.textProperty()
+				.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "city"));
 
-	lblCustomerPostCode.textProperty()
-		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "postCode"));
+		lblCustomerPostCode.textProperty()
+				.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "postCode"));
 
-	lblCustomerContactPartnerFN.textProperty().bind(
-		Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "contactFirstName"));
+		lblCustomerContactPartnerFN.textProperty().bind(
+				Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "contactFirstName"));
 
-	lblCustomerContactPartnerLN.textProperty()
-		.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "contactLastName"));
+		lblCustomerContactPartnerLN.textProperty()
+				.bind(Bindings.selectString(cbxCustomer.getSelectionModel().selectedItemProperty(), "contactLastName"));
 
-    }
+	}
 
 }
