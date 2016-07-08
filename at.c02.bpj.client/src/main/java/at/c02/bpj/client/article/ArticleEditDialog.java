@@ -1,5 +1,7 @@
 package at.c02.bpj.client.article;
 
+import com.google.common.base.Strings;
+
 import at.c02.bpj.client.api.model.Article;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
@@ -16,8 +18,7 @@ import javafx.scene.control.Dialog;
 public class ArticleEditDialog extends Dialog<Article> {
 
 	private ViewTuple<ArticleEditView, ArticleEditViewModel> viewTuple;
-	private Boolean correctValues;
-	private Article article;
+	private boolean correctValues = false;
 
 	public ArticleEditDialog() {
 		// Laden von ArticleEditView
@@ -26,51 +27,42 @@ public class ArticleEditDialog extends Dialog<Article> {
 		// Speichern-Button
 		final ButtonType saveType = new ButtonType("Speichern", ButtonData.OK_DONE);
 		// Dialog hat Buttons "Speichern" und "Abbrechen"
-		getDialogPane().getButtonTypes().addAll(saveType, ButtonType.CANCEL);
+		getDialogPane().getButtonTypes().addAll(saveType);
 
 		Button saveButton = (Button) getDialogPane().lookupButton(saveType);
 		saveButton.setOnAction((event) -> {
-			article = viewTuple.getViewModel().getArticle();
-			correctValues = (article.getName().length() > 0 && article.getPrice() != 0
-					&& article.getCategory() != null);
+			correctValues = validateArticle(viewTuple.getViewModel().getArticle());
 			if (correctValues) {
-				this.correctValues = true;
 				close();
+			} else {
+				Alert noInputAlert = new Alert(AlertType.WARNING);
+				noInputAlert.setHeaderText("Eingabe fehlerhaft");
+				noInputAlert.setContentText("Bitte Pflichtfelder ausfüllen!");
+				noInputAlert.showAndWait();
 			}
 		});
 
 		this.setOnCloseRequest(event -> {
-			article = viewTuple.getViewModel().getArticle();
-			correctValues = (article.getName().length() > 0 && article.getPrice() != 0
-					&& article.getCategory() != null);
-
-			if (correctValues == false) {
+			if (!correctValues) {
 				event.consume();
 			}
 
 		});
 
 		setResultConverter(buttonType -> {
-			if (saveType.equals(buttonType)) {
+			if (saveType.equals(buttonType) && validateArticle(viewTuple.getViewModel().getArticle())) {
 				// Nur wenn Speichern gedrückt wurde, wird der Artikel
 				// zurückgeliefert
-				article = viewTuple.getViewModel().getArticle();
-				correctValues = (article.getName().length() > 0 && article.getPrice() != 0
-						&& article.getCategory() != null);
-
-				if (correctValues == false) {
-					Alert noInputAlert = new Alert(AlertType.WARNING);
-					noInputAlert.setHeaderText("Eingabe fehlerhaft");
-					noInputAlert.setContentText("Bitte Pflichtfelder ausfüllen!");
-					noInputAlert.showAndWait();
-
-				} else {
-					return article;
-				}
+				return viewTuple.getViewModel().getArticle();
 			}
 			// sonst NULL
 			return null;
 		});
+	}
+
+	private boolean validateArticle(Article article) {
+		return article != null && !Strings.isNullOrEmpty(article.getName()) && article.getPrice() != 0
+				&& article.getCategory() != null;
 	}
 
 	/**

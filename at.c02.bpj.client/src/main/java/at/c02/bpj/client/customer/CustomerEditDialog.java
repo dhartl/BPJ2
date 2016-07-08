@@ -1,5 +1,8 @@
 package at.c02.bpj.client.customer;
 
+
+import com.google.common.base.Strings;
+
 import at.c02.bpj.client.api.model.Customer;
 import de.saxsys.mvvmfx.FluentViewLoader;
 import de.saxsys.mvvmfx.ViewTuple;
@@ -16,8 +19,7 @@ import javafx.scene.control.Dialog;
 public class CustomerEditDialog extends Dialog<Customer> {
 
 	private ViewTuple<CustomerEditView, CustomerEditViewModel> viewTuple;
-	private Boolean correctValues;
-	private Customer customer;
+	private boolean correctValues = false;
 
 	public CustomerEditDialog() {
 		// Laden von CustomerEditView
@@ -26,47 +28,41 @@ public class CustomerEditDialog extends Dialog<Customer> {
 		// Speichern-Button
 		final ButtonType saveType = new ButtonType("Speichern", ButtonData.OK_DONE);
 		// Dialog hat Buttons "Speichern" und "Abbrechen"
-		getDialogPane().getButtonTypes().addAll(saveType, ButtonType.CANCEL);
+		getDialogPane().getButtonTypes().addAll(saveType);
 
 		Button saveButton = (Button) getDialogPane().lookupButton(saveType);
 		saveButton.setOnAction((event) -> {
-			customer = viewTuple.getViewModel().getCustomer();
-			correctValues = (customer.getCompanyName().length() > 0);
+			correctValues = validateCustomer(viewTuple.getViewModel().getCustomer());
 			if (correctValues) {
-				this.correctValues = true;
 				close();
+			} else {
+				Alert noInputAlert = new Alert(AlertType.WARNING);
+				noInputAlert.setHeaderText("Eingabe fehlerhaft");
+				noInputAlert.setContentText("Bitte Pflichtfelder ausfüllen!");
+				noInputAlert.showAndWait();
+
 			}
 		});
 
 		this.setOnCloseRequest(event -> {
-
-			correctValues = (customer.getCompanyName().length() > 0);
-			if (correctValues == false) {
+			if (!correctValues) {
 				event.consume();
 			}
-
 		});
 
 		setResultConverter(buttonType -> {
-			if (saveType.equals(buttonType)) {
+			if (saveType.equals(buttonType) && validateCustomer(viewTuple.getViewModel().getCustomer())) {
 				// Nur wenn Speichern gedrückt wurde, wird der Artikel
 				// zurückgeliefert
-				customer = viewTuple.getViewModel().getCustomer();
-				correctValues = (customer.getCompanyName().length() > 0);
-
-				if (correctValues == false) {
-					Alert noInputAlert = new Alert(AlertType.WARNING);
-					noInputAlert.setHeaderText("Eingabe fehlerhaft");
-					noInputAlert.setContentText("Bitte Pflichtfelder ausfüllen!");
-					noInputAlert.showAndWait();
-
-				} else {
-					return customer;
-				}
+				return viewTuple.getViewModel().getCustomer();
 			}
 			// sonst NULL
 			return null;
 		});
+	}
+
+	private boolean validateCustomer(Customer customer) {
+		return customer != null && !Strings.isNullOrEmpty(customer.getCompanyName());
 	}
 
 	/**
