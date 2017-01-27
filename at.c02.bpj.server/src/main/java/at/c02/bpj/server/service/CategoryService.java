@@ -25,4 +25,9 @@ public class CategoryService {
 	public Category findById(Long categoryId) {
 		return categoryRepository.findOne(categoryId);
 	}
+
+	public Category createOrUpdateCategory(Category category) {
+		return categoryRepository.saveAndFlush(category);
+	}
+
 }
