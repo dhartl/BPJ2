@@ -15,4 +15,12 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
 	@Query("select distinct article from Article article join fetch article.category order by article.articleId")
 	List<Article> findAllFetchCategory();
 
+	@Query("select distinct article from Article article join fetch article.category "
+			+ "where lower(name) = lower(?1) order by article.articleId")
+	List<Article> findByName(String name);
+
+	@Query("select distinct article from Article article join fetch article.category "
+			+ "where lower(name) like lower(?1) order by article.articleId")
+	List<Article> findByNameLike(String string);
+
 }

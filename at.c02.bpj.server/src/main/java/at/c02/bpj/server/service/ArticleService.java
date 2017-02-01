@@ -46,4 +46,14 @@ public class ArticleService {
 		return articleRepository.findOne(articleId);
 	}
 
+	public List<Article> findArticles(String name, String search) {
+		if (name != null) {
+			return articleRepository.findByName(name);
+		}
+		if (search != null) {
+			return articleRepository.findByNameLike("%" + search + "%");
+		}
+		return null;
+	}
+
 }

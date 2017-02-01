@@ -30,4 +30,14 @@ public class CategoryService {
 		return categoryRepository.saveAndFlush(category);
 	}
 
+	public List<Category> findCategories(String name, String search) {
+		if (name != null) {
+			return categoryRepository.findByName(name.toLowerCase());
+		}
+		if (search != null) {
+			return categoryRepository.findByNameLike("%" + search + "%");
+		}
+		return null;
+	}
+
 }
