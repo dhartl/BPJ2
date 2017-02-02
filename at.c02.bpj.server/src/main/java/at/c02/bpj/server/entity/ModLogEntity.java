@@ -76,7 +76,8 @@ public abstract class ModLogEntity<T> extends BaseEntity<T> {
 
 	private static Long getCurrentUserId() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null) {
+		if (authentication != null && authentication.getPrincipal() != null
+				&& authentication.getPrincipal() instanceof Employee) {
 			Employee employee = (Employee) authentication.getPrincipal();
 			if (employee != null) {
 				return employee.getEmployeeId();
