@@ -2,6 +2,7 @@ package at.c02.bpj.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,8 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
-		// .authorizeRequests().anyRequest().authenticated().and().httpBasic();
+		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET).authenticated().and().httpBasic();
+		http.authorizeRequests().antMatchers(HttpMethod.POST).authenticated().and().httpBasic();
 	}
 
 	@Override
